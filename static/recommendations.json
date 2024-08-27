@@ -1,0 +1,427 @@
+{
+    "Upper respiratory tract infection" : {
+        "Procedures": ["Throat Swab", "Nasal Swab", "Chest X-Ray"],
+        "Surgeries": [],
+        "Labs": [],
+        "Lifestyle changes": ["Rest", "Hydration", "Good Hygiene", "Improve indoor air quality"]
+    },
+    "Gastroesophageal reflux disease": {
+        "Procedures": ["Biopsy", "Esophageal manometry", "Esophagram", "Upper Endoscopy"],
+        "Surgeries": ["Fundoplication", "Linx Surgery", "Hill Repair"],
+        "Labs": [],
+        "Lifestyle changes": ["Change eating habits", "Change sleeping position", "Maintain healthy weight", "Quit smoking", "Manage stress", "Avoid tight clothes"]
+    },
+    "Hypertension": {
+        "Procedures": [
+            "Carotid Baroreceptor Activation Therapy",
+            "Electrocardiogram (ECG)",
+            "Echocardiogram"
+        ],
+        "Surgeries": [
+            "Renal Denervation"
+        ],
+        "Labs": [
+            "Mean Atriel Blood Pressure",
+            "Urine Tests",
+            "Blood Tests"
+        ],
+        "Lifestyle changes": [
+            "Dietary Adjustments",
+            "Regular Physical Activity",
+            "Weight Management",
+            "Smoking Cessation",
+            "Limit Alcohol Intake",
+            "Stress Management"
+        ]
+    },
+    "Chronic Lung Diseases": {
+        "Procedures": [
+            "Spirometry",
+            "Peak expiratory flow (PEF) test",
+            "Fractional exhaled nitric oxide (FeNO) test",
+            "Chest computed tomography (CT) scan",
+            "Chest X-ray"
+        ],
+        "Surgeries": [
+            "Bullectomy",
+            "Lung Volume Reduction Surgery (LVRS)",
+            "Lung Transplants"
+        ],
+        "Labs": [
+            "CO2",
+            "Blood Oxygen levels"
+        ],
+        "Lifestyle changes": [
+            "Exercise",
+            "Stop smoking",
+            "Improve indoor air quality",
+            "Healthy food",
+            "Drink water"
+        ]
+    },
+    
+    "Type 2 Diabetes Mellitus": {
+        "Procedures": [],
+        "Surgeries": [
+            "Roux-en-y Gastric Bypass (gastric bypass)",
+            "Sleeve Gastrectomy (sleeve)",
+            "Biliopancreatic Diversion with Duodenal Switch (duodenal switch)",
+            "Single Anastomosis Duodeno-Ileal Bypass with Sleeve Gastrectomy (SADI-S)"
+        ],
+        "Labs": [
+            "hemoglobin_A1c",
+            "fast_plasma_glucose",
+            "total_glucose",
+            "Random Blood Sugar Test"
+        ],
+        "Lifestyle changes": [
+            "Healthy eating",
+            "Exercise",
+            "Stress management",
+            "Stop smoking",
+            "Limited alcohol"
+        ]
+    },
+
+    "Anemia": {
+        "Procedures": [
+            "Peripheral blood smear"
+        ],
+        "Surgeries": [],
+        "Labs": [
+            "hemoglobin", 
+            "hematocrit", 
+            "total_rbc",
+            "Reticulocyte count",
+            "iron", 
+            "ferritin", 
+            "TIBC", 
+            "transferrin"
+        ],
+        "Lifestyle changes": [
+            "Regular sleep",
+            "Iron rich diet",
+            "Avoid alcohol",
+            "Exercise"
+        ]
+    },
+    "Kidney Disease": {
+        "Procedures": [
+            "Extracorporeal Shock Wave Lithotripsy (ESWL)",
+            "Laparoscopic Cyst Ablation",
+            "Kidney Biopsy",
+            "Ultrasound",
+            "CT Scan",
+            "Renal Artery Stenosis Angioplasty"
+        ],
+        "Surgeries": [
+            "Dialysis Access Surgery",
+            "Kidney Transplant",
+            "Nephrectomy"
+        ],
+        "Labs": [
+            "glomelular_filtration_rate",
+            "urine_albumin/creatinine",
+            "BUN",
+            "creatinine",
+            "urine_creatinine"
+        ],
+        "Lifestyle changes": [
+            "Lose weight",
+            "Exercise",
+            "Limit alcohol",
+            "Stop smoking",
+            "Eat healthy foods",
+            "Manage stress"
+        ]
+    },
+    "Hypothyroidism": {
+        "Procedures": [],
+        "Surgeries": [],
+        "Labs": [
+            "total_tsh",
+            "free_thyroxine",
+            "thyroxine",
+            "free_T3",
+            "total_T3",
+            "Reverse T3 test"
+        ],
+        "Lifestyle changes": [
+            "More iodine intake diet change",
+            "Exercise",
+            "Stress management"
+        ]
+    },
+    "Ishemic Heart Disease": {
+        "Procedures": [
+            "Percutaneous Coronary Intervention (PCI)",
+            "Stress Testing",
+            "Electrophysiological Studies and Ablation",
+            "Electrocardiogram (ECG)",
+            "Echocardiogram"
+        ],
+        "Surgeries": [
+            "Coronary Artery Bypass Grafting (CABG)",
+            "Percutaneous Coronary Intervention (PCI)",
+            "Valve Repair or Replacement"
+        ],
+        "Labs": [
+            "CBC",
+            "HDL_cholesterol", "HDL_cholesterol_percentage", "LDL_cholesterol", "Non-HDL_cholesterol", "VLDL_cholesterol",
+            "C_reactive_protein",
+            "hemoglobin_A1c",
+            "fast_plasma_glucose"
+        ],
+        "Lifestyle changes": [
+            "Dietary Changes",
+            "Regular Physical Activity",
+            "Regular Monitoring",
+            "Weight Management",
+            "Smoking Cessation",
+            "Alcohol Moderation",
+            "Stress Management",
+            "Address Sleep Disorders"
+        ]
+    },
+    "Dyslipidemia": {
+        "Procedures": [
+            "LDL Apheresis",
+            "Plasmapheresis"
+        ],
+        "Surgeries": [
+            "Bariatric Surgery"
+        ],
+        "Labs": [
+            "HDL_cholesterol", "HDL_cholesterol_percentage", "LDL_cholesterol", "Non-HDL_cholesterol", "VLDL_cholesterol",
+            "Lipoprotein (a) Levels",
+            "Liver Function Tests",
+            "Apolipoprotein B (ApoB)",
+            "Apolipoprotein A-I (ApoA-I)",
+            "PCSK9 Levels"
+        ],
+        "Lifestyle changes": [
+            "Dietary Adjustments",
+            "Regular Physical Activity",
+            "Weight Management",
+            "Smoking Cessation",
+            "Alcohol Moderation",
+            "Stress Management",
+            "Medication Review"
+        ]
+    },
+    "Vitamin D Deficiency": {
+        "Procedures": [],
+        "Surgeries": [],
+        "Labs": [
+            "25-Hydroxyvitamin D Blood Test",
+            "vitamin_D", "vitamin_D2", "vitamin_D3",
+            "calcium",
+            "Phosphate Levels",
+            "Parathyroid Hormone (PTH) Levels"
+        ],
+        "Lifestyle changes": [
+            "Sun Exposure",
+            "Diet",
+            "Vitamin D Supplements",
+            "Regular Physical Activity"
+        ]
+    },
+    "Disorders of White Blood Cells": {
+        "Procedures": [
+            "Bone Marrow Biopsy",
+            "Stem Cell Transplant",
+            "Bone Marrow Examination"
+        ],
+        "Surgeries": [
+            "Splenectomy"
+        ],
+        "Labs": [
+            "Complete Blood Count (CBC) with Differential",
+            "Flow Cytometry"
+        ],
+        "Lifestyle changes": [
+            "Infection Prevention",
+            "Nutritional Support",
+            "Prompt Treatment of Infections",
+            "Weight Management",
+            "Smoking Cessation",
+            "Alcohol Moderation",
+            "Stress Management",
+            "Medication Review"
+        ]
+    },
+    "Normal":{
+        "Procedures": [],
+        "Surgeries": [],
+        "Labs": [],
+        "Lifestyle changes": []
+    },
+    "Chronic obstructive pulmonary disease": {
+        "Procedures": [
+            "Spirometry",
+            "Peak expiratory flow (PEF) test",
+            "Fractional exhaled nitric oxide (FeNO) test",
+            "Chest computed tomography (CT) scan",
+            "Chest X-ray"
+        ],
+        "Surgeries": [
+            "Bullectomy",
+            "Lung Volume Reduction Surgery (LVRS)",
+            "Lung Transplants"
+        ],
+        "Labs": [
+            "CO2",
+            "Blood Oxygen levels"
+        ],
+        "Lifestyle changes": [
+            "Exercise",
+            "Stop smoking",
+            "Improve indoor air quality",
+            "Healthy food",
+            "Drink water"
+        ]
+        },
+        "Chronic Kidney Disease": {
+            "Procedures": [
+                "Extracorporeal Shock Wave Lithotripsy (ESWL)",
+                "Laparoscopic Cyst Ablation",
+                "Kidney Biopsy",
+                "Ultrasound",
+                "CT Scan",
+                "Renal Artery Stenosis Angioplasty"
+            ],
+            "Surgeries": [
+                "Dialysis Access Surgery",
+                "Kidney Transplant",
+                "Nephrectomy"
+            ],
+            "Labs": [
+                "glomelular_filtration_rate",
+                "urine_albumin/creatinine",
+                "BUN",
+                "creatinine",
+                "urine_creatinine"
+            ],
+            "Lifestyle changes": [
+                "Lose weight",
+                "Exercise",
+                "Limit alcohol",
+                "Stop smoking",
+                "Eat healthy foods",
+                "Manage stress"
+            ]
+        },
+        "Chronic Heart Disease": {
+            "Procedures": [
+                "Percutaneous Coronary Intervention (PCI)",
+                "Stress Testing",
+                "Electrophysiological Studies and Ablation",
+                "Electrocardiogram (ECG)",
+                "Echocardiogram"
+            ],
+            "Surgeries": [
+                "Coronary Artery Bypass Grafting (CABG)",
+                "Percutaneous Coronary Intervention (PCI)",
+                "Valve Repair or Replacement"
+            ],
+            "Labs": [
+                "CBC",
+                "HDL_cholesterol", "HDL_cholesterol_percentage", "LDL_cholesterol", "Non-HDL_cholesterol", "VLDL_cholesterol",
+                "C_reactive_protein",
+                "hemoglobin_A1c",
+                "fast_plasma_glucose"
+            ],
+            "Lifestyle changes": [
+                "Dietary Changes",
+                "Regular Physical Activity",
+                "Regular Monitoring",
+                "Weight Management",
+                "Smoking Cessation",
+                "Alcohol Moderation",
+                "Stress Management",
+                "Address Sleep Disorders"
+            ]
+        },
+        "Atrial Fibrillation" : {
+            "Procedures": [
+                "Electrocardiograms (EKGs)",
+                "Echocardiography (ultrasound)",
+                "Cardiac magnetic resonance imaging (MRI)"
+            ],
+            "Surgeries": [
+                "Catheter Ablation",
+                "Maze Procedure",
+                "AV Node Ablation",
+                "Left Atrial Appendage Closure"
+            ],
+            "Labs": [
+                "potassium",
+                "thyroid hormone"
+            ],
+            "Lifestyle changes": [
+                "Enough sleep",
+                "Limit alcohol and caffeine",
+                "Healthy diet",
+                "Exercise",
+                "Reduce stress"
+            ]
+        },
+        "Osteoarthritis": {
+            "Procedures": [
+                "Corticosteroid Injections",
+                "Hyaluronic Acid Injections",
+                "Physical Therapy",
+                "Radiofrequency Ablation (RFA)"
+            ],
+            "Surgeries": [
+                "Total Knee Replacement (TKR)",
+                "Total Hip Replacement (THR)",
+                "Osteotomy",
+                "Arthroscopy",
+                "Joint Fusion Surgery"
+            ],
+            "Labs": [
+                "Erythrocyte Sedimentation Rate (ESR)",
+                "C_reactive_protein",
+                "Joint Fluid Analysis",
+                "Serum Cartilage Oligomeric Matrix Protein (COMP) Levels"
+            ],
+            "Lifestyle changes": [
+                "Exercise: Regular, low-impact activities",
+                "Weight Management",
+                "Metformin Use in Obese Patients",
+                "Manage Iron Levels",
+                "Mental Health Management",
+                "NSAIDs with Caution",
+                "Dementia Risk Mitigation",
+                "Diet",
+                "Joint Protection"
+            ]
+        },
+        "Hyperlipidemia": {
+            "Procedures": [
+                "LDL Apheresis",
+                "Plasmapheresis"
+            ],
+            "Surgeries": [
+                "Bariatric Surgery"
+            ],
+            "Labs": [
+                "HDL_cholesterol", "HDL_cholesterol_percentage", "LDL_cholesterol", "Non-HDL_cholesterol", "VLDL_cholesterol",
+                "Lipoprotein (a) Levels",
+                "Liver Function Tests",
+                "Apolipoprotein B (ApoB)",
+                "Apolipoprotein A-I (ApoA-I)",
+                "PCSK9 Levels"
+            ],
+            "Lifestyle changes": [
+                "Dietary Adjustments",
+                "Regular Physical Activity",
+                "Weight Management",
+                "Smoking Cessation",
+                "Alcohol Moderation",
+                "Stress Management",
+                "Medication Review"
+            ]
+        }
+}

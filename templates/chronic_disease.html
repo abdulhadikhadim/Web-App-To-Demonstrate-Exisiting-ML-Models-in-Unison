@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronic Diseases</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .menu-container {
+            width: 900px;
+            margin: 20px auto;
+        }
+        .menu {
+            background-color: #333;
+            color: white;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .menu-header {
+            background-color: #444;
+            padding: 10px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .menu-content {
+            display: none;
+            padding: 10px;
+            background-color: #555;
+        }
+        .menu-content.show {
+            display: block;
+        }
+        .submenu {
+            background-color: #666;
+            padding: 5px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .submenu-header {
+            cursor: pointer;
+            padding: 5px;
+            font-weight: bold;
+        }
+        .submenu-content {
+            display: none;
+            padding: 5px;
+            background-color: #777;
+        }
+        .submenu-content.show {
+            display: block;
+        }
+        .item {
+            margin: 5px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #888;
+        }
+        th {
+            background-color: #555;
+        }
+        td {
+            background-color: #666;
+        }
+    </style>
+</head>
+<body  bgcolor="black">
+    <div class="menu-container">
+        <!-- Disease Menu -->
+        <div class="menu">
+            <div class="menu-header" onclick="toggleMenu('disease-menu')">Disease</div>
+            <div id="disease-menu" class="menu-content">
+                <div class="item">Probability</div>
+                <!-- Feature Vector Submenu -->
+                <div class="submenu">
+                    <div class="submenu-header" onclick="toggleSubmenu('feature-vector-menu')">Feature Vector</div>
+                    <div id="feature-vector-menu" class="submenu-content">
+                        {% if vector %}
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for key, value in vector.items() %}
+                                        <tr>
+                                            <td>{{ key }}</td>
+                                            <td>{{ value }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>No feature data available.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- Important Features Submenu -->
+                <div class="submenu">
+                    <div class="submenu-header" onclick="toggleSubmenu('important-features-menu')">Important Features</div>
+                    <div id="important-features-menu" class="submenu-content">
+                            {% if imp %}
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Feature</th>
+                                            <th>Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for important in imp %}
+                                            <tr>
+                                                <td>{{important["Feature"]}}</td>
+                                                <td>{{ important["Value"] }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                <p>No feature data available.</p>
+                            {% endif %}
+                    </div>
+                </div>
+                <!-- Risky Features Submenu -->
+                <div class="submenu">
+                    <div class="submenu-header" onclick="toggleSubmenu('risky-features-menu')">Risky Features</div>
+                    <div id="risky-features-menu" class="submenu-content">
+
+                            {% if risk %}
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Feature</th>
+                                            <th>Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for risky in risk %}
+                                            <tr>
+                                                <td>{{ risky["Feature"] }}</td>
+                                                <td>{{ risky["Value"] }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                <p>No feature data available.</p>
+                            {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu(menuId) {
+            var menu = document.getElementById(menuId);
+            if (menu.classList.contains('show')) {
+                menu.classList.remove('show');
+            } else {
+                menu.classList.add('show');
+            }
+        }
+
+        function toggleSubmenu(submenuId) {
+            var submenu = document.getElementById(submenuId);
+            if (submenu.classList.contains('show')) {
+                submenu.classList.remove('show');
+            } else {
+                submenu.classList.add('show');
+            }
+        }
+    </script>
+</body>
+</html>
