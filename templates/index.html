@@ -7,6 +7,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <title>Doctor App</title>
+  <style>
+    .scrollable-json {
+      max-height: 300px; /* Adjust the height as needed */
+      overflow-y: scroll;
+      border: 1px solid #ccc;
+      padding: 10px;
+      background-color: #161515ef;
+    }
+  </style>
 </head>
 <body class="font-Poppins" bgcolor="black">
   <!-- Header -->
@@ -50,7 +59,9 @@
       <div id="jsonData" class="hidden json-container">
         <h2 class="text-2xl text-center text-gold">JSON Information</h2>
         <a href="#" id="jsonLink" class="text-blue-500 underline">Click here to view the JSON data</a>
-        <pre id="jsonResult" class="hidden"></pre>
+        <div class="scrollable-json">
+          <pre id="jsonResult" class="hidden"></pre>
+        </div>
         <button id="showResponse" type="button" class="bg-gold mt-4 px-6 py-2 rounded-full center-button move-below">Diagnosed Disease</button>
       </div>
     </div>
@@ -90,131 +101,6 @@
     });
   </script>
 </section>
-<script>
-  let additionalImage1, additionalImage2;
-
-function handleFileUpload(event) {
-
-const file = event.target.files[0];
-const reader = new FileReader();
-reader.onload = function (e) {
-  const imagePreview = document.getElementById('image-preview');
-  imagePreview.src = e.target.result;
-  document.getElementById('uploaded-image').classList.remove('hidden');
-};
-reader.readAsDataURL(file);
-
-// Extract the image name without the extension
-const fileNameWithoutExtension = file.name.split('.').slice(0, -1).join('.');
-console.log(fileNameWithoutExtension);
-}
-document.getElementById('processVideoButton').addEventListener('click', async function() {
-  const fileInput = document.getElementById('video-upload');
-  const file = fileInput.files[0];
-
-  if (!file) {
-    alert('Please select a video file to process.');
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append('file', file);
-
-  const response = await fetch('http://127.0.0.1:5000/process_video', {
-    method: 'POST',
-    body: formData
-  });
-
-  if (response.ok) {
-    alert('Video processing initiated. Please check the server logs for the result.');
-
-  } else {
-    alert('Error processing video. Please check the server logs for details.');
-  }
-});
-
-async function uploadAndProcessImage() {
-const fileInput = document.getElementById('file-upload');
-const file = fileInput.files[0];
-
-const formData = new FormData();
-formData.append('file', file);
-
-const response = await fetch('http://127.0.0.1:5000/', {
-  method: 'POST',
-  body: formData
-});
-
-const data = await response.json();
-displayProcessedImage(data.processed_image_path);
-
-// Use the extracted image name to set the paths for the additional images
-const fileNameWithoutExtension = file.name.split('.').slice(0, -1).join('.');
-additionalImage1 = `D:/Division/type1-Data/additional_images_folder1/${fileNameWithoutExtension}.png`;
-additionalImage2 = `D:/Division/type1-Data/additional_images_folder2/${fileNameWithoutExtension}.png`;
-console.log(additionalImage1)
-console.log(additionalImage2)
-
-displayAdditionalImages();
-}
-async function submitInsulatorForm() {
-  const leakageCurrent = document.getElementById('leakage-current').value;
-  const appliedVoltage = document.getElementById('applied-voltage').value;
-
-
-  const data = {
-    leakage_current: leakageCurrent,
-    applied_voltage: appliedVoltage,
-
-  };
-
-  const response = await fetch('http://127.0.0.1:5000/predict_life', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  });
-
-  const result = await response.json();
-  const insulatorResultElement = document.getElementById('insulator-result');
-  insulatorResultElement.textContent = `The Expected life left based on these parameters is: ${result.life_left} Years`;
-  insulatorResultElement.classList.remove('hidden');
-}
-
-  function displayProcessedImage(filename) {
-      const processedImagePreview = document.getElementById('processed-image-preview');
-      processedImagePreview.src = "D:\\Division\\type1-Data\\testimage\\" + filename;
-      document.getElementById('processed-image-container').classList.remove('hidden');
-
-}
-function handleVideoUpload(event) {
-      const file = event.target.files[0];
-      const videoPreview = document.getElementById('video-preview');
-      const url = URL.createObjectURL(file);
-      videoPreview.src = url;
-      document.getElementById('uploaded-video').classList.remove('hidden');
-    }
-
-function displayAdditionalImages() {
-  setTimeout(function() {
-    const additionalImage1Preview = document.getElementById('additional-image-1-preview');
-    additionalImage1Preview.src = additionalImage1;
-    document.getElementById('additional-image-1-container').classList.remove('hidden');
-
-    const additionalImage2Preview = document.getElementById('additional-image-2-preview');
-    additionalImage2Preview.src = additionalImage2;
-    document.getElementById('additional-image-2-container').classList.remove('hidden');
-
-    // Show the insulator form after displaying the additional images
-    document.getElementById('insulator-form-container').classList.remove('hidden');
-  }, 3000); // 3000 milliseconds = 3 seconds delay
-}
-
-
-</script>
-
-<!-- Remaining HTML code -->
 
 </body>
 </html>

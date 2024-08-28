@@ -5,7 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Chronic Diseases</title>
-
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #020202dc;
+            margin: 0;
+            padding: 0;
+        }
+        .menu-container {
+            width: 900px;
+            margin: 120px auto 20px auto; /* Added 120px margin-top */
+        }
+        .menu {
+            background-color: #333;
+            color: white;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .menu-header {
+            background-color: #444;
+            padding: 10px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .menu-content {
+            display: none;
+            padding: 10px;
+            background-color: #555;
+        }
+        .menu-content.show {
+            display: block;
+        }
+        .submenu {
+            background-color: #666;
+            padding: 5px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .submenu-header {
+            cursor: pointer;
+            padding: 5px;
+            font-weight: bold;
+        }
+        .submenu-content {
+            display: none;
+            padding: 5px;
+            background-color: #777;
+        }
+        .submenu-content.show {
+            display: block;
+        }
+        .item {
+            margin: 5px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #888;
+        }
+        th {
+            background-color: #555;
+        }
+        td {
+            background-color: #666;
+        }
+    </style>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -74,77 +141,40 @@
         .toggle-btn.collapsed {
             left: 10px;
         }
+        .top-nav {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            position: fixed;
+            top: 10px; /* Adjusted to 10px from the top */
+            left: 290px; /* Adjusted to start from the left edge */
+            right: 0;
+            z-index: 1000;
+        }
+        .top-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+        }
+        .top-nav a:hover {
+            background-color: #555;
+        }
     </style>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #020202dc;
-                margin: 0;
-                padding: 0;
-            }
-            .menu-container {
-                width: 900px;
-                margin: 20px auto;
-            }
-            .menu {
-                background-color: #333;
-                color: white;
-                border-radius: 5px;
-                overflow: hidden;
-            }
-            .menu-header {
-                background-color: #444;
-                padding: 10px;
-                cursor: pointer;
-                text-align: center;
-            }
-            .menu-content {
-                display: none;
-                padding: 10px;
-                background-color: #555;
-            }
-            .menu-content.show {
-                display: block;
-            }
-            .submenu {
-                background-color: #666;
-                padding: 5px;
-                border-radius: 5px;
-                margin: 5px 0;
-            }
-            .submenu-header {
-                cursor: pointer;
-                padding: 5px;
-                font-weight: bold;
-            }
-            .submenu-content {
-                display: none;
-                padding: 5px;
-                background-color: #777;
-            }
-            .submenu-content.show {
-                display: block;
-            }
-            .item {
-                margin: 5px 0;
-            }
-            table {
-                width: 100%;
-                border-collapse: collapse;
-            }
-            th, td {
-                padding: 10px;
-                border: 1px solid #888;
-            }
-            th {
-                background-color: #555;
-            }
-            td {
-                background-color: #666;
-            }
-        </style>
 </head>
 <body class="font-Poppins" bgcolor="black">
+
+    <!-- Top Navigation Bar -->
+    <div class="top-nav">
+        <a href="/">Home</a>
+        <a href="chronic">Chronic Disease</a>
+        <a href="medlab">MedLab Diagnosis</a>
+        <a href="pattern">Diagnose Patterns</a>
+        <a href="something">Something</a>
+    </div>
 
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
@@ -185,6 +215,7 @@
             {% endfor %}
         </div>
     </div>
+
     <div class="menu-container">
         <!-- Disease Menu -->
         <div class="menu">
@@ -274,53 +305,51 @@
     </div>
 
     <script>
-
-    
-    document.addEventListener("DOMContentLoaded", function () {
-        // General Collapsible Menu Handling
-        const collapsibles = document.querySelectorAll('.collapsible-menu');
-    
-        collapsibles.forEach(button => {
-            button.addEventListener('click', function () {
-                this.classList.toggle('active');
-                const content = this.nextElementSibling;
-    
-                if (content.style.display === 'block') {
-                    content.style.display = 'none';
-                } else {
-                    content.style.display = 'block';
-                }
+        document.addEventListener("DOMContentLoaded", function () {
+            // General Collapsible Menu Handling
+            const collapsibles = document.querySelectorAll('.collapsible-menu');
+        
+            collapsibles.forEach(button => {
+                button.addEventListener('click', function () {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+        
+                    if (content.style.display === 'block') {
+                        content.style.display = 'none';
+                    } else {
+                        content.style.display = 'block';
+                    }
+                });
+            });
+        
+            // Disease Menu and Submenu Handling
+            function toggleMenu(menuId) {
+                const menu = document.getElementById(menuId);
+                menu.classList.toggle('show');
+            }
+        
+            function toggleSubmenu(submenuId) {
+                const submenu = document.getElementById(submenuId);
+                submenu.classList.toggle('show');
+            }
+        
+            // Event Listeners for Disease Menu and Submenus
+            const diseaseMenuHeader = document.querySelector('.menu-header');
+            if (diseaseMenuHeader) {
+                diseaseMenuHeader.addEventListener('click', function () {
+                    toggleMenu('disease-menu');
+                });
+            }
+        
+            const submenuHeaders = document.querySelectorAll('.submenu-header');
+            submenuHeaders.forEach(submenuHeader => {
+                submenuHeader.addEventListener('click', function () {
+                    const submenuId = this.nextElementSibling.id;
+                    toggleSubmenu(submenuId);
+                });
             });
         });
-    
-        // Disease Menu and Submenu Handling
-        function toggleMenu(menuId) {
-            const menu = document.getElementById(menuId);
-            menu.classList.toggle('show');
-        }
-    
-        function toggleSubmenu(submenuId) {
-            const submenu = document.getElementById(submenuId);
-            submenu.classList.toggle('show');
-        }
-    
-        // Event Listeners for Disease Menu and Submenus
-        const diseaseMenuHeader = document.querySelector('.menu-header');
-        if (diseaseMenuHeader) {
-            diseaseMenuHeader.addEventListener('click', function () {
-                toggleMenu('disease-menu');
-            });
-        }
-    
-        const submenuHeaders = document.querySelectorAll('.submenu-header');
-        submenuHeaders.forEach(submenuHeader => {
-            submenuHeader.addEventListener('click', function () {
-                const submenuId = this.nextElementSibling.id;
-                toggleSubmenu(submenuId);
-            });
-        });
-    });
-</script>
+    </script>
 
     <!-- Toggle Button -->
     <button id="toggle-btn" class="toggle-btn" onclick="toggleSidebar()">☰</button>

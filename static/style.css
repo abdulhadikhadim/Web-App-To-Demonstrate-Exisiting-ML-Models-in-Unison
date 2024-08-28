@@ -110,6 +110,30 @@ Sections
 /**
 Remove the margin in all browsers.
 */
+.top-nav {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  position: fixed;
+  top: 0px; /* Adjusted to 10px from the top */
+  left: 250; /* Adjusted to start from the left edge */
+  right: 0;
+  z-index: 1000;
+  width: 1200px;
+}
+.top-nav a {
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+}
+.top-nav a:hover {
+  background-color: #555;
+}
+
 
 /* CSS Styles */
 .collapsible-menu-container {
