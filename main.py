@@ -14,7 +14,7 @@ app.config["SECRET_KEY"] = "your_secret_key_here"
 Session(app)
 
 diagnosis = {}
-patient1 = Patient()3ew43
+patient1 = Patient()
 
 @app.route('/', methods=["GET", "POST"])
 def home():
@@ -45,10 +45,10 @@ def diagnose():
     global diagnosis
     response = requests.post(API_URL, json = patient1.data)
     diagnosis = response.json()
-    print(diagnosis)
+    # print(diagnosis)
     # return render_template("response.html", diagnosis = diagnosis)
 
-    return render_template('diagnose copy.html', data = patient1.data)
+    return render_template('diagnose.html', data = patient1.data)
 
 @app.route("/response")
 def response_from_api():
@@ -64,7 +64,7 @@ def chronic_diagnosis():
     vector = data["CKD"]
     imp = imp_features["CKD"]
     risk = risky["CKD"]
-    return render_template("chronic_disease.html", imp = imp, vector = vector, risk = risk)
+    return render_template("chronic_disease.html", imp = imp, vector = vector, risk = risk, data = patient1.data)
 
 # @app.route('/get_patient_data')
 # def get_patient_data():

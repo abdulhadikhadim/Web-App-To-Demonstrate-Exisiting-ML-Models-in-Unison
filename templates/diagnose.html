@@ -6,145 +6,203 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Diagnose Disease</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #020202dc;
+            transition: margin-left 0.3s;
+        }
+
+        .collapsible-menu-container {
+            position: fixed;
+            left: 0;
+            top: 100;
+            height: 100%;
+            width: 250px; /* Adjust width as needed */
+            background-color: #333;
+            color: #fff;
+            overflow: auto;
+            z-index: 1000; /* Ensure it is above other elements */
+            padding: 10px; /* Ensure padding is sufficient */
+            transition: transform 0.3s;
+        }
+
+        .collapsible-menu-container.collapsed {
+            transform: translateX(-100%);
+        }
+
+        .collapsible-menu {
+            width: 100%;
+            margin-top: 100;
+            background-color: #444;
+            border: none;
+            padding: 10px;
+            text-align: left;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .collapsible-menu:hover {
+            background-color: #555;
+        }
+
+        .collapsible-content {
+            display: block;
+            background-color: #555;
+            padding: 10px;
+        }
+
+        .collapsible-content p {
+            margin: 10px 0;
+        }
+
+        .main-content {
+            margin-left: 250px; /* Adjust based on sidebar width */
+            padding: 20px;
+            margin-top: 100px;
+            transition: margin-left 0.3s;
+        }
+
+        .main-content.shifted {
+            margin-left: 0;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns */
+            gap: 20px; /* Space between images */
+            padding: 20px;
+            justify-content: center;
+        }
+
+        .image-grid-item img {
+            width: 100%;
+            height: 250px;
+            max-width: 250px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .image-grid-item p {
+            margin-top: 10px;
+            font-size: 20px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .toggle-button {
+            position: absolute;
+            top: 10px;
+            left: 250px;
+            z-index: 1001;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            transition: left 0.3s;
+        }
+
+        .toggle-button.shifted {
+            left: 10px;
+        }
+    </style>
 </head>
+    <!-- Top Navigation Bar -->
+    <div class="top-nav">
+        <a href="/">Home</a>
+
+    </div>
+    
 
 <body>
-    <!-- Diagnosed Disease Information -->
-    <section class="py-20 mt-15">
-        <div class="sm:w-3/4 lg:w-5/12 mx-auto px-2">
-            <h1 class="text-3xl text-center text-gold">Diagnosed Disease</h1>
-            <p class="text-white text-lg text-center mt-4">The diagnosis results will be displayed here.</p>
+    <!-- Toggle Button for Sidebar -->
+    <button id="toggle-menu" class="toggle-button">☰</button>
+
+    <!-- Collapsible Menu Container -->
+    <div id="collapsible-menu" class="collapsible-menu-container">
+        <button class="collapsible-menu">Personal Information</button>
+        <div id="personal-info" class="collapsible-content">
+            <p id="dob">Date of Birth: {{data["Date_Of_Birth"]}}</p>
+            <p id="gender">Gender: {{data["Gender"]}}</p>
+            <p id="marital-status">Marital Status: {{data["MaritalStatus"]}}</p>
+            <p id="races">Races: {{data["Races"]}}</p>
         </div>
-    </section>
-
-    <div class="container">
-        <!-- Left Side: Patient Information and Vitals -->
-        <div class="left-side">
-            <!-- Personal Information Section -->
-            <div>
-                <button class="collapsible">Personal Information</button>
-                <div class="content">
-                    <p id="dob">Date of Birth: {{data["Date_Of_Birth"]}}</p>
-                    <p id="gender">Gender: {{data["Gender"]}}</p>
-                    <p id="marital-status">Marital Status: {{data["MaritalStatus"]}}</p>
-                    <p id="races">Races: {{data["Races"]}}</p>
-                </div>
-            </div>
-
-            <!-- Vitals Section -->
-            <div>
-                <button class="collapsible">Vitals</button>
-                <div class="content">
-                    <p id="weight">Weight: {{data["Vitals"]["Weight"]}}lbs</p>
-                    <p id="height">Height: {{data["Vitals"]["Height"]}}</p>
-                    <p id="systolic">Systolic: {{data["Vitals"]["Systolic"]}}</p>
-                    <p id="diastolic">Diastolic: {{data["Vitals"]["Diastolic"]}}</p>
-                    <p id="pulse">Pulse: {{data["Vitals"]["Pulse"]}}</p>
-                    <p id="respiration">Respiration: {{data["Vitals"]["Respiration"]}}</p>
-                </div>
-            </div>
-             <!-- Diagnosis Section -->
-             <div>
-                <button class="collapsible">Diagnosis</button>
-                <div class="content">
-                    <p id="weight">Weight: {{data["Vitals"]["Weight"]}}lbs</p>
-                    <p id="height">Height: {{data["Vitals"]["Height"]}}</p>
-                    <p id="systolic">Systolic: {{data["Vitals"]["Systolic"]}}</p>
-                    <p id="diastolic">Diastolic: {{data["Vitals"]["Diastolic"]}}</p>
-                    <p id="pulse">Pulse: {{data["Vitals"]["Pulse"]}}</p>
-                    <p id="respiration">Respiration: {{data["Vitals"]["Respiration"]}}</p>
-                </div>
-            </div>
-             <!-- Family History Section -->
-             <div>
-                <button class="collapsible">Family History</button>
-                <div class="content">
-                    {% for member in data["FamilyHistory"] %}
-                        <button class="collapsible">{{ member["FamilyMember"] }}</button>
-                        <div class="content">
-                            {% for disease in member["Diseases"] %}
-                                <p>{{ disease["DiseaseName"] }} - {% if disease["Denies"] %} Yes {% else %} No {% endif %}</p>
-                            {% endfor %}
-                        </div>
+        <button class="collapsible-menu">Vitals</button>
+        <div id="vitals" class="collapsible-content">
+            <p id="weight">Weight: {{data["Vitals"]["Weight"]}}lbs</p>
+            <p id="height">Height: {{data["Vitals"]["Height"]}}</p>
+            <p id="systolic">Systolic: {{data["Vitals"]["Systolic"]}}</p>
+            <p id="diastolic">Diastolic: {{data["Vitals"]["Diastolic"]}}</p>
+            <p id="pulse">Pulse: {{data["Vitals"]["Pulse"]}}</p>
+            <p id="respiration">Respiration: {{data["Vitals"]["Respiration"]}}</p>
+        </div>
+        <button class="collapsible-menu">Diagnosis</button>
+        <div id="diagnosis" class="collapsible-content">
+            <p id="weight">Weight: {{data["Vitals"]["Weight"]}}lbs</p>
+            <p id="height">Height: {{data["Vitals"]["Height"]}}</p>
+            <p id="systolic">Systolic: {{data["Vitals"]["Systolic"]}}</p>
+            <p id="diastolic">Diastolic: {{data["Vitals"]["Diastolic"]}}</p>
+            <p id="pulse">Pulse: {{data["Vitals"]["Pulse"]}}</p>
+            <p id="respiration">Respiration: {{data["Vitals"]["Respiration"]}}</p>
+        </div>
+        <button class="collapsible-menu">Family History</button>
+        <div id="family-history" class="collapsible-content">
+            {% for member in data["FamilyHistory"] %}
+                <button class="collapsible-menu">{{ member["FamilyMember"] }}</button>
+                <div class="collapsible-content">
+                    {% for disease in member["Diseases"] %}
+                        <p>{{ disease["DiseaseName"] }} - {% if disease["Denies"] %} Yes {% else %} No {% endif %}</p>
                     {% endfor %}
                 </div>
-            </div>
-        </div>
-
-        <!-- Right Side: Disease Predictions, Trajectories, and Medlabs Response -->
-        <div class="right-side">
-            <!-- Disease Prediction Section -->
-            <div class="model-section">
-                <button class="collapsible">Disease Prediction</button>
-                <div class="content">
-                    <button class="collapsible">Sub Result 1</button>
-                    <div class="content">
-                        <p>Detail Information 1</p>
-                    </div>
-                    <button class="collapsible">Sub Result 2</button>
-                    <div class="content">
-                        <p>Detail Information 2</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Disease Trajectories Section -->
-            <div class="model-section">
-                <button class="collapsible">Disease Trajectories</button>
-                <div class="content">
-                    <button class="collapsible">Sub Result 1</button>
-                    <div class="content">
-                        <p>Detail Information 1</p>
-                    </div>
-                    <button class="collapsible">Sub Result 2</button>
-                    <div class="content">
-                        <p>Detail Information 2</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Medlabs Response Section -->
-            <div class="model-section">
-                <button class="collapsible">Medlabs Response</button>
-                <div class="content">
-                    <button class="collapsible">Sub Result 1</button>
-                    <div class="content">
-                        <p>Detail Information 1</p>
-                    </div>
-                    <button class="collapsible">Sub Result 2</button>
-                    <div class="content">
-                        <p>Detail Information 2</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 
+    <!-- Main Content Area -->
+    <div id="main-content" class="main-content">
+        <!-- Image Grid Section -->
+        <section class="image-grid">
+            <div class="image-grid-item">
+                <a href="chronic">
+                    <img src="static/imgs/Chronic_Diseases.jpg" alt="Image 1">
+                    <p>Chronic Disease</p>
+                </a>
+            </div>
+            <div class="image-grid-item">
+                <a href="medlab">
+                    <img src="static/imgs/Lab_Testing.jpg" alt="Image 2">
+                    <p>MedLab Diagnosis</p>
+                </a>
+            </div>
+            <div class="image-grid-item">
+                <a href="pattern">
+                    <img src="static/imgs/pattern_mining.png" alt="Image 3">
+                    <p>Disease Pattern</p>
+                </a>
+            </div>
+            <div class="image-grid-item">
+                <a href="link4">
+                    <img src="static/imgs/Chronic_Diseases.jpg" alt="Image 4">
+                    <p>Something</p>
+                </a>
+            </div>
+        </section>
+    </div>
     <script>
-        document.addEventListener("DOMContentLoaded", async function () {
-            const PID = 'patient-id-placeholder'; // Replace with actual logic to get PID
-            const practice = 'practice-placeholder'; // Replace with actual logic to get practice
+        function toggleMenu() {
+            const menu = document.getElementById("collapsible-menu");
+            const content = document.getElementById("main-content");
+            const toggleButton = document.getElementById("toggle-menu");
+            menu.classList.toggle('collapsed');
+            content.classList.toggle('shifted');
+            toggleButton.classList.toggle('shifted');
+        }
 
-            const response = await fetch(`/get_patient_data?PID=${PID}&PP=${practice}`);
-            const data = await response.json();
-
-            document.getElementById("dob").textContent = "Date of Birth: " + data.Date_Of_Birth;
-            document.getElementById("gender").textContent = "Gender: " + data.Gender;
-            document.getElementById("marital-status").textContent = "Marital Status: " + (data.MaritalStatus || "N/A");
-            document.getElementById("races").textContent = "Races: " + (data.Races.join(", ") || "N/A");
-
-            document.getElementById("weight").textContent = "Weight: " + data.Vitals.Weight;
-            document.getElementById("height").textContent = "Height: " + data.Vitals.Height;
-            document.getElementById("systolic").textContent = "Systolic: " + data.Vitals.Systolic;
-            document.getElementById("diastolic").textContent = "Diastolic: " + data.Vitals.Diastolic;
-            document.getElementById("pulse").textContent = "Pulse: " + data.Vitals.Pulse;
-            document.getElementById("respiration").textContent = "Respiration: " + data.Vitals.Respiration;
-        });
-    </script>
-
-    <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const collapsibles = document.querySelectorAll('.collapsible');
+            const collapsibles = document.querySelectorAll('.collapsible-menu');
 
             collapsibles.forEach(button => {
                 button.addEventListener('click', function () {
@@ -162,8 +220,12 @@
                     }
                 });
             });
+
+            // Add event listener to toggle button
+            document.getElementById("toggle-menu").addEventListener("click", toggleMenu);
         });
     </script>
 
 </body>
+
 </html>

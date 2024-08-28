@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Chronic Diseases</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #020202dc;
             margin: 0;
             padding: 0;
         }
         .menu-container {
             width: 900px;
-            margin: 20px auto;
+            margin: 120px auto 20px auto; /* Added 120px margin-top */
         }
         .menu {
             background-color: #333;
@@ -72,8 +73,149 @@
             background-color: #666;
         }
     </style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #020202dc;
+            margin: 0;
+            padding: 0;
+            transition: margin-left 0.3s ease;
+        }
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #333;
+            overflow-x: hidden;
+            transition: width 0.3s ease;
+            padding-top: 20px;
+        }
+        .sidebar.collapsed {
+            width: 0;
+            padding-top: 20px;
+        }
+        .sidebar button {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        .sidebar button:hover {
+            background-color: #555;
+        }
+        .sidebar .collapsible-content {
+            display: none;
+            padding: 10px;
+            background-color: #555;
+        }
+        .sidebar .collapsible-content.show {
+            display: block;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+        }
+        .main-content.collapsed {
+            margin-left: 0;
+        }
+        .toggle-btn {
+            position: fixed;
+            top: 20px;
+            left: 250px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px;
+            transition: left 0.3s ease;
+        }
+        .toggle-btn.collapsed {
+            left: 10px;
+        }
+        .top-nav {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            position: fixed;
+            top: 10px; /* Adjusted to 10px from the top */
+            left: 290px; /* Adjusted to start from the left edge */
+            right: 0;
+            z-index: 1000;
+        }
+        .top-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+        }
+        .top-nav a:hover {
+            background-color: #555;
+        }
+    </style>
 </head>
-<body  bgcolor="black">
+<body class="font-Poppins" bgcolor="black">
+
+    <!-- Top Navigation Bar -->
+    <div class="top-nav">
+        <a href="/">Home</a>
+        <a href="chronic">Chronic Disease</a>
+        <a href="medlab">MedLab Diagnosis</a>
+        <a href="pattern">Diagnose Patterns</a>
+        <a href="something">Something</a>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <button class="collapsible-menu">Personal Information</button>
+        <div class="collapsible-content">
+            <p id="dob">Date of Birth: {{data["Date_Of_Birth"]}}</p>
+            <p id="gender">Gender: {{data["Gender"]}}</p>
+            <p id="marital-status">Marital Status: {{data["MaritalStatus"]}}</p>
+            <p id="races">Races: {{data["Races"]}}</p>
+        </div>
+        <button class="collapsible-menu">Vitals</button>
+        <div class="collapsible-content">
+            <p id="weight">Weight: {{data["Vitals"]["Weight"]}}lbs</p>
+            <p id="height">Height: {{data["Vitals"]["Height"]}}</p>
+            <p id="systolic">Systolic: {{data["Vitals"]["Systolic"]}}</p>
+            <p id="diastolic">Diastolic: {{data["Vitals"]["Diastolic"]}}</p>
+            <p id="pulse">Pulse: {{data["Vitals"]["Pulse"]}}</p>
+            <p id="respiration">Respiration: {{data["Vitals"]["Respiration"]}}</p>
+        </div>
+        <button class="collapsible-menu">Diagnosis</button>
+        <div class="collapsible-content">
+            <p id="weight">Weight: {{data["Vitals"]["Weight"]}}lbs</p>
+            <p id="height">Height: {{data["Vitals"]["Height"]}}</p>
+            <p id="systolic">Systolic: {{data["Vitals"]["Systolic"]}}</p>
+            <p id="diastolic">Diastolic: {{data["Vitals"]["Diastolic"]}}</p>
+            <p id="pulse">Pulse: {{data["Vitals"]["Pulse"]}}</p>
+            <p id="respiration">Respiration: {{data["Vitals"]["Respiration"]}}</p>
+        </div>
+        <button class="collapsible-menu">Family History</button>
+        <div class="collapsible-content" id="family-history">
+            {% for member in data["FamilyHistory"] %}
+                <button class="collapsible-menu">{{ member["FamilyMember"] }}</button>
+                <div class="collapsible-content">
+                    {% for disease in member["Diseases"] %}
+                        <p>{{ disease["DiseaseName"] }} - {% if disease["Denies"] %} Yes {% else %} No {% endif %}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
     <div class="menu-container">
         <!-- Disease Menu -->
         <div class="menu">
@@ -136,7 +278,6 @@
                 <div class="submenu">
                     <div class="submenu-header" onclick="toggleSubmenu('risky-features-menu')">Risky Features</div>
                     <div id="risky-features-menu" class="submenu-content">
-
                             {% if risk %}
                                 <table>
                                     <thead>
@@ -164,23 +305,78 @@
     </div>
 
     <script>
-        function toggleMenu(menuId) {
-            var menu = document.getElementById(menuId);
-            if (menu.classList.contains('show')) {
-                menu.classList.remove('show');
-            } else {
-                menu.classList.add('show');
+        document.addEventListener("DOMContentLoaded", function () {
+            // General Collapsible Menu Handling
+            const collapsibles = document.querySelectorAll('.collapsible-menu');
+        
+            collapsibles.forEach(button => {
+                button.addEventListener('click', function () {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+        
+                    if (content.style.display === 'block') {
+                        content.style.display = 'none';
+                    } else {
+                        content.style.display = 'block';
+                    }
+                });
+            });
+        
+            // Disease Menu and Submenu Handling
+            function toggleMenu(menuId) {
+                const menu = document.getElementById(menuId);
+                menu.classList.toggle('show');
             }
+        
+            function toggleSubmenu(submenuId) {
+                const submenu = document.getElementById(submenuId);
+                submenu.classList.toggle('show');
+            }
+        
+            // Event Listeners for Disease Menu and Submenus
+            const diseaseMenuHeader = document.querySelector('.menu-header');
+            if (diseaseMenuHeader) {
+                diseaseMenuHeader.addEventListener('click', function () {
+                    toggleMenu('disease-menu');
+                });
+            }
+        
+            const submenuHeaders = document.querySelectorAll('.submenu-header');
+            submenuHeaders.forEach(submenuHeader => {
+                submenuHeader.addEventListener('click', function () {
+                    const submenuId = this.nextElementSibling.id;
+                    toggleSubmenu(submenuId);
+                });
+            });
+        });
+    </script>
+
+    <!-- Toggle Button -->
+    <button id="toggle-btn" class="toggle-btn" onclick="toggleSidebar()">☰</button>
+
+    <!-- Main Content -->
+    <div id="main-content" class="main-content">
+        <!-- Existing content here -->
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            const mainContent = document.getElementById("main-content");
+            const toggleBtn = document.getElementById("toggle-btn");
+
+            sidebar.classList.toggle("collapsed");
+            mainContent.classList.toggle("collapsed");
+            toggleBtn.classList.toggle("collapsed");
         }
 
-        function toggleSubmenu(submenuId) {
-            var submenu = document.getElementById(submenuId);
-            if (submenu.classList.contains('show')) {
-                submenu.classList.remove('show');
-            } else {
-                submenu.classList.add('show');
-            }
-        }
+        document.querySelectorAll(".collapsible-menu").forEach(button => {
+            button.addEventListener("click", function () {
+                this.classList.toggle("active");
+                const content = this.nextElementSibling;
+                content.classList.toggle("show");
+            });
+        });
     </script>
 </body>
 </html>
