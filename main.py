@@ -66,6 +66,17 @@ def chronic_diagnosis():
     risk = risky["CKD"]
     return render_template("chronic_disease.html", imp = imp, vector = vector, risk = risk, data = patient1.data)
 
+@app.route("/medlabs")
+def medlabs_response():
+    return render_template("medlabs_response.html")
+
+@app.route("/pattern")
+def pattern_recognition():
+    return render_template("pattern_recognition.html")
+
+@app.route("/recommendation")
+def recommendations():
+    return render_template("Recommendation.html")
 # @app.route('/get_patient_data')
 # def get_patient_data():
 #     PID = request.args.get('PID')
