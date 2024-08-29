@@ -98,7 +98,6 @@ def pattern_recognition():
     </html>
     '''
     return render_template_string(html)
-    return render_template("pattern_recognition.html",data=patient1.data)
 
 @app.route("/recommendation")
 def recommendations_response():

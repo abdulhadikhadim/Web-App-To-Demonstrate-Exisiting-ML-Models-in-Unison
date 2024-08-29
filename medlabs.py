@@ -17,7 +17,7 @@ class MedLabPredictions:
                 self.names.append(disease["disease_name"])
                 self.prob[name] = disease["probability"]
                 self.feature_imp[name] = disease["feature_importances"]
-        # return self.names, self.prob, self.feature_imp
+            # return self.names, self.prob, self.feature_imp
 
 
 
