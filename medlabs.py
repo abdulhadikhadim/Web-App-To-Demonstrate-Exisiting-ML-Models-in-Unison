@@ -1,15 +1,23 @@
 class MedLabPredictions:
-    def __init__(self,disease_names=[], prob={}, feature_imp={}):
-        self.disease_names = disease_names
+    def __init__(self,names=[], prob={}, feature_imp={}):
+        self.names = names
         self.prob = prob
         self.feature_imp = feature_imp
+        
+    def top_four_selector(self, data):
+        sorted_responses = sorted(data["likely_diag"], key=lambda x: x.get('probability', ''), reverse=True)
+        sorted_responses = sorted_responses[0:4]
+        return sorted_responses
     
-    def set_values(self, data):
-        for disease in data["likely_diag"]:
+    def set_values(self):
+        diagnosis = self.top_four_selector()
+        for disease in diagnosis:
             name = disease["disease_name"]
-            if name not in self.disease_names:
-                self.disease_names.append(disease["disease_name"])
+            if name not in self.names:
+                self.names.append(disease["disease_name"])
                 self.prob[name] = disease["probability"]
                 self.feature_imp[name] = disease["feature_importances"]
-        return self.disease_names, self.prob, self.feature_imp
+        return self.names, self.prob, self.feature_imp
+
+
 

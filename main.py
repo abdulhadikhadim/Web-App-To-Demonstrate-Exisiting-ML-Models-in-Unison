@@ -8,7 +8,8 @@ from chronic import ChronicDiseasePred
 from medlabs import MedLabPredictions
 from recommendations import Recommendations
 
-DISEASE_MAPPINGS = json.load("static\disease_name_mapping.json")
+with open("static\disease_name_mapping.json", "r") as file:
+    DISEASE_MAPPINGS = json.load(file)
 
 API_URL = "http://172.16.101.167:5000/integrate"
 
@@ -49,8 +50,7 @@ def diagnose():
     global diagnosis
     response = requests.post(API_URL, json = patient1.data)
     diagnosis = response.json()
-    # print(diagnosis)
-    # return render_template("response.html", diagnosis = diagnosis)
+    patient1.diagnosis_sorter()
 
     return render_template('diagnose.html', data = patient1.data)
 

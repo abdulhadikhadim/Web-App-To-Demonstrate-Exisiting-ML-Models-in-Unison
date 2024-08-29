@@ -2,8 +2,11 @@ from chronic import ChronicDiseasePred
 from medlabs import MedLabPredictions
 from recommendations import Recommendations
 import json
+from datetime import datetime
 
-DISEASE_MAPPINGS = json.load("static\disease_name_mapping.json")
+
+with open("static\disease_name_mapping.json", "r") as file:
+    DISEASE_MAPPINGS = json.load(file)
 
 class Patient:
     def __init__(self, patient_ID=0, patient_practice="", data={}, chronic_pred = None, medlab_pred = None, recommendations = None):
@@ -51,5 +54,18 @@ class Patient:
         for name in self.chronic_pred.names:
             if self.chronic_pred.prob>=0.5:
                 name.append(DISEASE_MAPPINGS[name])
+        for name in self.medlab_pred.names:
+            if self.medlab_pred.prob>=60:
+                name.append(DISEASE_MAPPINGS[name])
         return names   
+    
+    def diagnosis_sorter(self):
+        def parse_date(date_str):
+            try:
+                return datetime.strptime(date_str, '%Y-%m-%d')
+            except ValueError:
+                return datetime.min
+
+        sorted_diagnoses = sorted(self.data["Diagnoses"], key=lambda x: parse_date(x.get('Date', '')), reverse=True)
+        self.data["Diagnoses"] = sorted_diagnoses
 
