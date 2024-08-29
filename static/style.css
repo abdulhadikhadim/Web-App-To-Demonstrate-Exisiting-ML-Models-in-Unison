@@ -32,7 +32,7 @@ html {
 
 body {
   font-family: Arial, sans-serif;
-  background-color: #020202dc;
+  background-color: #272626dc;
   margin: 0;
   padding: 0;
 }
@@ -245,6 +245,7 @@ Remove the margin in all browsers.
 /* CSS Styles */
 .collapsible-menu-container {
     position: fixed;
+
     left: 0;
     top: 0;
     height: 100%;
@@ -255,6 +256,7 @@ Remove the margin in all browsers.
     z-index: 1000;
     transition: width 0.3s, margin-left 0.3s;
     padding: 10px;
+    margin-top: 75px;
 }
 
 .collapsible-menu {
