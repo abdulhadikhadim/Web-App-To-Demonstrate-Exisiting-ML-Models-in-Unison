@@ -5,6 +5,11 @@ import json
 import requests
 from patient import Patient
 from chronic import ChronicDiseasePred
+from medlabs import MedLabPredictions
+from recommendations import Recommendations
+
+with open("static\disease_name_mapping.json", "r") as file:
+    DISEASE_MAPPINGS = json.load(file)
 
 API_URL = "http://172.16.101.167:5000/integrate"
 
@@ -14,7 +19,7 @@ app.config["SECRET_KEY"] = "your_secret_key_here"
 Session(app)
 
 diagnosis = {}
-patient1 = Patient()3ew43
+patient1 = Patient()
 
 @app.route('/', methods=["GET", "POST"])
 def home():
@@ -45,10 +50,9 @@ def diagnose():
     global diagnosis
     response = requests.post(API_URL, json = patient1.data)
     diagnosis = response.json()
-    print(diagnosis)
-    # return render_template("response.html", diagnosis = diagnosis)
+    patient1.diagnosis_sorter()
 
-    return render_template('diagnose copy.html', data = patient1.data)
+    return render_template('diagnose.html', data = patient1.data)
 
 @app.route("/response")
 def response_from_api():
@@ -59,66 +63,37 @@ def response_from_api():
 @app.route("/chronic")
 def chronic_diagnosis():
     global diagnosis
+    global patient1
     prediction = ChronicDiseasePred(diagnosis["chronic_diseases_response"])
-    data, imp_features, risky = prediction.set_values()
-    vector = data["CKD"]
-    imp = imp_features["CKD"]
-    risk = risky["CKD"]
-    return render_template("chronic_disease.html", imp = imp, vector = vector, risk = risk)
+    patient1.chronic_pred = prediction
+    names, prob, vector, imp_features, risky, rules = prediction.set_values()
 
-# @app.route('/get_patient_data')
-# def get_patient_data():
-#     PID = request.args.get('PID')
-#     practice = request.args.get('PP')
+    return render_template("chronic_disease.html", names=names, prob=prob, imp = imp_features, vector = vector, risk = risky, data=patient1.data, rules = rules)
 
-#     mongo_fetcher = MongoFetcher()
-#     pat = mongo_fetcher.get_patients_from_mongo(PID, practice)
-#     data = json.loads(pat)
-#     keys = ["_id", "patientid", "practice"]
-#     for key in keys:
-#         data.pop(key)
+@app.route("/medlabs")
+def medlabs_response():
+    global diagnosis
+    global patient1
+    med_data = diagnosis["medlabs_response"]
+    med_preds = MedLabPredictions()
+    patient1.medlab_pred = med_preds
+    names, probs, feature_imp = med_preds.set_values(med_data)
+    return render_template("medlabs_response.html", names=names, probs=probs, feature_imp=feature_imp)
 
-#     return json.dumps(data)
+@app.route("/pattern")
+def pattern_recognition():
+    return render_template("pattern_recognition.html")
 
-
-# @app.route('/save_input', methods=["POST"])
-# def save_input():
-#     session['PID'] = request.form['PID']
-#     session['PP'] = request.form['PP']
-#     return redirect(url_for("process"))
-
-# @app.route('/save_input', methods=["POST"])
-# def save_input():
-#     session['PID'] = request.form['PID']
-#     session['PP'] = request.form['PP']
-    
-#     mongo_fetcher = MongoFetcher()
-#     PID = session.get("PID", '')
-#     practice = session.get("PP", '')
-#     pat = mongo_fetcher.get_patients_from_mongo(PID, practice)
-#     data = json.loads(pat)
-#     keys = ["_id", "patientid", "practice"]
-#     for key in keys:
-#         data.pop(key)
-    
-#     return json.dumps(data)
-
-
-
-# @app.route("/process", methods=["GET"])
-# def process():
-#     mongo_fetcher = MongoFetcher()
-#     PID = session.get("PID",'')
-#     practice = session.get("PP",'')
-#     print(PID, practice)
-#     pat = mongo_fetcher.get_patients_from_mongo(PID, practice)
-#     data = json.loads(pat)
-#     keys = ["_id", "patientid", "practice"]
-#     for key in keys:
-#         data.pop(key)
-#     return render_template("process.html", result = data)
-
+@app.route("/recommendation")
+def recommendations_response():
+    global patient1
+    global diagnosis
+    filtered_names = patient1.recommendations_filter()
+    recommendations_data = diagnosis["recommendations"]
+    recommendations = Recommendations()
+    names, procedures, surgeries, labs, lifestyle_changes = recommendations.set_values(filtered_names, recommendations_data)
+    return render_template("Recommendation.html")
 
 if __name__ == '__main__':    
-    app.run(debug=True, port=5000)
+    app.run(host="172.16.105.138",debug=True, port=5000)
 

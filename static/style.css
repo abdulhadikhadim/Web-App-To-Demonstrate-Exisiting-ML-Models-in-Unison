@@ -110,6 +110,94 @@ Sections
 /**
 Remove the margin in all browsers.
 */
+.top-nav {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  position: fixed;
+  top: 0px; /* Adjusted to 10px from the top */
+  left: 250; /* Adjusted to start from the left edge */
+  right: 0;
+  z-index: 1000;
+  width: 1200px;
+}
+.top-nav a {
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+}
+.top-nav a:hover {
+  background-color: #555;
+}
+
+
+/* CSS Styles */
+.collapsible-menu-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 295px;
+    background-color: #333;
+    color: #fff;
+    overflow: auto;
+    z-index: 1000;
+    transition: width 0.3s, margin-left 0.3s;
+    padding: 10px;
+}
+
+.collapsible-menu {
+    width: 100%;
+    background-color: #444;
+    border: none;
+    padding: 10px;
+    text-align: left;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.collapsible-menu:hover {
+    background-color: #555;
+}
+
+.collapsible-content {
+    display: none;
+    background-color: #555;
+    padding: 10px;
+}
+
+.collapsible-menu-container.collapsed {
+    width: 0;
+    padding: 0;
+    /* top:10; */
+}
+
+.collapsible-menu-container.collapsed .collapsible-content,
+.collapsible-menu-container.collapsed .collapsible-menu {
+    display: none;
+}
+
+.toggle-menu {
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1001;
+    transition: left 0.3s;
+}
+
+.toggle-menu.collapsed {
+    left: 0;
+}
 
 body {
   margin: 0;
