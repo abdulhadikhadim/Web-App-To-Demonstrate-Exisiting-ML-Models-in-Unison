@@ -6,6 +6,9 @@ import requests
 from patient import Patient
 from chronic import ChronicDiseasePred
 from medlabs import MedLabPredictions
+from recommendations import Recommendations
+
+DISEASE_MAPPINGS = json.load("static\disease_name_mapping.json")
 
 API_URL = "http://172.16.101.167:5000/integrate"
 
@@ -60,7 +63,9 @@ def response_from_api():
 @app.route("/chronic")
 def chronic_diagnosis():
     global diagnosis
+    global patient1
     prediction = ChronicDiseasePred(diagnosis["chronic_diseases_response"])
+    patient1.chronic_pred = prediction
     names, prob, vector, imp_features, risky, rules = prediction.set_values()
 
     return render_template("chronic_disease.html", names=names, prob=prob, imp = imp_features, vector = vector, risk = risky, data=patient1.data, rules = rules)
@@ -68,8 +73,10 @@ def chronic_diagnosis():
 @app.route("/medlabs")
 def medlabs_response():
     global diagnosis
+    global patient1
     med_data = diagnosis["medlabs_response"]
     med_preds = MedLabPredictions()
+    patient1.medlab_pred = med_preds
     names, probs, feature_imp = med_preds.set_values(med_data)
     return render_template("medlabs_response.html", names=names, probs=probs, feature_imp=feature_imp)
 
@@ -78,7 +85,13 @@ def pattern_recognition():
     return render_template("pattern_recognition.html")
 
 @app.route("/recommendation")
-def recommendations():
+def recommendations_response():
+    global patient1
+    global diagnosis
+    filtered_names = patient1.recommendations_filter()
+    recommendations_data = diagnosis["recommendations"]
+    recommendations = Recommendations()
+    names, procedures, surgeries, labs, lifestyle_changes = recommendations.set_values(filtered_names, recommendations_data)
     return render_template("Recommendation.html")
 
 if __name__ == '__main__':    
