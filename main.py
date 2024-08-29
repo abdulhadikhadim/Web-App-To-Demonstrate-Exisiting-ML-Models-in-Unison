@@ -36,7 +36,7 @@ def home():
         patient1.data = json.loads(pat)
         
         if patient1.data == {}:
-            print("Condition True")
+            print("Condition is True")
             flash("Patient ID or Practice is Incorrect!")
 
         else:  
