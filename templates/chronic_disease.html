@@ -7,6 +7,7 @@
     <title>Chronic Diseases</title>
     
     <style>
+        
         body {
             font-family: Arial, sans-serif;
             background-color: #020202dc;
@@ -76,6 +77,17 @@
             background-color: #666;
         }
     </style>
+    <style>
+    hr {
+        height:10px;
+        margin-top: 8px;
+        margin-left: 325px;
+        margin-bottom: 8px;
+        border-width:0;
+        width: 200px;
+        background-color:#ffffff;
+      }
+      </style>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -223,9 +235,10 @@
     <div class="menu-container">
         <!-- Disease Menu -->
         <div class="menu">
-            <div class="menu-header" onclick="toggleMenu('disease-menu')">Disease</div>
+            {% for name in names %}
+            <div class="menu-header" onclick="toggleMenu('disease-menu')">{{name}}</div>
             <div id="disease-menu" class="menu-content">
-                <div class="item">Probability</div>
+                <div class="item">Probability : {{prob[name]}}</div>
                 <!-- Feature Vector Submenu -->
                 <div class="submenu">
                     <div class="submenu-header" onclick="toggleSubmenu('feature-vector-menu')">Feature Vector</div>
@@ -239,7 +252,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for key, value in vector.items() %}
+                                    {% for key, value in vector[name].items() %}
                                         <tr>
                                             <td>{{ key }}</td>
                                             <td>{{ value }}</td>
@@ -265,7 +278,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for important in imp %}
+                                        {% for important in imp[name] %}
                                             <tr>
                                                 <td>{{important["Feature"]}}</td>
                                                 <td>{{ important["Value"] }}</td>
@@ -291,7 +304,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for risky in risk %}
+                                        {% for risky in risk[name] %}
                                             <tr>
                                                 <td>{{ risky["Feature"] }}</td>
                                                 <td>{{ risky["Value"] }}</td>
@@ -304,7 +317,31 @@
                             {% endif %}
                     </div>
                 </div>
+<!-- Prediction Rules Submenu -->
+<div class="submenu">
+    <div class="submenu-header" onclick="toggleSubmenu('prediction-rules-menu-{{ loop.index }}')">Prediction Rules</div>
+    <div id="prediction-rules-menu-{{ loop.index }}" class="submenu-content">
+        {% for rule in rules[name] %}
+            <div class="submenu-item">
+                <!-- Header for each rule to toggle its content -->
+                 <hr>
+                <div class="rule-header" onclick="toggleRuleContent('rule-content-{{ loop.index }}')">
+                    Rule {{ loop.index }}
+                </div>
+                <!-- Content for each rule -->
+                <div id="rule-content-{{ loop.index }}" class="rule-content">
+                    <p>{{ rule.English }}</p>
+                    <p>Outcome: {{ rule["Predicate"]["Result"]["Outcome"] }}</p>
+                    <p>Probability: {{ rule["Predicate"]["Result"]["Probabability"] }}</p>
+                    <p>Samples: {{ rule["Predicate"]["Result"]["Samples"] }}</p>
+                    <p>Support: {{ rule["Support"] }}</p>
+                </div>
             </div>
+        {% endfor %}
+    </div>
+</div>
+            </div>
+            {% endfor %}
         </div>
     </div>
 

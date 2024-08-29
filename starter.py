@@ -7,7 +7,7 @@ class MongoFetcher:
         # self.db = self.client['Patients_for_API']
         self.db = self.client['Patients_for_API']
         
-        self.collection = self.db['PatientData']
+        self.collection = self.db['PatientData200']
 
     def get_patients_from_mongo(self, patientid, practice):
         """Fetches patient data from local mongo dump
