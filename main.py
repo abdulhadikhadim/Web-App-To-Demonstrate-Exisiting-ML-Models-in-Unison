@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, flash
+from flask import Flask, render_template, request, session, flash, render_template_string
 from flask_session import Session
 from starter import MongoFetcher
 import json
@@ -77,25 +77,36 @@ def chronic_diagnosis():
 def medlabs_response():
     global diagnosis
     global patient1
-    med_data = diagnosis["medlabs_response"]
-    med_preds = MedLabPredictions()
     names, probs, feature_imp = patient1.get_medlab_pred()
     return render_template("medlabs_response.html", names=names, probs=probs, feature_imp=feature_imp,data=patient1.data)
 
 @app.route("/pattern")
 def pattern_recognition():
+    global patient1
+    print(patient1.chronic_pred.trajectory)
+    fig = patient1.chronic_pred.sanky_plot_generator()
+    plot_html = fig.to_html(full_html=False)
+    html = f'''
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Plotly Plot</title>
+    </head>
+    <body>
+        {plot_html}
+    </body>
+    </html>
+    '''
+    return render_template_string(html)
     return render_template("pattern_recognition.html",data=patient1.data)
 
 @app.route("/recommendation")
 def recommendations_response():
     global patient1
     global diagnosis
-    filtered_names = patient1.recommendations_filter()
-    recommendations_data = diagnosis["recommendations"]
-    recommendations = Recommendations()
     names, procedures, surgeries, labs, lifestyle_changes = patient1.get_recommendations()
     return render_template("Recommendation.html", names=names, procedure=procedures, surgeries=surgeries, lab=labs, lifestyle=lifestyle_changes, data=patient1.data)
 
 if __name__ == '__main__':    
-    app.run(debug=True, port=5000)
+    app.run(host="172.16.105.138",debug=True, port=5000)
 
