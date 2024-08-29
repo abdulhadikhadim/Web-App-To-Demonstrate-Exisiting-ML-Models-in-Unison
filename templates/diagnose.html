@@ -142,13 +142,13 @@
         </div>
         <button class="collapsible-menu">Diagnosis</button>
         <div id="diagnosis" class="collapsible-content">
-            <p id="weight">Weight: {{data["Vitals"]["Weight"]}}lbs</p>
-            <p id="height">Height: {{data["Vitals"]["Height"]}}</p>
-            <p id="systolic">Systolic: {{data["Vitals"]["Systolic"]}}</p>
-            <p id="diastolic">Diastolic: {{data["Vitals"]["Diastolic"]}}</p>
-            <p id="pulse">Pulse: {{data["Vitals"]["Pulse"]}}</p>
-            <p id="respiration">Respiration: {{data["Vitals"]["Respiration"]}}</p>
+            {% for diagnosis in data["Diagnoses"] %}
+            <p id="weight">ICD 10: {{diagnosis["ICD_10"]}}</p>
+            <p id="height">Is Current: {{ diagnosis["IsCurrent"]}}</p>
+            <p id="systolic">Date: {{diagnosis["Date"]}}</p>
+            {% endfor %}
         </div>
+
         <button class="collapsible-menu">Family History</button>
         <div id="family-history" class="collapsible-content">
             {% for member in data["FamilyHistory"] %}
