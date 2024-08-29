@@ -5,7 +5,7 @@ class MedLabPredictions:
         self.feature_imp = feature_imp
     
     def set_values(self, data):
-        for disease in data["likeky_diage"]:
+        for disease in data["likely_diag"]:
             name = disease["disease_name"]
             if name not in self.disease_names:
                 self.disease_names.append(disease["disease_name"])

@@ -71,16 +71,16 @@ def medlabs_response():
     med_data = diagnosis["medlabs_response"]
     med_preds = MedLabPredictions()
     names, probs, feature_imp = med_preds.set_values(med_data)
-    return render_template("medlabs_response.html", names=names, probs=probs, feature_imp=feature_imp)
+    return render_template("medlabs_response.html", names=names, probs=probs, feature_imp=feature_imp,data=patient1.data)
 
 @app.route("/pattern")
 def pattern_recognition():
-    return render_template("pattern_recognition.html")
+    return render_template("pattern_recognition.html",data=patient1.data)
 
 @app.route("/recommendation")
 def recommendations():
     return render_template("Recommendation.html")
 
 if __name__ == '__main__':    
-    app.run(host="172.16.105.138",debug=True, port=5000)
+    app.run(debug=True, port=5000)
 
