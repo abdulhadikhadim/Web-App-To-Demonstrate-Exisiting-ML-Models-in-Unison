@@ -5,6 +5,7 @@ import json
 import requests
 from patient import Patient
 from chronic import ChronicDiseasePred
+from medlabs import MedLabPredictions
 
 API_URL = "http://172.16.101.167:5000/integrate"
 
@@ -60,15 +61,17 @@ def response_from_api():
 def chronic_diagnosis():
     global diagnosis
     prediction = ChronicDiseasePred(diagnosis["chronic_diseases_response"])
-    data, imp_features, risky = prediction.set_values()
-    vector = data["CKD"]
-    imp = imp_features["CKD"]
-    risk = risky["CKD"]
-    return render_template("chronic_disease.html", imp = imp, vector = vector, risk = risk, data = patient1.data)
+    names, prob, vector, imp_features, risky, rules = prediction.set_values()
+
+    return render_template("chronic_disease.html", names=names, prob=prob, imp = imp_features, vector = vector, risk = risky, data=patient1.data, rules = rules)
 
 @app.route("/medlabs")
 def medlabs_response():
-    return render_template("medlabs_response.html")
+    global diagnosis
+    med_data = diagnosis["medlabs_response"]
+    med_preds = MedLabPredictions()
+    names, probs, feature_imp = med_preds.set_values(med_data)
+    return render_template("medlabs_response.html", names=names, probs=probs, feature_imp=feature_imp)
 
 @app.route("/pattern")
 def pattern_recognition():
@@ -77,59 +80,7 @@ def pattern_recognition():
 @app.route("/recommendation")
 def recommendations():
     return render_template("Recommendation.html")
-# @app.route('/get_patient_data')
-# def get_patient_data():
-#     PID = request.args.get('PID')
-#     practice = request.args.get('PP')
-
-#     mongo_fetcher = MongoFetcher()
-#     pat = mongo_fetcher.get_patients_from_mongo(PID, practice)
-#     data = json.loads(pat)
-#     keys = ["_id", "patientid", "practice"]
-#     for key in keys:
-#         data.pop(key)
-
-#     return json.dumps(data)
-
-
-# @app.route('/save_input', methods=["POST"])
-# def save_input():
-#     session['PID'] = request.form['PID']
-#     session['PP'] = request.form['PP']
-#     return redirect(url_for("process"))
-
-# @app.route('/save_input', methods=["POST"])
-# def save_input():
-#     session['PID'] = request.form['PID']
-#     session['PP'] = request.form['PP']
-    
-#     mongo_fetcher = MongoFetcher()
-#     PID = session.get("PID", '')
-#     practice = session.get("PP", '')
-#     pat = mongo_fetcher.get_patients_from_mongo(PID, practice)
-#     data = json.loads(pat)
-#     keys = ["_id", "patientid", "practice"]
-#     for key in keys:
-#         data.pop(key)
-    
-#     return json.dumps(data)
-
-
-
-# @app.route("/process", methods=["GET"])
-# def process():
-#     mongo_fetcher = MongoFetcher()
-#     PID = session.get("PID",'')
-#     practice = session.get("PP",'')
-#     print(PID, practice)
-#     pat = mongo_fetcher.get_patients_from_mongo(PID, practice)
-#     data = json.loads(pat)
-#     keys = ["_id", "patientid", "practice"]
-#     for key in keys:
-#         data.pop(key)
-#     return render_template("process.html", result = data)
-
 
 if __name__ == '__main__':    
-    app.run(host=None,debug=True, port=5000)
+    app.run(host="172.16.105.138",debug=True, port=5000)
 
