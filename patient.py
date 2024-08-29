@@ -52,11 +52,11 @@ class Patient:
     def recommendations_filter(self):
         names = []
         for name in self.chronic_pred.names:
-            if self.chronic_pred.prob>=0.5:
-                name.append(DISEASE_MAPPINGS[name])
+            if self.chronic_pred.prob[name]>=0.5:
+                names.append(DISEASE_MAPPINGS[name])
         for name in self.medlab_pred.names:
-            if self.medlab_pred.prob>=60:
-                name.append(DISEASE_MAPPINGS[name])
+            if self.medlab_pred.prob[name]>=60:
+                names.append(DISEASE_MAPPINGS[name])
         return names   
     
     def diagnosis_sorter(self):
@@ -69,3 +69,20 @@ class Patient:
         sorted_diagnoses = sorted(self.data["Diagnoses"], key=lambda x: parse_date(x.get('Date', '')), reverse=True)
         self.data["Diagnoses"] = sorted_diagnoses
 
+    def patient_data_collector(self, data):
+        self.chronic_pred = ChronicDiseasePred()
+        self.chronic_pred.set_values(data["chronic_diseases_response"])
+        self.medlab_pred = MedLabPredictions()
+        self.medlab_pred.set_values(data["medlabs_response"])
+        self.recommendations = Recommendations()
+        filtered_names = self.recommendations_filter()
+        self.recommendations.set_values(filtered_names, data["recommendations"])
+    
+    def get_chronic_pred(self):
+        return self.chronic_pred.names, self.chronic_pred.prob, self.chronic_pred.feature_vector, self.chronic_pred.important_features, self.chronic_pred.risky_features, self.chronic_pred.top_pred_rules
+
+    def get_medlab_pred(self):
+        return self.medlab_pred.names, self.medlab_pred.prob, self.medlab_pred.feature_imp
+
+    def get_recommendations(self):
+        return self.recommendations.names, self.recommendations.procedures, self.recommendations.surgeries, self.recommendations.labs, self.recommendations.lifestyle_changes
