@@ -21,8 +21,10 @@ Session(app)
 diagnosis = {}
 patient1 = Patient()
 
+
 @app.route('/', methods=["GET", "POST"])
 def home():
+    global patient1
     if request.method == "POST":
         session['PID'] = request.form['PID']
         session['PP'] = request.form['PP'] 
@@ -48,8 +50,10 @@ def home():
 @app.route('/diagnose')
 def diagnose():
     global diagnosis
+    global patient1
     response = requests.post(API_URL, json = patient1.data)
     diagnosis = response.json()
+    patient1.patient_data_collector(diagnosis)
     patient1.diagnosis_sorter()
 
     return render_template('diagnose.html', data = patient1.data)
@@ -64,9 +68,8 @@ def response_from_api():
 def chronic_diagnosis():
     global diagnosis
     global patient1
-    prediction = ChronicDiseasePred(diagnosis["chronic_diseases_response"])
-    patient1.chronic_pred = prediction
-    names, prob, vector, imp_features, risky, rules = prediction.set_values()
+    # prediction = ChronicDiseasePred(diagnosis["chronic_diseases_response"])
+    names, prob, vector, imp_features, risky, rules = patient1.get_chronic_pred()
 
     return render_template("chronic_disease.html", names=names, prob=prob, imp = imp_features, vector = vector, risk = risky, data=patient1.data, rules = rules)
 
@@ -76,13 +79,12 @@ def medlabs_response():
     global patient1
     med_data = diagnosis["medlabs_response"]
     med_preds = MedLabPredictions()
-    patient1.medlab_pred = med_preds
-    names, probs, feature_imp = med_preds.set_values(med_data)
-    return render_template("medlabs_response.html", names=names, probs=probs, feature_imp=feature_imp)
+    names, probs, feature_imp = patient1.get_medlab_pred()
+    return render_template("medlabs_response.html", names=names, probs=probs, feature_imp=feature_imp,data=patient1.data)
 
 @app.route("/pattern")
 def pattern_recognition():
-    return render_template("pattern_recognition.html")
+    return render_template("pattern_recognition.html",data=patient1.data)
 
 @app.route("/recommendation")
 def recommendations_response():
@@ -91,9 +93,9 @@ def recommendations_response():
     filtered_names = patient1.recommendations_filter()
     recommendations_data = diagnosis["recommendations"]
     recommendations = Recommendations()
-    names, procedures, surgeries, labs, lifestyle_changes = recommendations.set_values(filtered_names, recommendations_data)
-    return render_template("Recommendation.html")
+    names, procedures, surgeries, labs, lifestyle_changes = patient1.get_recommendations()
+    return render_template("Recommendation.html", names=names, procedure=procedures, surgeries=surgeries, lab=labs, lifestyle=lifestyle_changes, data=patient1.data)
 
 if __name__ == '__main__':    
-    app.run(host="172.16.105.138",debug=True, port=5000)
+    app.run(debug=True, port=5000)
 

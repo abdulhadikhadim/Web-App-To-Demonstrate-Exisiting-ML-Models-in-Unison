@@ -7,7 +7,6 @@
     <title>Chronic Diseases</title>
     
     <style>
-        
         body {
             font-family: Arial, sans-serif;
             background-color: #020202dc;
@@ -236,13 +235,13 @@
         <!-- Disease Menu -->
         <div class="menu">
             {% for name in names %}
-            <div class="menu-header" onclick="toggleMenu('disease-menu')">{{name}}</div>
-            <div id="disease-menu" class="menu-content">
+            <div class="menu-header" onclick="toggleMenu('disease-menu-{{ loop.index }}')">{{name}}</div>
+            <div id="disease-menu-{{ loop.index }}" class="menu-content">
                 <div class="item">Probability : {{prob[name]}}</div>
                 <!-- Feature Vector Submenu -->
                 <div class="submenu">
-                    <div class="submenu-header" onclick="toggleSubmenu('feature-vector-menu')">Feature Vector</div>
-                    <div id="feature-vector-menu" class="submenu-content">
+                    <div class="submenu-header" onclick="toggleSubmenu('feature-vector-menu-{{ loop.index }}')">Feature Vector</div>
+                    <div id="feature-vector-menu-{{ loop.index }}" class="submenu-content">
                         {% if vector %}
                             <table>
                                 <thead>
@@ -267,8 +266,8 @@
                 </div>
                 <!-- Important Features Submenu -->
                 <div class="submenu">
-                    <div class="submenu-header" onclick="toggleSubmenu('important-features-menu')">Important Features</div>
-                    <div id="important-features-menu" class="submenu-content">
+                    <div class="submenu-header" onclick="toggleSubmenu('important-features-menu-{{ loop.index }}')">Important Features</div>
+                    <div id="important-features-menu-{{ loop.index }}" class="submenu-content">
                             {% if imp %}
                                 <table>
                                     <thead>
@@ -293,8 +292,8 @@
                 </div>
                 <!-- Risky Features Submenu -->
                 <div class="submenu">
-                    <div class="submenu-header" onclick="toggleSubmenu('risky-features-menu')">Risky Features</div>
-                    <div id="risky-features-menu" class="submenu-content">
+                    <div class="submenu-header" onclick="toggleSubmenu('risky-features-menu-{{ loop.index }}')">Risky Features</div>
+                    <div id="risky-features-menu-{{ loop.index }}" class="submenu-content">
                             {% if risk %}
                                 <table>
                                     <thead>
@@ -325,15 +324,14 @@
             <div class="submenu-item">
                 <!-- Header for each rule to toggle its content -->
                  <hr>
-                <div class="rule-header" onclick="toggleRuleContent('rule-content-{{ loop.index }}')">
+                <div class="rule-header" onclick="toggleRuleContent('rule-content-{{ loop.index }}-{{ loop.index }}')">
                     Rule {{ loop.index }}
                 </div>
                 <!-- Content for each rule -->
-                <div id="rule-content-{{ loop.index }}" class="rule-content">
+                <div id="rule-content-{{ loop.index }}-{{ loop.index }}" class="rule-content">
                     <p>{{ rule.English }}</p>
                     <p>Outcome: {{ rule["Predicate"]["Result"]["Outcome"] }}</p>
-                    <p>Probability: {{ rule["Predicate"]["Result"]["Probabability"] }}</p>
-                    <p>Samples: {{ rule["Predicate"]["Result"]["Samples"] }}</p>
+                    <p>Probability: {{ rule["Predicate"]["Result"]["Probability"] }}</p>
                     <p>Support: {{ rule["Support"] }}</p>
                 </div>
             </div>
@@ -374,19 +372,33 @@
                 submenu.classList.toggle('show');
             }
         
-            // Event Listeners for Disease Menu and Submenus
-            const diseaseMenuHeader = document.querySelector('.menu-header');
-            if (diseaseMenuHeader) {
-                diseaseMenuHeader.addEventListener('click', function () {
-                    toggleMenu('disease-menu');
-                });
+            function toggleRuleContent(ruleContentId) {
+                const ruleContent = document.getElementById(ruleContentId);
+                ruleContent.classList.toggle('show');
             }
+        
+            // Event Listeners for Disease Menu and Submenus
+            const diseaseMenuHeaders = document.querySelectorAll('.menu-header');
+            diseaseMenuHeaders.forEach(diseaseMenuHeader => {
+                diseaseMenuHeader.addEventListener('click', function () {
+                    const menuId = this.nextElementSibling.id;
+                    toggleMenu(menuId);
+                });
+            });
         
             const submenuHeaders = document.querySelectorAll('.submenu-header');
             submenuHeaders.forEach(submenuHeader => {
                 submenuHeader.addEventListener('click', function () {
                     const submenuId = this.nextElementSibling.id;
                     toggleSubmenu(submenuId);
+                });
+            });
+        
+            const ruleHeaders = document.querySelectorAll('.rule-header');
+            ruleHeaders.forEach(ruleHeader => {
+                ruleHeader.addEventListener('click', function () {
+                    const ruleContentId = this.nextElementSibling.id;
+                    toggleRuleContent(ruleContentId);
                 });
             });
         });
