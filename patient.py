@@ -54,6 +54,9 @@ class Patient:
         for name in self.chronic_pred.names:
             if self.chronic_pred.prob>=0.5:
                 name.append(DISEASE_MAPPINGS[name])
+        for name in self.medlab_pred.names:
+            if self.medlab_pred.prob>=60:
+                name.append(DISEASE_MAPPINGS[name])
         return names   
     
     def diagnosis_sorter(self):
