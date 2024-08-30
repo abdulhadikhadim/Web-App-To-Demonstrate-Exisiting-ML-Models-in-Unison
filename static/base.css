@@ -1,0 +1,145 @@
+/* Overall styling for body and navigation bar */
+body {
+    background-color: #e2dede;
+    color: #000;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Styling for the top navigation bar */
+.top-nav {
+    display: flex;
+    background-color: #0287CA;
+    padding: 15px 20px;
+    width: 100vw; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    z-index: 1000;
+    align-items: center;
+    justify-content: space-between; /* Align items to the edges */
+}
+
+/* Image styling */
+.top-nav img {
+    height: 25px; /* Adjust this value to match your navigation bar height */
+    margin-right: auto; /* Pushes image to the left */
+}
+
+/* Styling for navigation links */
+.top-nav a {
+    color: #ffffff;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: opacity 0.3s; /* Smooth transition for hover effect */
+}
+
+/* Display links only on hover */
+.top-nav:hover a {
+    opacity: 1; /* Show links on hover */
+}
+
+/* Link hover effect */
+.top-nav a:hover {
+    text-decoration: underline;
+}
+
+/* Sidebar styling */
+.sidebar {
+    background-color: #d4d6d8;
+    padding: 15px;
+    width: 250px;
+    position: fixed;
+    top: 60px; /* Adjusted for the height of the top navigation bar */
+    left: 0;
+    height: calc(100% - 60px); /* Height adjusted to not overlap with the top bar */
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+    transform: translateX(-100%); /* Sidebar is collapsed by default */
+    margin-top: 0px; /* Ensure sidebar does not overlap with top navigation bar */
+}
+
+.sidebar.expanded {
+    transform: translateX(0);
+}
+
+.sidebar .collapsible-menu {
+    background-color: #0287CA;
+    border: none;
+    color: #000;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.collapsible-content {
+    padding-left: 15px;
+    display: none;
+}
+
+.collapsible-menu.active + .collapsible-content {
+    display: block;
+}
+
+.main-content {
+    margin-top: 20px;
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+.main-content.expanded {
+    margin-left: 250px;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.mx-2 {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: 10rem;
+}
+
+.feature-title {
+    margin-top: 0.5rem;
+    font-size: 1.25rem;
+}
+
+.toggle-btn {
+    position: fixed;
+    top: 70px; /* Adjusted to avoid overlap with top navigation bar */
+    left: 10px;
+    z-index: 1000;
+    background-color: #0287CA;
+    border: none;
+    color: #000;
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: left 0.3s ease; /* Smooth transition for button movement */
+}
+
+.toggle-btn.expanded {
+    left: 270px; /* Adjust this value to match the width of the expanded sidebar */
+}
+
+.accordion-collapse {
+    max-height: 400px; /* Adjust the max-height as needed */
+    overflow-y: auto;  /* Enable vertical scrolling if content overflows */
+}
+.plot-container {
+    max-width: 100%;
+    overflow: auto;
+}

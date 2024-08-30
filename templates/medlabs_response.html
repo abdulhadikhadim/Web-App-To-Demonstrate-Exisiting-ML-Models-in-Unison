@@ -1,32 +1,29 @@
-
 {% extends "base.html" %}
 
 {% block title %}Medlabs Response{% endblock %}
 
 {% block content %}
 
-    <!-- Top Navigation Bar -->
-    <div class="top-nav">
-        <a href="/">Home</a>
-        <a href="chronic">Chronic Disease</a>
-        <a href="medlabs">MedLab Diagnosis</a>
-        <a href="recommendation">Recommendations</a> 
-        <!-- use the proper name if required later -->
-    </div>
-
-    <div class="menu-container">
-        <!-- Disease Menu -->
-        <div class="menu">
-            {% for name in names %}
-            <div class="menu-header" onclick="toggleMenu('disease-menu-{{ loop.index }}')">{{name}}</div>
-            <div id="disease-menu-{{ loop.index }}" class="menu-content">
-                <div class="item">Probability : {{probs[name]}}</div>
-                <!-- Important Features Submenu -->
-                <div class="submenu">
-                    <div class="submenu-header" onclick="toggleSubmenu('important-features-menu-{{ loop.index }}')">Feature Importance</div>
-                    <div id="important-features-menu-{{ loop.index }}" class="submenu-content">
-                        {% if feature_imp %}
-                            <table>
+<div class="container mt-4">
+    <div class="row">
+        {% if "normal" in names %}
+        <div class="alert alert-success text-center" role="alert" style="font-size: 1.5rem; font-weight: bold;">
+            The Patient is Healthy According to MedLab Predictions!
+        </div>
+        {% else %}
+        {% for name in names %}
+        <div class="col-md-12 mb-3">
+            <!-- Disease Name Button -->
+            <button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#disease-{{ loop.index }}" aria-expanded="false" aria-controls="disease-{{ loop.index }}">
+                {{ name }} - Probability: {{ probs[name] }}
+            </button>
+            <!-- Feature Importance Dropdown -->
+            <div id="disease-{{ loop.index }}" class="collapse mt-2">
+                <div class="card card-body">
+                    <h5>Feature Importance</h5>
+                    {% if feature_imp %}
+                        <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
+                            <table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th>Feature</th>
@@ -34,69 +31,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for key,value  in feature_imp[name].items() %}
+                                    {% for key, value in feature_imp[name].items() %}
                                         <tr>
-                                            <td>{{key}}</td>
+                                            <td>{{ key }}</td>
                                             <td>{{ value }}</td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
-                        {% else %}
-                            <p>No feature Importance data available.</p>
-                        {% endif %}
-                    </div>
+                        </div>
+                    {% else %}
+                        <p>No feature importance data available.</p>
+                    {% endif %}
                 </div>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
+        {% endif %}
     </div>
+</div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // General Collapsible Menu Handling
-            const collapsibles = document.querySelectorAll('.collapsible-menu');
-        
-            collapsibles.forEach(button => {
-                button.addEventListener('click', function () {
-                    this.classList.toggle('active');
-                    const content = this.nextElementSibling;
-        
-                    if (content.style.display === 'block') {
-                        content.style.display = 'none';
-                    } else {
-                        content.style.display = 'block';
-                    }
-                });
-            });
-        
-            // Disease Menu and Submenu Handling
-            function toggleMenu(menuId) {
-                const menu = document.getElementById(menuId);
-                menu.classList.toggle('show');
-            }
-        
-            function toggleSubmenu(submenuId) {
-                const submenu = document.getElementById(submenuId);
-                submenu.classList.toggle('show');
-            }
-        
-            // Event Listeners for Disease Menu and Submenus
-            const diseaseMenuHeaders = document.querySelectorAll('.menu-header');
-            diseaseMenuHeaders.forEach(header => {
-                header.addEventListener('click', function () {
-                    const menuId = this.nextElementSibling.id;
-                    toggleMenu(menuId);
-                });
-            });
-        
-            const submenuHeaders = document.querySelectorAll('.submenu-header');
-            submenuHeaders.forEach(submenuHeader => {
-                submenuHeader.addEventListener('click', function () {
-                    const submenuId = this.nextElementSibling.id;
-                    toggleSubmenu(submenuId);
-                });
-            });
-        });
-    </script>
 {% endblock %}
