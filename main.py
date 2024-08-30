@@ -86,18 +86,7 @@ def pattern_recognition():
     print(patient1.chronic_pred.trajectory)
     fig = patient1.chronic_pred.sanky_plot_generator()
     plot_html = fig.to_html(full_html=False)
-    html = f'''
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Plotly Plot</title>
-    </head>
-    <body>
-        {plot_html}
-    </body>
-    </html>
-    '''
-    return render_template_string(html)
+    return render_template("pattern_recognition.html", html = plot_html,data = patient1.data)
 
 @app.route("/recommendation")
 def recommendations_response():
@@ -107,5 +96,5 @@ def recommendations_response():
     return render_template("Recommendation.html", names=names, procedure=procedures, surgeries=surgeries, lab=labs, lifestyle=lifestyle_changes, data=patient1.data)
 
 if __name__ == '__main__':    
-    app.run(debug=True, port=5000)
+    app.run(host = "172.16.105.138", debug=True, port=5000)
 

@@ -3,115 +3,125 @@
 {% block title %}Diagnose Disease{% endblock %}
 
 {% block content %}
-    <!-- Top Navigation Bar -->
-    <div class="top-nav">
-        <a href="/">Home</a>
-        <a href="chronic">Chronic Disease</a>
-        <a href="medlabs">MedLab Diagnosis</a>
-        <a href="recommendation">Recommendations</a> 
-        <!-- use the proper name if required later -->
-    </div>
-
-
-
-    <div class="menu-container">
-        <!-- Disease Menu -->
-        <div class="menu">
-            {% for name in names %}
-            <div class="menu-header" onclick="toggleMenu('disease-menu-{{ loop.index }}')">{{name}}</div>
-            <div id="disease-menu-{{ loop.index }}" class="menu-content">
-                
-                <!-- Procedures Submenu -->
-                <div class="submenu">
-                    <div class="submenu-header" onclick="toggleSubmenu('procedures-menu-{{ loop.index }}')">Procedures</div>
-                    <div id="procedures-menu-{{ loop.index }}" class="submenu-content">
+<div class="container mt-5">
+    <div class="row">
+        <!-- Procedures (Top Left) -->
+        <div class="col-md-6 mb-4">
+            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#procedures-menu" aria-expanded="false" aria-controls="procedures-menu", style = "background-color: #0287CA">
+                Procedures
+            </button>
+            <div id="procedures-menu" class="collapse mb-3">
+                {% for name in names %}
+                {% if name != "Normal" %}
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <button class="btn btn-link text-decoration-none w-100 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#procedure-{{ loop.index }}" aria-expanded="false" aria-controls="procedure-{{ loop.index }}">
+                            {{ name }}
+                        </button>
+                    </div>
+                    <div id="procedure-{{ loop.index }}" class="collapse card-body">
                         {% if procedure[name] %}
-                            {% for procedure in procedure[name] %}
-                            <p>{{procedure}}</p>
+                            {% for procedure_item in procedure[name] %}
+                                <p>{{ procedure_item }}</p>
                             {% endfor %}
                         {% else %}
-                            <p>No feature Importance data available.</p>
+                            <p>No procedure data available.</p>
                         {% endif %}
                     </div>
                 </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
 
-                <div class="submenu">
-                    <div class="submenu-header" onclick="toggleSubmenu('surgeries-menu-{{ loop.index }}')">Surgeries</div>
-                    <div id="surgeries-menu-{{ loop.index }}" class="submenu-content">
+        <!-- Surgeries (Top Right) -->
+        <div class="col-md-6 mb-4">
+            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#surgeries-menu" aria-expanded="false" aria-controls="surgeries-menu", style = "background-color: #0287CA">
+                Surgeries
+            </button>
+            <div id="surgeries-menu" class="collapse mb-3">
+                {% for name in names %}
+                {% if name != "Normal" %}
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <button class="btn btn-link text-decoration-none w-100 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#surgery-{{ loop.index }}" aria-expanded="false" aria-controls="surgery-{{ loop.index }}">
+                            {{ name }}
+                        </button>
+                    </div>
+                    <div id="surgery-{{ loop.index }}" class="collapse card-body">
                         {% if surgeries[name] %}
                             {% for surgery in surgeries[name] %}
-                            <p>{{surgery}}</p>
+                                <p>{{ surgery }}</p>
                             {% endfor %}
                         {% else %}
                             <p>No surgery data available.</p>
                         {% endif %}
                     </div>
                 </div>
-
-                <div class="submenu">
-                    <div class="submenu-header" onclick="toggleSubmenu('lifestyle-menu-{{ loop.index }}')">Lifestyle Changes</div>
-                    <div id="lifestyle-menu-{{ loop.index }}" class="submenu-content">
-                        {% if lifestyle[name] %}
-                            {% for lifestyle in lifestyle[name] %}
-                            <p>{{lifestyle}}</p>
-                            {% endfor %}
-                        {% else %}
-                            <p>No Lifestyle Changes available.</p>
-                        {% endif %}
-                    </div>
-                </div>
-
-                <div class="submenu">
-                    <div class="submenu-header" onclick="toggleSubmenu('labs-menu-{{ loop.index }}')">Labs</div>
-                    <div id="labs-menu-{{ loop.index }}" class="submenu-content">
-                        {% if lab[name] %}
-                            {% for lab in lab[name] %}
-                            <p>{{lab}}</p>
-                            {% endfor %}
-                        {% else %}
-                            <p>No Labs data available.</p>
-                        {% endif %}
-                    </div>
-                </div>
-
-
+                {% endif %}
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
+    <div class="row">
+        <!-- Lifestyle Changes (Bottom Left) -->
+        <div class="col-md-6 mb-4">
+            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#lifestyle-menu" aria-expanded="false" aria-controls="lifestyle-menu", style = "background-color: #0287CA" >
+                Lifestyle Changes
+            </button>
+            <div id="lifestyle-menu" class="collapse mb-3">
+                {% for name in names %}
+                {% if name != "Normal" %}
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <button class="btn btn-link text-decoration-none w-100 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#lifestyle-{{ loop.index }}" aria-expanded="false" aria-controls="lifestyle-{{ loop.index }}">
+                            {{ name }}
+                        </button>
+                    </div>
+                    <div id="lifestyle-{{ loop.index }}" class="collapse card-body">
+                        {% if lifestyle[name] %}
+                            {% for lifestyle_item in lifestyle[name] %}
+                                <p>{{ lifestyle_item }}</p>
+                            {% endfor %}
+                        {% else %}
+                            <p>No lifestyle changes data available.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
 
-        
-            // Disease Menu and Submenu Handling
-            function toggleMenu(menuId) {
-                const menu = document.getElementById(menuId);
-                menu.classList.toggle('show');
-            }
-        
-            function toggleSubmenu(submenuId) {
-                const submenu = document.getElementById(submenuId);
-                submenu.classList.toggle('show');
-            }
-        
-            // Event Listeners for Disease Menu and Submenus
-            const diseaseMenuHeaders = document.querySelectorAll('.menu-header');
-            diseaseMenuHeaders.forEach(header => {
-                header.addEventListener('click', function () {
-                    const menuId = this.nextElementSibling.id;
-                    toggleMenu(menuId);
-                });
-            });
-        
-            const submenuHeaders = document.querySelectorAll('.submenu-header');
-            submenuHeaders.forEach(submenuHeader => {
-                submenuHeader.addEventListener('click', function () {
-                    const submenuId = this.nextElementSibling.id;
-                    toggleSubmenu(submenuId);
-                });
-            });
-        });
-    </script>
-
+        <!-- Labs (Bottom Right) -->
+        <div class="col-md-6 mb-4">
+            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#labs-menu" aria-expanded="false" aria-controls="labs-menu", style = "background-color: #0287CA">
+                Labs
+            </button>
+            <div id="labs-menu" class="collapse">
+                {% for name in names %}
+                {% if name != "Normal" %}
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <button class="btn btn-link text-decoration-none w-100 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#lab-{{ loop.index }}" aria-expanded="false" aria-controls="lab-{{ loop.index }}">
+                            {{ name }}
+                        </button>
+                    </div>
+                    <div id="lab-{{ loop.index }}" class="collapse card-body">
+                        {% if lab[name] %}
+                            {% for lab_item in lab[name] %}
+                                <p>{{ lab_item }}</p>
+                            {% endfor %}
+                        {% else %}
+                            <p>No labs data available.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

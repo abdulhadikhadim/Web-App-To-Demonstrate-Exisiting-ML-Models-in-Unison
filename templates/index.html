@@ -1,215 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <title>Doctor App</title>
-  <style>
-    .scrollable-json {
-      max-height: 300px; /* Adjust the height as needed */
-      overflow-y: scroll;
-      border: 10px solid #ccc;
-      padding: 1px;
-      background-color: #161515ef;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor App</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <!-- Custom CSS -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+
+  
 </head>
-<body class="font-Poppins" bgcolor="black">
-  <!-- Header -->
-  <header>
-    <nav class="container flex items-center py-4 mt-4 sm:mt-12">
-      <ul class="hidden sm:flex flex-1 justify-between lg\:items-end gap-12 text-gold uppercase text-xs">
-        <li class="cursor-pointer font-bold text-center" style="font-size:50px;width:100%;">Disease Prediction System</li>
-      </ul>
-      <div class="flex sm:hidden flex-1 justify-end">
-        <i class="text-3xl fas fa-bars"></i>
-      </div>
-    </nav>
-  </header>
+<body>
 
-  <!-- Project Description -->
-  <section class="py-20 mt-20">
-    <div class="sm:w-3/4 lg:w-5/12 mx-auto px-2">
-      <form id="patientForm" action="/" method="POST">
-        <h1 class="text-3xl text-center text-gold">Enter Patient ID</h1>
-        <input class="center-button" type="text" id="PID" name="PID" placeholder="Enter patient's ID here" required>
-
-        <h1 class="text-3xl text-center text-gold">Enter Patient's Practice</h1>
-        <input class="center-button" type="text" id="PP" name="PP" placeholder="Enter patient's practice here" required>
-        
-        <button type="submit" class="bg-gold mt-4 px-6 py-2 rounded-full animate-pulse center-button move-below">Get Data</button>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <div class = "alert alert-success">
-            {% for message in messages %}
-                {{ message }}
-            {% endfor %}  
-        </div>
-        {% endif %}
-        {% endwith %}
-      </form>
+    <!-- Yellow Strip -->
+    <div class="yellow-strip">
+    <img src="static/imgs/header.jfif" alt="Logo">
+    <a> Prediction System </a>
     </div>
-  </section>
 
-  <section class="py-10 mt-10">
-    <div class="sm:w-3/4 lg:w-5/12 mx-auto px-2">
-      <div id="jsonData" class="hidden json-container">
-        <h2 class="text-2xl text-center text-gold">JSON Information</h2>
-        <a href="#" id="jsonLink" class="text-blue-500 underline">Click here to view the JSON data</a>
-        <div class="scrollable-json">
-          <pre id="jsonResult" class="hidden"></pre>
-        </div>
-        <button id="showResponse" type="button" class="bg-gold mt-4 px-6 py-2 rounded-full center-button move-below">Diagnosed Disease</button>
-      </div>
-    </div>
-  </section>
+    <!-- Header -->
+    <!-- <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container"> -->
+                <!-- If your other pages have a specific brand/logo here, include it -->
+                <!-- <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto"> -->
+                        <!-- Add more nav items if needed, consistent with other pages -->
+                    <!-- </ul>
+                </div>
+            </div>
+        </nav>
+    </header> -->
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const form = document.getElementById("patientForm");
-        const jsonResult = document.getElementById("jsonResult");
-        const jsonLink = document.getElementById("jsonLink");
+    <!-- Main Content -->
+    <main>
+        <section class="py-5">
+            <div class="container patient-details-section">
+                <form id="patientForm" action="/" method="POST" class="patient-details-form">
+                    <h1 class="text-center text-yellow mb-4">Enter Patient Details</h1>
+                    <div class="mb-3">
+                        <input class="form-control" type="text" id="PID" name="PID" placeholder="Enter patient's ID here" required>
+                    </div>
+                    <div class="mb-3">
+                        <input class="form-control" type="text" id="PP" name="PP" placeholder="Enter patient's practice here" required>
+                    </div>
+                    <button id="showResponse" type="button" class="btn btn-yellow mt-3">Diagnosed Disease</button>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <div class="alert alert-success mt-3">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                </form>
+            </div>
+        </section>
 
-        form.onsubmit = async function (e) {
-            e.preventDefault();
-
-            const formData = new FormData(form);
-            const response = await fetch('/', {
-                method: 'POST',
-                body: formData
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                document.getElementById("jsonData").classList.remove("hidden");
-                jsonResult.textContent = JSON.stringify(result, null, 2);
-                jsonLink.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(result, null, 2));
-
-                jsonLink.onclick = function () {
-                    jsonResult.classList.toggle("hidden");
-                };
-            }
-        };
-
-        document.getElementById("showResponse").onclick = function () {
-          
-          window.location.href = "/diagnose";  // Redirect to the diagnose page
-        };
-    });
-  </script>
-</section>
-
-</body>
-</html>
-
-
-  <!-- Hero -->
-  <section class="relative bg-black">
-    <div class="container flex flex-col-reverse lg:flex-row items-center gap-12 mt-14 lg:mt-28">
-      <!-- Content -->
-      <div class="flex flex-1 flex-col items-center lg:items-start">
-        <h2 class="text-gold text-3xl md:text-4 lg:text-5xl text-center lg:text-left mb-6">
-          An Explainable Disease Surveillance System For Early Prediction of Multiple Chronic Diseases
-        </h2>
-        <p class="text-white text-lg text-center lg:text-left mb-6">
-          Description
-        </p>
-        <div class="flex justify-center flex-wrap gap-6">
-          
-        </div>
-      </div>
-      <!-- Image -->
-      <div class="flex justify-center flex-1 mb-10 md:mb-16 lg:mb-0 z-10">
-        <img class="w-5/6 h-5/6 sm:w-3/4 sm:h-3/4 md:w-full md:h-full img3" src="./static/imgs/Chronic_Diseases.jpg" alt="" />
-      </div>
-    </div>
-    <section class="py-20 mt-20">
-      <!-- Heading -->
-      
-      <!-- Cards ---->
-      
-    </section>
-   
-  </section>
-
- 
-    <!-- Feature #1 -->
-    <div class="relative mt-20 lg:mt-24 bg-black">
-      <div class="container flex flex-col lg:flex-row items-center justify-center gap-x-24">
-        <!-- Image -->
-        <div class="flex flex-1 justify-center z-10 mb-10 lg:mb-0">
-          <img
-            class="w-5/6 h-5/6 sm:w-3/4 sm:h-3/4 md:w-full md:h-full img3"
-            src="./static/imgs/lab_testing.jpg"
-            alt=""
-          />
-        </div>
-        <!-- Content -->
-        <div class="flex flex-1 flex-col items-center lg:items-start">
-          <h1 class="text-3xl text-gold">A Hybrid AI and Rule-Based CDSS for Disease Diagnosis and Management Using Labs</h1>
-          <p class="text-white my-4 text-center lg:text-left sm:w-3/4 lg:w-full">
-            Description  
-          </p>
-          
-        </div>
-      </div>
-      
-    <!-- Feature #2 -->
-    <div class="relative mt-20 lg:mt-52">
-      <div class="container flex flex-col lg:flex-row-reverse items-center justify-center gap-x-24">
-        <!-- Image -->
-        <div class="flex flex-1 justify-center z-10 mb-10 lg:mb-0">
-          <img
-            class="w-5/6 h-5/6 sm:w-3/4 sm:h-3/4 md:w-full md:h-full img3"
-            src="./static/imgs/pattern_mining.png"
-            alt=""
-          />
-        </div>
-        <!-- Content -->
-        <div class="flex flex-1 flex-col items-center lg:items-start">
-          <h1 class="text-3xl text-gold">Mining Diseases Progression Patterns for Advanced Disease Surveillance</h1>
-          <p class="text-white my-4 text-center lg:text-left sm:w-3/4 lg:w-full">
-          </p>
+        <!-- <section class="py-5">
+          <div class="container">
+              <div id="jsonData" class="hidden">
+                  <h2 class="text-center text-yellow mb-3">Patient Information</h2>
+                  <a href="#" id="jsonLink" class="text-primary">Click here to view the Patient's Information</a>
+                  <div class="scrollable-json">
+                      <pre id="jsonResult" class="hidden"></pre>
+                  </div>
+                  <button id="showResponse" type="button" class="btn btn-yellow mt-3">Diagnosed Disease</button>
+              </div>
           </div>
-      </div>
-      
-    <!-- Feature #3 -->
-   
-    
-     
+      </section> -->
 
-       
-  </section>
+        <section class="py-5">
+            <div class="container">
+                <div class="feature-row">
+                    <div class="feature-card">
+                        <img src="static/imgs/Chronic_Diseases.jpg" alt="Chronic Disease" class="img-feature">
+                        <h3 class="feature-title text-yellow">An Explainable Disease Surveillance System For Early Prediction of Multiple Chronic Diseases</h3>
+                        <p class="feature-description">Description</p>
+                    </div>
+                    <div class="feature-card">
+                        <img src="static/imgs/lab_testing.jpg" alt="Lab Testing" class="img-feature">
+                        <h3 class="feature-title text-yellow">A Hybrid AI and Rule-Based CDSS for Disease Diagnosis and Management Using Labs</h3>
+                        <p class="feature-description">Description</p>
+                    </div>
+                    <div class="feature-card">
+                        <img src="static/imgs/pattern_mining.png" alt="Pattern Mining" class="img-feature">
+                        <h3 class="feature-title text-yellow">Mining Diseases Progression Patterns for Advanced Disease Surveillance</h3>
+                        <p class="feature-description">Description</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("patientForm");
+            const jsonResult = document.getElementById("jsonResult");
+            const jsonLink = document.getElementById("jsonLink");
 
-  <!-- Footer -->
-  <footer class="bg-black py-8">
-    <div class="container flex flex-col md:flex-row items-center">
-      <div class="flex flex-1 flex-wrap items-center justify-center md:justify-start gap-12">
-        <img src="./static/imgs/logo-bookmark-white.png" alt="" />
-        <ul class="flex text-white uppercase gap-12 text-xs">
-        </ul>
-      </div>
-      <div class="flex gap-10 mt-12 md:mt-0">
+            form.onsubmit = async function (e) {
+                e.preventDefault();
 
-        
-      </div>
-      
-    </div>
-    
-  </footer>
- 
-  <section class="bg-black text-white py-0 mt-0 ">
-    <div class="container bg-black">
-      <div class="sm:w-3/4 lg:w-max mx-auto bg-black">
-        
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
+                const formData = new FormData(form);
+                const response = await fetch('/', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    document.getElementById("jsonData").classList.remove("hidden");
+                    jsonResult.textContent = JSON.stringify(result, null, 2);
+                    jsonLink.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(result, null, 2));
+
+                    jsonLink.onclick = function () {
+                        jsonResult.classList.toggle("hidden");
+                    };
+                }
+            };
+
+            document.getElementById("showResponse").onclick = function () {
+                window.location.href = "/diagnose";
+            };
+        });
+    </script>
 </body>
 </html>

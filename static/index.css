@@ -1,0 +1,104 @@
+body {
+    background-color: #e2dede; /* Adjust to your site's background color */
+    color: #000; /* Adjust to your site's text color */
+    font-family: 'Your-Font-Family', sans-serif; /* Ensure the font matches your site */
+}
+.scrollable-json {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f8f9fa; /* Ensure it matches your theme */
+    color: #000; /* Ensure it matches your theme */
+    margin: 0 auto;
+    max-width: 80%; 
+}
+.text-yellow {
+    color: #0287CA; /* Adjust to match your theme */
+}
+.btn-yellow {
+    background-color: #0287CA; /* Adjust to match your theme */
+    color: #000; /* Adjust to match your theme */
+}
+.btn-yellow:hover {
+    background-color: #0287CA; /* Adjust to match your theme */
+}
+.hidden {
+    display: none;
+}
+.center-button {
+    display: block;
+    margin: 0 auto;
+}
+.img-feature {
+    width: 100%;
+    height: auto;
+}
+.feature-card {
+    text-align: center;
+    margin: 10px;
+}
+.feature-title {
+    font-size: 1.25rem;
+    margin-top: 10px;
+    /* color: #333; Ensure it matches your theme */
+}
+.feature-description {
+    font-size: 1rem;
+    color: #666; /* Ensure it matches your theme */
+}
+.feature-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}
+.feature-card {
+    flex: 1;
+    margin: 0 10px;
+    max-width: 33.33%;
+    box-sizing: border-box;
+}
+.patient-details-section {
+    background-color: #f8f9fa; /* Adjust to match your theme */
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+.patient-details-form h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+.patient-details-form input, .patient-details-form button {
+    margin-top: 0.5rem;
+}
+.yellow-strip {
+    display: flex;
+    background-color: #0287CA; /* Adjust to match your theme */
+    padding: 15px 20px;
+    text-align: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    align-items: center;
+    /* justify-content: space-between; */
+}
+.yellow-strip a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+    
+}
+.yellow-strip img {
+    height: 25px; /* Adjust this value to match your navigation bar height */
+    margin-right: 525px;
+}
+#jsonResult {
+    margin: 0 auto;
+    width: 100%;
+    white-space: pre-wrap;
+    overflow-x: auto;
+}

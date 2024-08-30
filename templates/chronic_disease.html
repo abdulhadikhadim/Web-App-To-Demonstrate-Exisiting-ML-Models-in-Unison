@@ -4,176 +4,190 @@
 
 {% block content %}
 
-    <div class="menu-container">
-        <!-- Disease Menu -->
-        <div class="menu">
-            {% for name in names %}
-            <div class="menu-header" onclick="toggleMenu('disease-menu-{{ loop.index }}')">{{name}}</div>
-            <div id="disease-menu-{{ loop.index }}" class="menu-content">
-                <div class="item">Probability : {{prob[name]}}</div>
-                <!-- Feature Vector Submenu -->
-                <div class="submenu">
-                    <div class="submenu-header" onclick="toggleSubmenu('feature-vector-menu-{{ loop.index }}')">Feature Vector</div>
-                    <div id="feature-vector-menu-{{ loop.index }}" class="submenu-content">
-                        {% if vector %}
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Feature</th>
-                                        <th>Value</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for key, value in vector[name].items() %}
-                                        <tr>
-                                            <td>{{ key }}</td>
-                                            <td>{{ value }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        {% else %}
-                            <p>No feature data available.</p>
-                        {% endif %}
-                    </div>
-                </div>
-                <!-- Important Features Submenu -->
-                <div class="submenu">
-                    <div class="submenu-header" onclick="toggleSubmenu('important-features-menu-{{ loop.index }}')">Important Features</div>
-                    <div id="important-features-menu-{{ loop.index }}" class="submenu-content">
-                            {% if imp %}
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Feature</th>
-                                            <th>Value</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for important in imp[name] %}
-                                            <tr>
-                                                <td>{{important["Feature"]}}</td>
-                                                <td>{{ important["Value"] }}</td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            {% else %}
-                                <p>No feature data available.</p>
-                            {% endif %}
-                    </div>
-                </div>
-                <!-- Risky Features Submenu -->
-                <div class="submenu">
-                    <div class="submenu-header" onclick="toggleSubmenu('risky-features-menu-{{ loop.index }}')">Risky Features</div>
-                    <div id="risky-features-menu-{{ loop.index }}" class="submenu-content">
-                            {% if risk %}
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Feature</th>
-                                            <th>Value</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for risky in risk[name] %}
-                                            <tr>
-                                                <td>{{ risky["Feature"] }}</td>
-                                                <td>{{ risky["Value"] }}</td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            {% else %}
-                                <p>No feature data available.</p>
-                            {% endif %}
-                    </div>
-                </div>
-<!-- Prediction Rules Submenu -->
-<div class="submenu">
-    <div class="submenu-header" onclick="toggleSubmenu('prediction-rules-menu-{{ loop.index }}')">Prediction Rules</div>
-    <div id="prediction-rules-menu-{{ loop.index }}" class="submenu-content">
-        {% for rule in rules[name] %}
-            <div class="submenu-item">
-                <!-- Header for each rule to toggle its content -->
-                 <hr>
-                <div class="rule-header" onclick="toggleRuleContent('rule-content-{{ loop.index }}-{{ loop.index }}')">
-                    Rule {{ loop.index }}
-                </div>
-                <!-- Content for each rule -->
-                <div id="rule-content-{{ loop.index }}-{{ loop.index }}" class="rule-content">
-                    <p>{{ rule.English }}</p>
-                    <p>Outcome: {{ rule["Predicate"]["Result"]["Outcome"] }}</p>
-                    <p>Probability: {{ rule["Predicate"]["Result"]["Probability"] }}</p>
-                    <p>Support: {{ rule["Support"] }}</p>
-                </div>
+    <!-- Tabs for Diseases -->
+    <div class="container mt-4">
+        <!-- Centered Buttons for switching tabs -->
+        <div class="d-flex justify-content-center mb-3">
+            <div class="btn-group" role="group" aria-label="Disease Tabs", style = "background-color: #fff">
+                {% for name in names %}
+                <button class="btn btn-outline-primary {% if loop.index == active_tab %}active{% endif %}" id="btn-{{ loop.index }}" onclick="showTab({{ loop.index }})">{{ name }}</button>
+                {% endfor %}
             </div>
-        {% endfor %}
-    </div>
-</div>
+        </div>
+
+        <!-- Tab content -->
+        <div class="tab-content mt-4">
+            {% for name in names %}
+            <div class="tab-pane {% if loop.index == active_tab %}show{% endif %}" id="tab-content-{{ loop.index }}" style="display: {% if loop.index == active_tab %}block{% else %}none{% endif %};">
+                <!-- Row for Accordion Sections -->
+                <div class="row">
+                    <!-- Feature Vector Section -->
+                    <div class="col-lg-4 mb-3">
+                        <div class="accordion" id="accordion-feature-vector-{{ loop.index }}">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-feature-vector-{{ loop.index }}">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-feature-vector-{{ loop.index }}" aria-expanded="false" aria-controls="collapse-feature-vector-{{ loop.index }}">
+                                        Feature Vector
+                                    </button>
+                                </h2>
+                                <div id="collapse-feature-vector-{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="heading-feature-vector-{{ loop.index }}" data-bs-parent="#accordion-feature-vector-{{ loop.index }}">
+                                    <div class="accordion-body">
+                                        {% if vector[name] %}
+                                            <table class="table table-striped" id="table-feature-vector-{{ loop.index }}">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Feature</th>
+                                                        <th>Value</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for key, value in vector[name].items() %}
+                                                        <tr>
+                                                            <td>{{ key }}</td>
+                                                            <td>{{ value }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        {% else %}
+                                            <p>No feature data available.</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Important Features Section -->
+                    <div class="col-lg-4 mb-3">
+                        <div class="accordion" id="accordion-important-features-{{ loop.index }}">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-important-features-{{ loop.index }}">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-important-features-{{ loop.index }}" aria-expanded="false" aria-controls="collapse-important-features-{{ loop.index }}">
+                                        Important Features
+                                    </button>
+                                </h2>
+                                <div id="collapse-important-features-{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="heading-important-features-{{ loop.index }}" data-bs-parent="#accordion-important-features-{{ loop.index }}">
+                                    <div class="accordion-body">
+                                        {% if imp[name] %}
+                                            <table class="table table-striped" id="table-important-features-{{ loop.index }}">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Feature</th>
+                                                        <th>Value</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for important in imp[name] %}
+                                                        <tr>
+                                                            <td>{{ important["Feature"] }}</td>
+                                                            <td>{{ important["Value"] }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        {% else %}
+                                            <p>No important features data available.</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Risky Features Section -->
+                    <div class="col-lg-4 mb-3">
+                        <div class="accordion" id="accordion-risky-features-{{ loop.index }}">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading-risky-features-{{ loop.index }}">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-risky-features-{{ loop.index }}" aria-expanded="false" aria-controls="collapse-risky-features-{{ loop.index }}">
+                                        Risky Features
+                                    </button>
+                                </h2>
+                                <div id="collapse-risky-features-{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="heading-risky-features-{{ loop.index }}" data-bs-parent="#accordion-risky-features-{{ loop.index }}">
+                                    <div class="accordion-body">
+                                        {% if risk[name] %}
+                                            <table class="table table-striped" id="table-risky-features-{{ loop.index }}">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Feature</th>
+                                                        <th>Value</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for risky in risk[name] %}
+                                                        <tr>
+                                                            <td>{{ risky["Feature"] }}</td>
+                                                            <td>{{ risky["Value"] }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        {% else %}
+                                            <p>No risky features data available.</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prediction Rules Button -->
+                <button class="btn btn-primary mt-3" type="button" data-bs-toggle="modal" data-bs-target="#rules-modal-{{ loop.index }}">
+                    Show Prediction Rules
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="rules-modal-{{ loop.index }}" tabindex="-1" aria-labelledby="rulesModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="rulesModalLabel">Prediction Rules</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {% for rule in rules[name] %}
+                                    <div class="rule-item mb-2">
+                                        <hr>
+                                        <div class="rule-header">
+                                            Rule {{ loop.index }}
+                                        </div>
+                                        <div class="rule-content">
+                                            <p>{{ rule.English }}</p>
+                                            <p>Outcome: {{ rule["Predicate"]["Result"]["Outcome"] }}</p>
+                                            <p>Probability: {{ rule["Predicate"]["Result"]["Probability"] }}</p>
+                                            <p>Support: {{ rule["Support"] }}</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             {% endfor %}
         </div>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // General Collapsible Menu Handling
-            const collapsibles = document.querySelectorAll('.collapsible-menu');
-        
-            collapsibles.forEach(button => {
-                button.addEventListener('click', function () {
-                    this.classList.toggle('active');
-                    const content = this.nextElementSibling;
-        
-                    if (content.style.display === 'block') {
-                        content.style.display = 'none';
-                    } else {
-                        content.style.display = 'block';
-                    }
-                });
+        function showTab(tabIndex) {
+            document.querySelectorAll('.tab-pane').forEach((pane, index) => {
+                pane.style.display = index === tabIndex - 1 ? 'block' : 'none';
             });
-        
-            // Disease Menu and Submenu Handling
-            function toggleMenu(menuId) {
-                const menu = document.getElementById(menuId);
-                menu.classList.toggle('show');
-            }
-        
-            function toggleSubmenu(submenuId) {
-                const submenu = document.getElementById(submenuId);
-                submenu.classList.toggle('show');
-            }
-        
-            function toggleRuleContent(ruleContentId) {
-                const ruleContent = document.getElementById(ruleContentId);
-                ruleContent.classList.toggle('show');
-            }
-        
-            // Event Listeners for Disease Menu and Submenus
-            const diseaseMenuHeaders = document.querySelectorAll('.menu-header');
-            diseaseMenuHeaders.forEach(diseaseMenuHeader => {
-                diseaseMenuHeader.addEventListener('click', function () {
-                    const menuId = this.nextElementSibling.id;
-                    toggleMenu(menuId);
-                });
+
+            document.querySelectorAll('.btn-group .btn').forEach((button, index) => {
+                button.classList.toggle('active', index === tabIndex - 1);
             });
-        
-            const submenuHeaders = document.querySelectorAll('.submenu-header');
-            submenuHeaders.forEach(submenuHeader => {
-                submenuHeader.addEventListener('click', function () {
-                    const submenuId = this.nextElementSibling.id;
-                    toggleSubmenu(submenuId);
-                });
+
+            // Reset all accordions to collapsed state
+            document.querySelectorAll('.accordion-button').forEach(button => {
+                button.classList.add('collapsed');
             });
-        
-            const ruleHeaders = document.querySelectorAll('.rule-header');
-            ruleHeaders.forEach(ruleHeader => {
-                ruleHeader.addEventListener('click', function () {
-                    const ruleContentId = this.nextElementSibling.id;
-                    toggleRuleContent(ruleContentId);
-                });
+            document.querySelectorAll('.accordion-collapse').forEach(collapse => {
+                collapse.classList.remove('show');
             });
-        });
+        }
     </script>
 {% endblock %}
