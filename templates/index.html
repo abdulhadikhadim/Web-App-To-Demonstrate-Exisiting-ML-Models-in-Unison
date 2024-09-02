@@ -52,7 +52,7 @@
                     <div class="mb-3">
                         <input class="form-control" type="text" id="PP" name="PP" placeholder="Enter patient's practice here" required>
                     </div>
-                    <button id="showResponse" type="button" class="btn btn-yellow mt-3">Diagnosed Disease</button>
+                    <button type="submit" class="btn btn-yellow mt-3">Get Data</button>
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
                     <div class="alert alert-success mt-3">
@@ -63,6 +63,14 @@
                     {% endif %}
                     {% endwith %}
                 </form>
+                <div id="jsonData" class="hidden json-container">
+                    <h2 class="text-2xl text-center text-gold">JSON Information</h2>
+                    <a href="#" id="jsonLink" class="text-blue-500 underline">Click here to view the JSON data</a>
+                    <div class="scrollable-json">
+                        <pre id="jsonResult" class="hidden"></pre>
+                    </div>
+                    <button id="diagnoseButton" type="button" class="btn btn-yellow mt-3">Diagnosed Disease</button>
+                </div>
             </div>
         </section>
 
@@ -109,30 +117,33 @@
             const form = document.getElementById("patientForm");
             const jsonResult = document.getElementById("jsonResult");
             const jsonLink = document.getElementById("jsonLink");
-
+            const jsonDataDiv = document.getElementById("jsonData");
+    
             form.onsubmit = async function (e) {
                 e.preventDefault();
-
+    
                 const formData = new FormData(form);
                 const response = await fetch('/', {
                     method: 'POST',
                     body: formData
                 });
-
+    
                 if (response.ok) {
                     const result = await response.json();
-                    document.getElementById("jsonData").classList.remove("hidden");
+                    jsonDataDiv.classList.remove("hidden");
                     jsonResult.textContent = JSON.stringify(result, null, 2);
                     jsonLink.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(result, null, 2));
-
+    
                     jsonLink.onclick = function () {
                         jsonResult.classList.toggle("hidden");
                     };
+                } else {
+                    console.error("Failed to fetch data");
                 }
             };
-
-            document.getElementById("showResponse").onclick = function () {
-                window.location.href = "/diagnose";
+    
+            document.getElementById("diagnoseButton").onclick = function () {
+                window.location.href = "/diagnose";  // Redirect to the diagnose page
             };
         });
     </script>

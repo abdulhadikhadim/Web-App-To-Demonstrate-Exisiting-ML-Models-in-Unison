@@ -1,28 +1,30 @@
-.accordion-button::after {
-    content: "";
+.container {
+    display: flex;
+    flex-direction: row;
 }
 
-.accordion-button:not(.collapsed) {
-    color: #0d6efd;
-    background-color: #e9ecef;
+.left-pane {
+    flex: 1;
+    margin-right: 20px;
 }
 
-.accordion-body {
-    padding: 1rem;
+.right-pane {
+    flex: 3;
 }
 
-.rule-content {
-    display: none;
+.btn-group-vertical {
+    width: 100%;
 }
 
-.rule-content.show {
-    display: block;
+.tab-content {
+    width: 100%;
 }
 
-.rule-header {
-    cursor: pointer;
+.tab-pane {
+    transition: display 0.3s ease-in-out;
+    padding: 0 15px;
 }
 
-.margin-side{
-    margin-left: 20;
+.accordion-item {
+    margin-bottom: 20px;
 }

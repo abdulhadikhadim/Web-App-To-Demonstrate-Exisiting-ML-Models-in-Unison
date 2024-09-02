@@ -60,6 +60,7 @@ body {
     transition: transform 0.3s ease;
     transform: translateX(-100%); /* Sidebar is collapsed by default */
     margin-top: 0px; /* Ensure sidebar does not overlap with top navigation bar */
+    z-index: 1001;
 }
 
 .sidebar.expanded {
@@ -90,8 +91,9 @@ body {
 
 .main-content {
     margin-top: 20px;
-    padding: 20px;
+    padding-top: 20px;
     transition: margin-left 0.3s ease;
+
 }
 
 .main-content.expanded {
@@ -142,4 +144,21 @@ body {
 .plot-container {
     max-width: 100%;
     overflow: auto;
+}
+
+/* Add this to your CSS file or inside <style> tag */
+.procedure-item {
+    margin-bottom: 15px; /* Adjust this value as needed */
+}
+
+/* From Abdul hadi */
+/* Adjusting right-pane to make space for sidebar */
+.right-pane {
+    margin-left: 80px; /* Move content to the right, accounting for sidebar width + some padding */
+    padding-right: 60px; /* Optional: add padding to the right side */
+}
+
+/* Adjusting container to have full width minus sidebar */
+.container {
+    max-width: calc(100%); /* Full width minus sidebar width + some padding */
 }

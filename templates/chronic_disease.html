@@ -3,34 +3,42 @@
 {% block title %}Chronic Diseases{% endblock %}
 
 {% block content %}
-
-    <!-- Tabs for Diseases -->
-    <div class="container mt-4">
-        <!-- Centered Buttons for switching tabs -->
+<div class="container mt-4">
+    <!-- Left Pane -->
+    <div class="left-pane">
         <div class="d-flex justify-content-center mb-3">
-            <div class="btn-group" role="group" aria-label="Disease Tabs", style = "background-color: #fff">
-                {% for name in names %}
-                <button class="btn btn-outline-primary {% if loop.index == active_tab %}active{% endif %}" id="btn-{{ loop.index }}" onclick="showTab({{ loop.index }})">{{ name }}</button>
-                {% endfor %}
+            <div class="btn-group-vertical" role="group" aria-label="Disease Tabs">
+                {% if names %}
+                    {% for name in names %}
+                        {% if name %}
+                            <button class="btn btn-outline-primary {% if loop.index == active_tab or loop.index == 1 %}active{% endif %}" id="btn-{{ loop.index }}" onclick="showTab({{ loop.index }})">{{ name }} ({{ prob[name] }})</button>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-success text-center" role="alert" style="font-size: 1.5rem; font-weight: bold;">
+                        The Patient has no chronic disease!
+                    </div>
+                {% endif %}
             </div>
         </div>
+    </div>
 
-        <!-- Tab content -->
+    <!-- Right Pane -->
+    <div class="right-pane">
         <div class="tab-content mt-4">
             {% for name in names %}
-            <div class="tab-pane {% if loop.index == active_tab %}show{% endif %}" id="tab-content-{{ loop.index }}" style="display: {% if loop.index == active_tab %}block{% else %}none{% endif %};">
-                <!-- Row for Accordion Sections -->
+            <div class="tab-pane {% if loop.index == active_tab or loop.index == 1 %}show{% endif %}" id="tab-content-{{ loop.index }}" style="display: {% if loop.index == active_tab or loop.index == 1 %}block{% else %}none{% endif %};">
                 <div class="row">
                     <!-- Feature Vector Section -->
-                    <div class="col-lg-4 mb-3">
+                    <div class="col-lg-12 mb-3">
                         <div class="accordion" id="accordion-feature-vector-{{ loop.index }}">
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="heading-feature-vector-{{ loop.index }}">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-feature-vector-{{ loop.index }}" aria-expanded="false" aria-controls="collapse-feature-vector-{{ loop.index }}">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-feature-vector-{{ loop.index }}" aria-expanded="true" aria-controls="collapse-feature-vector-{{ loop.index }}">
                                         Feature Vector
                                     </button>
                                 </h2>
-                                <div id="collapse-feature-vector-{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="heading-feature-vector-{{ loop.index }}" data-bs-parent="#accordion-feature-vector-{{ loop.index }}">
+                                <div id="collapse-feature-vector-{{ loop.index }}" class="accordion-collapse collapse show" aria-labelledby="heading-feature-vector-{{ loop.index }}" data-bs-parent="#accordion-feature-vector-{{ loop.index }}">
                                     <div class="accordion-body">
                                         {% if vector[name] %}
                                             <table class="table table-striped" id="table-feature-vector-{{ loop.index }}">
@@ -59,15 +67,15 @@
                     </div>
 
                     <!-- Important Features Section -->
-                    <div class="col-lg-4 mb-3">
+                    <div class="col-lg-12 mb-3">
                         <div class="accordion" id="accordion-important-features-{{ loop.index }}">
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="heading-important-features-{{ loop.index }}">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-important-features-{{ loop.index }}" aria-expanded="false" aria-controls="collapse-important-features-{{ loop.index }}">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-important-features-{{ loop.index }}" aria-expanded="true" aria-controls="collapse-important-features-{{ loop.index }}">
                                         Important Features
                                     </button>
                                 </h2>
-                                <div id="collapse-important-features-{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="heading-important-features-{{ loop.index }}" data-bs-parent="#accordion-important-features-{{ loop.index }}">
+                                <div id="collapse-important-features-{{ loop.index }}" class="accordion-collapse collapse show" aria-labelledby="heading-important-features-{{ loop.index }}" data-bs-parent="#accordion-important-features-{{ loop.index }}">
                                     <div class="accordion-body">
                                         {% if imp[name] %}
                                             <table class="table table-striped" id="table-important-features-{{ loop.index }}">
@@ -81,7 +89,7 @@
                                                     {% for important in imp[name] %}
                                                         <tr>
                                                             <td>{{ important["Feature"] }}</td>
-                                                            <td>{{ important["Value"] }}</td>
+                                                            <td>{{ important["Value"]|float|round(4) }}</td>
                                                         </tr>
                                                     {% endfor %}
                                                 </tbody>
@@ -96,15 +104,15 @@
                     </div>
 
                     <!-- Risky Features Section -->
-                    <div class="col-lg-4 mb-3">
+                    <div class="col-lg-12 mb-3">
                         <div class="accordion" id="accordion-risky-features-{{ loop.index }}">
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="heading-risky-features-{{ loop.index }}">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-risky-features-{{ loop.index }}" aria-expanded="false" aria-controls="collapse-risky-features-{{ loop.index }}">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-risky-features-{{ loop.index }}" aria-expanded="true" aria-controls="collapse-risky-features-{{ loop.index }}">
                                         Risky Features
                                     </button>
                                 </h2>
-                                <div id="collapse-risky-features-{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="heading-risky-features-{{ loop.index }}" data-bs-parent="#accordion-risky-features-{{ loop.index }}">
+                                <div id="collapse-risky-features-{{ loop.index }}" class="accordion-collapse collapse show" aria-labelledby="heading-risky-features-{{ loop.index }}" data-bs-parent="#accordion-risky-features-{{ loop.index }}">
                                     <div class="accordion-body">
                                         {% if risk[name] %}
                                             <table class="table table-striped" id="table-risky-features-{{ loop.index }}">
@@ -118,7 +126,7 @@
                                                     {% for risky in risk[name] %}
                                                         <tr>
                                                             <td>{{ risky["Feature"] }}</td>
-                                                            <td>{{ risky["Value"] }}</td>
+                                                            <td>{{ risky["Value"]|float|round(3) }}</td>
                                                         </tr>
                                                     {% endfor %}
                                                 </tbody>
@@ -165,29 +173,27 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             {% endfor %}
         </div>
     </div>
+</div>
 
-    <script>
-        function showTab(tabIndex) {
-            document.querySelectorAll('.tab-pane').forEach((pane, index) => {
-                pane.style.display = index === tabIndex - 1 ? 'block' : 'none';
-            });
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        showTab(1); // Automatically show the first tab when the page loads
+    });
 
-            document.querySelectorAll('.btn-group .btn').forEach((button, index) => {
-                button.classList.toggle('active', index === tabIndex - 1);
-            });
+    function showTab(tabIndex) {
+        document.querySelectorAll('.tab-pane').forEach((pane, index) => {
+            pane.style.display = index === tabIndex - 1 ? 'block' : 'none';
+            pane.classList.toggle('show', index === tabIndex - 1);
+        });
 
-            // Reset all accordions to collapsed state
-            document.querySelectorAll('.accordion-button').forEach(button => {
-                button.classList.add('collapsed');
-            });
-            document.querySelectorAll('.accordion-collapse').forEach(collapse => {
-                collapse.classList.remove('show');
-            });
-        }
-    </script>
+        document.querySelectorAll('.btn-group-vertical .btn').forEach((button, index) => {
+            button.classList.toggle('active', index === tabIndex - 1);
+        });
+    }
+</script>
 {% endblock %}
+

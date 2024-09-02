@@ -64,14 +64,25 @@ def response_from_api():
     diagnosis = response.json()
     return render_template("response.html", diagnosis = diagnosis)
 
+# @app.route("/chronic")
+# def chronic_diagnosis():
+#     global diagnosis
+#     global patient1
+#     # prediction = ChronicDiseasePred(diagnosis["chronic_diseases_response"])
+#     names, prob, vector, imp_features, risky, rules = patient1.get_chronic_pred()
+#     return render_template("chronic_disease.html", names=names, prob=prob, imp = imp_features, vector = vector, risk = risky, data=patient1.data, rules = rules)
+
 @app.route("/chronic")
 def chronic_diagnosis():
     global diagnosis
     global patient1
-    # prediction = ChronicDiseasePred(diagnosis["chronic_diseases_response"])
     names, prob, vector, imp_features, risky, rules = patient1.get_chronic_pred()
 
-    return render_template("chronic_disease.html", names=names, prob=prob, imp = imp_features, vector = vector, risk = risky, data=patient1.data, rules = rules)
+    # Sort the names list based on the probability in descending order
+    sorted_names = sorted(names, key=lambda x: prob[x], reverse=True)
+
+    return render_template("chronic_disease.html", names=sorted_names, prob=prob, imp=imp_features, vector=vector, risk=risky, data=patient1.data, rules=rules)
+
 
 @app.route("/medlabs")
 def medlabs_response():
@@ -83,7 +94,7 @@ def medlabs_response():
 @app.route("/pattern")
 def pattern_recognition():
     global patient1
-    print(patient1.chronic_pred.trajectory)
+    # print(patient1.chronic_pred.trajectory)
     fig = patient1.chronic_pred.sanky_plot_generator()
     plot_html = fig.to_html(full_html=False)
     return render_template("pattern_recognition.html", html = plot_html,data = patient1.data)
@@ -92,9 +103,11 @@ def pattern_recognition():
 def recommendations_response():
     global patient1
     global diagnosis
+    # names, probs, vector, imp_features, risky, rules = patient1.get_chronic_pred()
     names, procedures, surgeries, labs, lifestyle_changes = patient1.get_recommendations()
+    full_names = [DISEASE_MAPPINGS.get(name, name) for name in names]
     return render_template("Recommendation.html", names=names, procedure=procedures, surgeries=surgeries, lab=labs, lifestyle=lifestyle_changes, data=patient1.data)
 
 if __name__ == '__main__':    
-    app.run(host = "172.16.105.138", debug=True, port=5000)
+    app.run(host = "172.16.105.134", debug=True, port=5000)
 
