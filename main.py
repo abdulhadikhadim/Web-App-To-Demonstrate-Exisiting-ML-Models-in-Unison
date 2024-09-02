@@ -64,14 +64,25 @@ def response_from_api():
     diagnosis = response.json()
     return render_template("response.html", diagnosis = diagnosis)
 
+# @app.route("/chronic")
+# def chronic_diagnosis():
+#     global diagnosis
+#     global patient1
+#     # prediction = ChronicDiseasePred(diagnosis["chronic_diseases_response"])
+#     names, prob, vector, imp_features, risky, rules = patient1.get_chronic_pred()
+#     return render_template("chronic_disease.html", names=names, prob=prob, imp = imp_features, vector = vector, risk = risky, data=patient1.data, rules = rules)
+
 @app.route("/chronic")
 def chronic_diagnosis():
     global diagnosis
     global patient1
-    # prediction = ChronicDiseasePred(diagnosis["chronic_diseases_response"])
     names, prob, vector, imp_features, risky, rules = patient1.get_chronic_pred()
 
-    return render_template("chronic_disease.html", names=names, prob=prob, imp = imp_features, vector = vector, risk = risky, data=patient1.data, rules = rules)
+    # Sort the names list based on the probability in descending order
+    sorted_names = sorted(names, key=lambda x: prob[x], reverse=True)
+
+    return render_template("chronic_disease.html", names=sorted_names, prob=prob, imp=imp_features, vector=vector, risk=risky, data=patient1.data, rules=rules)
+
 
 @app.route("/medlabs")
 def medlabs_response():
