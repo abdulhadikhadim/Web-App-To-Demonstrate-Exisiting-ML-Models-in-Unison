@@ -4,26 +4,30 @@
 
 {% block content %}
 <div class="container mt-5">
-    <div class="row">
-        <!-- Procedures (Top Left) -->
-        <div class="col-md-6 mb-4">
-            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#procedures-menu" aria-expanded="false" aria-controls="procedures-menu", style = "background-color: #0287CA">
+    <div class="row mb-4">
+        <!-- Procedures -->
+        <div class="col-12">
+            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#procedures-menu" aria-expanded="true" aria-controls="procedures-menu" style="background-color: #0287CA">
                 Procedures
             </button>
-            <div id="procedures-menu" class="collapse mb-3">
+            <div id="procedures-menu" class="collapse show mb-3">
+                
                 {% for name in names %}
                 {% if name != "Normal" %}
                 <div class="card mb-2">
                     <div class="card-header">
-                        <button class="btn btn-link text-decoration-none w-100 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#procedure-{{ loop.index }}" aria-expanded="false" aria-controls="procedure-{{ loop.index }}">
+                        <h5 class="mb-0 d-flex justify-content-between align-items-center">
                             {{ name }}
-                        </button>
+                            <span class="badge bg-primary">{{ prob[name] if name in prob else 'N/A' }}</span>
+                        </h5>
                     </div>
-                    <div id="procedure-{{ loop.index }}" class="collapse card-body">
+                    <div class="card-body">
                         {% if procedure[name] %}
-                            {% for procedure_item in procedure[name] %}
-                                <p>{{ procedure_item }}</p>
-                            {% endfor %}
+                            <ul class="list-unstyled">
+                                {% for procedure_item in procedure[name] %}
+                                    <li>{{ procedure_item }}</li>
+                                {% endfor %}
+                            </ul>
                         {% else %}
                             <p>No procedure data available.</p>
                         {% endif %}
@@ -33,26 +37,31 @@
                 {% endfor %}
             </div>
         </div>
+    </div>
 
-        <!-- Surgeries (Top Right) -->
-        <div class="col-md-6 mb-4">
-            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#surgeries-menu" aria-expanded="false" aria-controls="surgeries-menu", style = "background-color: #0287CA">
+    <div class="row mb-4">
+        <!-- Surgeries -->
+        <div class="col-12">
+            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#surgeries-menu" aria-expanded="true" aria-controls="surgeries-menu" style="background-color: #0287CA">
                 Surgeries
             </button>
-            <div id="surgeries-menu" class="collapse mb-3">
+            <div id="surgeries-menu" class="collapse show mb-3">
                 {% for name in names %}
                 {% if name != "Normal" %}
                 <div class="card mb-2">
                     <div class="card-header">
-                        <button class="btn btn-link text-decoration-none w-100 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#surgery-{{ loop.index }}" aria-expanded="false" aria-controls="surgery-{{ loop.index }}">
+                        <h5 class="mb-0 d-flex justify-content-between align-items-center">
                             {{ name }}
-                        </button>
+                            <span class="badge bg-primary">{{ prob[name] if name in prob else 'N/A' }}</span>
+                        </h5>
                     </div>
-                    <div id="surgery-{{ loop.index }}" class="collapse card-body">
+                    <div class="card-body">
                         {% if surgeries[name] %}
-                            {% for surgery in surgeries[name] %}
-                                <p>{{ surgery }}</p>
-                            {% endfor %}
+                            <ul class="list-unstyled">
+                                {% for surgery in surgeries[name] %}
+                                    <li>{{ surgery }}</li>
+                                {% endfor %}
+                            </ul>
                         {% else %}
                             <p>No surgery data available.</p>
                         {% endif %}
@@ -64,26 +73,29 @@
         </div>
     </div>
 
-    <div class="row">
-        <!-- Lifestyle Changes (Bottom Left) -->
-        <div class="col-md-6 mb-4">
-            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#lifestyle-menu" aria-expanded="false" aria-controls="lifestyle-menu", style = "background-color: #0287CA" >
+    <div class="row mb-4">
+        <!-- Lifestyle Changes -->
+        <div class="col-12">
+            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#lifestyle-menu" aria-expanded="true" aria-controls="lifestyle-menu" style="background-color: #0287CA">
                 Lifestyle Changes
             </button>
-            <div id="lifestyle-menu" class="collapse mb-3">
+            <div id="lifestyle-menu" class="collapse show mb-3">
                 {% for name in names %}
                 {% if name != "Normal" %}
                 <div class="card mb-2">
                     <div class="card-header">
-                        <button class="btn btn-link text-decoration-none w-100 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#lifestyle-{{ loop.index }}" aria-expanded="false" aria-controls="lifestyle-{{ loop.index }}">
+                        <h5 class="mb-0 d-flex justify-content-between align-items-center">
                             {{ name }}
-                        </button>
+                            <span class="badge bg-primary">{{ prob[name] if name in prob else 'N/A' }}</span>
+                        </h5>
                     </div>
-                    <div id="lifestyle-{{ loop.index }}" class="collapse card-body">
+                    <div class="card-body">
                         {% if lifestyle[name] %}
-                            {% for lifestyle_item in lifestyle[name] %}
-                                <p>{{ lifestyle_item }}</p>
-                            {% endfor %}
+                            <ul class="list-unstyled">
+                                {% for lifestyle_item in lifestyle[name] %}
+                                    <li>{{ lifestyle_item }}</li>
+                                {% endfor %}
+                            </ul>
                         {% else %}
                             <p>No lifestyle changes data available.</p>
                         {% endif %}
@@ -93,26 +105,31 @@
                 {% endfor %}
             </div>
         </div>
+    </div>
 
-        <!-- Labs (Bottom Right) -->
-        <div class="col-md-6 mb-4">
-            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#labs-menu" aria-expanded="false" aria-controls="labs-menu", style = "background-color: #0287CA">
+    <div class="row mb-4">
+        <!-- Labs -->
+        <div class="col-12">
+            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#labs-menu" aria-expanded="true" aria-controls="labs-menu" style="background-color: #0287CA">
                 Labs
             </button>
-            <div id="labs-menu" class="collapse">
+            <div id="labs-menu" class="collapse show mb-3">
                 {% for name in names %}
                 {% if name != "Normal" %}
                 <div class="card mb-2">
                     <div class="card-header">
-                        <button class="btn btn-link text-decoration-none w-100 text-start" type="button" data-bs-toggle="collapse" data-bs-target="#lab-{{ loop.index }}" aria-expanded="false" aria-controls="lab-{{ loop.index }}">
+                        <h5 class="mb-0 d-flex justify-content-between align-items-center">
                             {{ name }}
-                        </button>
+                            <span class="badge bg-primary">{{ prob[name] if name in prob else 'N/A' }}</span>
+                        </h5>
                     </div>
-                    <div id="lab-{{ loop.index }}" class="collapse card-body">
+                    <div class="card-body">
                         {% if lab[name] %}
-                            {% for lab_item in lab[name] %}
-                                <p>{{ lab_item }}</p>
-                            {% endfor %}
+                            <ul class="list-unstyled">
+                                {% for lab_item in lab[name] %}
+                                    <li>{{ lab_item }}</li>
+                                {% endfor %}
+                            </ul>
                         {% else %}
                             <p>No labs data available.</p>
                         {% endif %}

@@ -143,3 +143,8 @@ body {
     max-width: 100%;
     overflow: auto;
 }
+
+/* Add this to your CSS file or inside <style> tag */
+.procedure-item {
+    margin-bottom: 15px; /* Adjust this value as needed */
+}

@@ -83,7 +83,7 @@ def medlabs_response():
 @app.route("/pattern")
 def pattern_recognition():
     global patient1
-    print(patient1.chronic_pred.trajectory)
+    # print(patient1.chronic_pred.trajectory)
     fig = patient1.chronic_pred.sanky_plot_generator()
     plot_html = fig.to_html(full_html=False)
     return render_template("pattern_recognition.html", html = plot_html,data = patient1.data)
@@ -92,9 +92,11 @@ def pattern_recognition():
 def recommendations_response():
     global patient1
     global diagnosis
+    # names, probs, vector, imp_features, risky, rules = patient1.get_chronic_pred()
     names, procedures, surgeries, labs, lifestyle_changes = patient1.get_recommendations()
+    full_names = [DISEASE_MAPPINGS.get(name, name) for name in names]
     return render_template("Recommendation.html", names=names, procedure=procedures, surgeries=surgeries, lab=labs, lifestyle=lifestyle_changes, data=patient1.data)
 
 if __name__ == '__main__':    
-    app.run(debug=True, port=5000)
+    app.run(host = "172.16.105.134", debug=True, port=5000)
 
