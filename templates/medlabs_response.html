@@ -14,7 +14,7 @@
         {% for name in names %}
         <div class="col-md-12 mb-3">
             <!-- Disease Name Button -->
-            <button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#disease-{{ loop.index }}" aria-expanded="true" aria-controls="disease-{{ loop.index }}" background-color="#0287CA">
+            <button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#disease-{{ loop.index }}" aria-expanded="true" aria-controls="disease-{{ loop.index }}" style="background-color: #0287CA">
                 {{ name }} - Probability: {{ probs[name] }}
             </button>
             <!-- Feature Importance Dropdown -->
