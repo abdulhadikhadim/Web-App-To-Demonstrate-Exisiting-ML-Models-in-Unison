@@ -6,12 +6,12 @@ from DiseasePredictor import DiseasePredictor
 class MedLabPredictor(DiseasePredictor):
     confirmed_diag: Dict[str, Any] = field(default_factory=dict)
 
-    def top_four_selector(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def select_top_four(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
         sorted_responses = sorted(data.get("likely_diag", []), key=lambda x: x.get('probability', 0), reverse=True)
         return sorted_responses[:4]
 
     def set_values(self, data: Dict[str, Any]) -> None:
-        diagnosis = self.top_four_selector(data)
+        diagnosis = self.select_top_four(data)
         for disease in diagnosis:
             name = disease["disease_name"]
             if name not in self.names:

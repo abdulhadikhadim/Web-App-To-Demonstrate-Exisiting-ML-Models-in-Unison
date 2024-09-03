@@ -66,7 +66,7 @@ class Patient:
             self._data.pop(key, None)
         return self._data
     
-    def recommendations_filter(self):
+    def filter_recommendations(self):
         names = []
         for name in self.chronic_pred.names:
             if self.chronic_pred.prob[name]>=0.5:
@@ -79,7 +79,7 @@ class Patient:
                     names.append(DISEASE_MAPPINGS[name])
         return names   
     
-    def diagnosis_sorter(self):
+    def sort_diagnosis(self):
         def parse_date(date_str):
             try: 
                 return datetime.strptime(date_str, '%Y-%m-%d')
@@ -89,13 +89,13 @@ class Patient:
         sorted_diagnoses = sorted(self.data["Diagnoses"], key=lambda x: parse_date(x.get('Date', '')), reverse=True)
         self.data["Diagnoses"] = sorted_diagnoses
 
-    def patient_data_collector(self, data):
+    def collect_patient_data(self, data):
         self.chronic_pred = ChronicPredictor()
         self.chronic_pred.set_values(data["chronic_diseases_response"])
         self.medlab_pred = MedLabPredictor()
         self.medlab_pred.set_values(data["medlabs_response"])
         self.recommendations = Recommendations()
-        filtered_names = self.recommendations_filter()
+        filtered_names = self.filter_recommendations()
         self.recommendations.set_values(filtered_names, data["recommendations"])
     
     def get_chronic_pred(self):

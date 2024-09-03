@@ -4,10 +4,6 @@ import json
 import requests
 from patient import Patient
 from starter import MongoFetcher
-from chronic import ChronicPredictor
-from medlabs import MedLabPredictor
-from recommendations import Recommendations
-from collections import defaultdict, namedtuple
 import os
 
 with open("static\disease_name_mapping.json", "r") as file:
@@ -92,8 +88,8 @@ class FlaskApp:
     def handle_diagnose(self):
         response = requests.post(API_URL, json=self.patient1.data)
         self.diagnosis = response.json()
-        self.patient1.patient_data_collector(self.diagnosis)
-        self.patient1.diagnosis_sorter()
+        self.patient1.collect_patient_data(self.diagnosis)
+        self.patient1.sort_diagnosis()
         return render_template('diagnose.html', data=self.patient1.data)
 
     def handle_chronic_diagnosis(self):
@@ -107,7 +103,7 @@ class FlaskApp:
         return render_template("medlabs_response.html", names=names, probs=probs, feature_imp=feature_imp, confirmed=confirmed, data=self.patient1.data)
 
     def handle_pattern_recognition(self):
-        fig = self.patient1.chronic_pred.sankey_plot_generator()
+        fig = self.patient1.chronic_pred.generate_sankey_plot()
         plot_html = fig.to_html(full_html=False) if fig else None
         return render_template("pattern_recognition.html", html=plot_html, data=self.patient1.data)
 

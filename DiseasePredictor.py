@@ -8,5 +8,9 @@ class DiseasePredictor:
     prob: Dict[str, float] = field(default_factory=dict)
     imp_features: Dict[str, Any] = field(default_factory=dict)
 
+    def set_values(self, data):
+        self.names = data["names"]
+        self.prob = data["prob"]
+        self.imp_features = data["imp_features"]
 
 
