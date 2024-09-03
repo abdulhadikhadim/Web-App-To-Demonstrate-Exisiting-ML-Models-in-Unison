@@ -17,15 +17,3 @@ class MongoFetcher:
         pretty_json = json.dumps(document, indent=4, sort_keys=False, default=str)
         # print(pretty_json)
         return pretty_json
-
-
-## Example list of patientid and practice pairs
-
-# patient_practice_pairs = [
-#     {'patientid': '60555', 'practice': 'AMERICAN PHYSICIANS FOUNDATION'},
-#     {'patientid': '54418', 'practice': 'AMG Medical Group'},
-#     {'patientid': '7684', 'practice': 'Advanced Integrative Medicine'},
-#     {'patientid': '19501', 'practice': 'Ardent Family Care'},
-# ]
-# get_patient = MongoFetcher()
-# print(get_patient.get_patients_from_mongo)
