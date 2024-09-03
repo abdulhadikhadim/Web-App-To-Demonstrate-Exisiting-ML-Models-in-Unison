@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.left-pane {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.right-pane {
+    flex: 3;
+}
+
+.btn-group-vertical {
+    width: 100%;
+}
+
+.tab-content {
+    width: 100%;
+}
+
+.tab-pane {
+    transition: display 0.3s ease-in-out;
+    padding: 0 15px;
+}
+
+.accordion-item {
+    margin-bottom: 20px;
+}

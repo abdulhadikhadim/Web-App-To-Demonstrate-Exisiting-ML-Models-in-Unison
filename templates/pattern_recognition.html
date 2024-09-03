@@ -1,15 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>Pattern</title>
+{% extends "base.html" %}
 
-    <h1>
-        <p>
-            Hi this is Pattern Recognition page
-        </p>
-    </h1>
+{% block title %}Disease Trajectories{% endblock %}
 
-</head>
+{% block content %}
+<div class="container mt-4">
+    <h1>Disease Trajectories</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="plot-container">
+                {% if html %}
+                    {{ html | safe }}
+                {% else %}
+                <div class="alert alert-success text-center" role="alert" style="font-size: 1.5rem; font-weight: bold;">
+                    The Disease Trajectories is unavailible for this patient
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

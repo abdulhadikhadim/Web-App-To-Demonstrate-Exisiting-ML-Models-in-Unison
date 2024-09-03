@@ -1,15 +1,144 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>Recommendation</title>
+{% extends "base.html" %}
 
-    <h1>
-        <p>
-            Hi this is Recommendation display page
-        </p>
-    </h1>
+{% block title %}Diagnose Disease{% endblock %}
 
-</head>
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <!-- Procedures -->
+        <div class="col-md-12">
+            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#procedures-menu" aria-expanded="true" aria-controls="procedures-menu" style="background-color: #0287CA">
+                Procedures
+            </button>
+            <div id="procedures-menu" class="collapse show mb-3">
+                
+                {% for name in names %}
+                {% if name != "Normal" %}
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <h5 class="mb-0 d-flex justify-content-between align-items-center">
+                            {{ name }}
+                            <span class="badge bg-primary">{{ prob[name] if name in prob else 'N/A' }}</span>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        {% if procedure[name] %}
+                            <ul class="list-unstyled">
+                                {% for procedure_item in procedure[name] %}
+                                    <li>{{ procedure_item }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No procedure data available.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <!-- Surgeries -->
+        <div class="col-12">
+            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#surgeries-menu" aria-expanded="true" aria-controls="surgeries-menu" style="background-color: #0287CA">
+                Surgeries
+            </button>
+            <div id="surgeries-menu" class="collapse show mb-3">
+                {% for name in names %}
+                {% if name != "Normal" %}
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <h5 class="mb-0 d-flex justify-content-between align-items-center">
+                            {{ name }}
+                            <span class="badge bg-primary">{{ prob[name] if name in prob else 'N/A' }}</span>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        {% if surgeries[name] %}
+                            <ul class="list-unstyled">
+                                {% for surgery in surgeries[name] %}
+                                    <li>{{ surgery }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No surgery data available.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <!-- Lifestyle Changes -->
+        <div class="col-12">
+            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#lifestyle-menu" aria-expanded="true" aria-controls="lifestyle-menu" style="background-color: #0287CA">
+                Lifestyle Changes
+            </button>
+            <div id="lifestyle-menu" class="collapse show mb-3">
+                {% for name in names %}
+                {% if name != "Normal" %}
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <h5 class="mb-0 d-flex justify-content-between align-items-center">
+                            {{ name }}
+                            <span class="badge bg-primary">{{ prob[name] if name in prob else 'N/A' }}</span>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        {% if lifestyle[name] %}
+                            <ul class="list-unstyled">
+                                {% for lifestyle_item in lifestyle[name] %}
+                                    <li>{{ lifestyle_item }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No lifestyle changes data available.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <!-- Labs -->
+        <div class="col-12">
+            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#labs-menu" aria-expanded="true" aria-controls="labs-menu" style="background-color: #0287CA">
+                Labs
+            </button>
+            <div id="labs-menu" class="collapse show mb-3">
+                {% for name in names %}
+                {% if name != "Normal" %}
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <h5 class="mb-0 d-flex justify-content-between align-items-center">
+                            {{ name }}
+                            <span class="badge bg-primary">{{ prob[name] if name in prob else 'N/A' }}</span>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        {% if lab[name] %}
+                            <ul class="list-unstyled">
+                                {% for lab_item in lab[name] %}
+                                    <li>{{ lab_item }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No labs data available.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

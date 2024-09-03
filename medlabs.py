@@ -9,15 +9,15 @@ class MedLabPredictions:
         sorted_responses = sorted_responses[0:4]
         return sorted_responses
     
-    def set_values(self):
-        diagnosis = self.top_four_selector()
+    def set_values(self,data):
+        diagnosis = self.top_four_selector(data)
         for disease in diagnosis:
             name = disease["disease_name"]
             if name not in self.names:
                 self.names.append(disease["disease_name"])
                 self.prob[name] = disease["probability"]
                 self.feature_imp[name] = disease["feature_importances"]
-        return self.names, self.prob, self.feature_imp
+            # return self.names, self.prob, self.feature_imp
 
 
 

@@ -28,10 +28,95 @@ html {
      tab-size: 4;
 }
 
+/* this is for the table in the data representation */
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #272626dc;
+  margin: 0;
+  padding: 0;
+}
+.menu-container {
+  width: 900px;
+  margin: 120px auto 20px auto; /* Added 120px margin-top */
+}
+.menu {
+  background-color: #333;
+  color: white;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.menu-header {
+  background-color: #444;
+  padding: 10px;
+  cursor: pointer;
+  text-align: center;
+}
+.menu-content {
+  display: none;
+  padding: 10px;
+  background-color: #555;
+}
+.menu-content.show {
+  display: block;
+}
+.submenu {
+  background-color: #666;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 5px 0;
+}
+.submenu-header {
+  cursor: pointer;
+  padding: 5px;
+  font-weight: bold;
+}
+.submenu-content {
+  display: none;
+  padding: 5px;
+  background-color: #777;
+  max-height: 200px; /* Set a fixed height */
+  overflow-y: auto; /* Make it scrollable */
+}
+.submenu-content.show {
+  display: block;
+}
+.item {
+  margin: 5px 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 10px;
+  border: 1px solid #888;
+}
+th {
+  background-color: #555;
+}
+td {
+  background-color: #666;
+}
+
+/* this is for the line between the rules */
+
+hr {
+  height:10px;
+  margin-top: 8px;
+  margin-left: 325px;
+  margin-bottom: 8px;
+  border-width:0;
+  width: 200px;
+  background-color:#ffffff;
+}
+/*  */
 /**
 1. Correct the line height in all browsers.
 2. Prevent adjustments of font size after orientation changes in iOS.
 */
+
+
 
 html {
   line-height: 1.15; /* 1 */
@@ -107,37 +192,36 @@ Sections
 ========
 */
 
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  gap: 20px; /* Space between images */
+  padding: 20px;
+  justify-content: center;
+}
+
+  .image-grid-item img {
+      width: 100%;
+      height: 250px;
+      max-width: 250px;
+      border-radius: 8px;
+      margin-top: 120px;
+      cursor: pointer;
+  }
+
+  .image-grid-item p {
+      margin-top: 10px;
+      font-size: 20px;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+  }
 /**
 Remove the margin in all browsers.
 */
-.top-nav {
-  background-color: #333;
-  color: white;
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 80px;
-  position: fixed;
-  top: 0px; /* Adjusted to 10px from the top */
-  left: 250; /* Adjusted to start from the left edge */
-  right: 0;
-  z-index: 1000;
-  width: 1200px;
-}
-.top-nav a {
-  color: white;
-  text-decoration: none;
-  padding: 10px;
-}
-.top-nav a:hover {
-  background-color: #555;
-}
-
 
 /* CSS Styles */
 .collapsible-menu-container {
     position: fixed;
+
     left: 0;
     top: 0;
     height: 100%;
@@ -148,6 +232,7 @@ Remove the margin in all browsers.
     z-index: 1000;
     transition: width 0.3s, margin-left 0.3s;
     padding: 10px;
+    margin-top: 75px;
 }
 
 .collapsible-menu {

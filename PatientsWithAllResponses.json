@@ -1,0 +1,498 @@
+[
+    {
+        "patientid": "12335",
+        "practice": "Advanced Integrative Medicine"
+    },
+    {
+        "patientid": "8475",
+        "practice": "Advanced Medical Office P.C"
+    },
+    {
+        "patientid": "30893",
+        "practice": "Alejandro Lopez, Jr., M.D.,PA"
+    },
+    {
+        "patientid": "7778",
+        "practice": "BROWARD MEDICAL ASSOCIATES"
+    },
+    {
+        "patientid": "3053",
+        "practice": "Bridgeport Family Medicine, LLC"
+    },
+    {
+        "patientid": "42772",
+        "practice": "Coastal Plus Medical Center"
+    },
+    {
+        "patientid": "7719",
+        "practice": "Covington Clinic PC"
+    },
+    {
+        "patientid": "1088",
+        "practice": "Current New York Medical P.C."
+    },
+    {
+        "patientid": "13366",
+        "practice": "Dana Jane Saltzman, MD"
+    },
+    {
+        "patientid": "12212",
+        "practice": "Darryl Isaacs, MD"
+    },
+    {
+        "patientid": "5262",
+        "practice": "Delta Medical PA"
+    },
+    {
+        "patientid": "3160",
+        "practice": "Family Health Care of Camden, Inc."
+    },
+    {
+        "patientid": "16606",
+        "practice": "Family Medical Practice"
+    },
+    {
+        "patientid": "386",
+        "practice": "Family Practice Center of Palatine, S.C"
+    },
+    {
+        "patientid": "1242",
+        "practice": "GAFFNEY HEALTH SERVICES"
+    },
+    {
+        "patientid": "5619",
+        "practice": "Health Edge Medical Care PLL"
+    },
+    {
+        "patientid": "21939",
+        "practice": "Health First Center LLC"
+    },
+    {
+        "patientid": "27401",
+        "practice": "Henderson County Department of Public Health"
+    },
+    {
+        "patientid": "4128",
+        "practice": "I and G Pediatrics"
+    },
+    {
+        "patientid": "56477",
+        "practice": "Institute for Asthma and Allergy"
+    },
+    {
+        "patientid": "7699",
+        "practice": "Janet Shen MD PC"
+    },
+    {
+        "patientid": "4156",
+        "practice": "Jessica Allan MD PC"
+    },
+    {
+        "patientid": "3347",
+        "practice": "Joshua Medical Centers"
+    },
+    {
+        "patientid": "4453",
+        "practice": "Marcelo-Mangune Medical Corporation"
+    },
+    {
+        "patientid": "81",
+        "practice": "Michael J. Faust, M.D."
+    },
+    {
+        "patientid": "2442",
+        "practice": "Michelle Campbell MD, PC"
+    },
+    {
+        "patientid": "1130",
+        "practice": "Midland Medical Broward,  Inc. "
+    },
+    {
+        "patientid": "17604",
+        "practice": "Mihail Medvedovsky Phy PC"
+    },
+    {
+        "patientid": "734",
+        "practice": "Monica Jain & Associates, LLC"
+    },
+    {
+        "patientid": "5150",
+        "practice": "PENN HIGHLANDS INTERNAL MEDICINE"
+    },
+    {
+        "patientid": "16759",
+        "practice": "Prime Care Family Care, Inc."
+    },
+    {
+        "patientid": "1331",
+        "practice": "RANA SULEMAN M.D"
+    },
+    {
+        "patientid": "1201",
+        "practice": "Scottsboro Quick Care Clinic"
+    },
+    {
+        "patientid": "6807",
+        "practice": "Soncy Medical Clinic"
+    },
+    {
+        "patientid": "2910",
+        "practice": "Soo Woong Kang, MD, Inc."
+    },
+    {
+        "patientid": "12605",
+        "practice": "Toe River Health District"
+    },
+    {
+        "patientid": "95645",
+        "practice": "URGENT CARE OF TEXAS"
+    },
+    {
+        "patientid": "406",
+        "practice": "Vcare Family Practice LLC"
+    },
+    {
+        "patientid": "3467",
+        "practice": "AMMA Healthcare LLC"
+    },
+    {
+        "patientid": "32451",
+        "practice": "Ardent Family Care"
+    },
+    {
+        "patientid": "3902",
+        "practice": "Castle Valley Childrens Clinic "
+    },
+    {
+        "patientid": "2272",
+        "practice": "Clay County Health Department"
+    },
+    {
+        "patientid": "806",
+        "practice": "Dave Family Medical Services, PC"
+    },
+    {
+        "patientid": "19729",
+        "practice": "Duplin County Health Department"
+    },
+    {
+        "patientid": "10637",
+        "practice": "Eastchester Medical Associates"
+    },
+    {
+        "patientid": "25830",
+        "practice": "Endocrine Associates of West Village"
+    },
+    {
+        "patientid": "3215",
+        "practice": "Falwell Family Medicine"
+    },
+    {
+        "patientid": "2124",
+        "practice": "Horizon Clinicians DBA Hope Medical Clinic"
+    },
+    {
+        "patientid": "35710",
+        "practice": "Independence Pediatrics"
+    },
+    {
+        "patientid": "2738",
+        "practice": "LUKE MEDICAL CLINIC"
+    },
+    {
+        "patientid": "1975",
+        "practice": "NORTHEAST PRIMARY CARE PHYSICIANS"
+    },
+    {
+        "patientid": "73739",
+        "practice": "PRINE HEALTH MEDICAL GROUP PLLC"
+    },
+    {
+        "patientid": "18500",
+        "practice": "Pender County Health Department"
+    },
+    {
+        "patientid": "5928",
+        "practice": "SETAL RANA, MD PA           Buckner Elam Medical    "
+    },
+    {
+        "patientid": "134",
+        "practice": "ARC HealthResources of Rockland, Inc. "
+    },
+    {
+        "patientid": "1823",
+        "practice": "Che-Fu Kuo, M.D., Ph.D."
+    },
+    {
+        "patientid": "575",
+        "practice": "David Bacha D.O. ,F.A.A.P."
+    },
+    {
+        "patientid": "15007",
+        "practice": "Downtown Primary Care LLP"
+    },
+    {
+        "patientid": "1586",
+        "practice": "FAMILY MEDICAL CARE OF BABYLON"
+    },
+    {
+        "patientid": "23578",
+        "practice": "Fox Valley Urgent Care Inc"
+    },
+    {
+        "patientid": "1199",
+        "practice": "INTERNAL MEDICINE SPECALISTS OF MIDDLE TENNESSEE"
+    },
+    {
+        "patientid": "21289",
+        "practice": "Internal Medicine & Cardiology Associates, P"
+    },
+    {
+        "patientid": "27954",
+        "practice": "Laurelton Heart Specialist PC"
+    },
+    {
+        "patientid": "23241",
+        "practice": "PL Physicians, Inc."
+    },
+    {
+        "patientid": "2075",
+        "practice": "SOUTH GEORGIA MEDICAL SERVICES"
+    },
+    {
+        "patientid": "11072",
+        "practice": "Sammy Chitayat MD"
+    },
+    {
+        "patientid": "9752",
+        "practice": "Stanly County Health Department"
+    },
+    {
+        "patientid": "3172",
+        "practice": "UIW Health Services"
+    },
+    {
+        "patientid": "11314",
+        "practice": "Alabama Cancer Care"
+    },
+    {
+        "patientid": "5644",
+        "practice": "Diab Agha Kidney and Hypertension Clinic"
+    },
+    {
+        "patientid": "3959",
+        "practice": "Horizons Healthcare, LLC"
+    },
+    {
+        "patientid": "5971",
+        "practice": "ROBERT F YERRINGTON, MD PA"
+    },
+    {
+        "patientid": "4695",
+        "practice": "Wee Care Pediatrics"
+    },
+    {
+        "patientid": "68809",
+        "practice": "Wilson County Health Department"
+    },
+    {
+        "patientid": "45",
+        "practice": "Belmont Medical Associates PLLC"
+    },
+    {
+        "patientid": "40875",
+        "practice": "Martin-Tyrrell-Washington District Health Department"
+    },
+    {
+        "patientid": "285",
+        "practice": "Mitchell Huebner, MD, PLLC"
+    },
+    {
+        "patientid": "25561",
+        "practice": "Sampson County Health Department"
+    },
+    {
+        "patientid": "30769",
+        "practice": "Surry County Health & Nutrition Center"
+    },
+    {
+        "patientid": "28623",
+        "practice": "Wilkes County Health Department"
+    },
+    {
+        "patientid": "63597",
+        "practice": "Golden Gate Obstetrics and Gynecology, Inc."
+    },
+    {
+        "patientid": "6300",
+        "practice": "IQBAL AHMED MD PA"
+    },
+    {
+        "patientid": "1815",
+        "practice": "MICHIANA INTERNAL MEDICINE,PC"
+    },
+    {
+        "patientid": "754",
+        "practice": "Pinnacles Peds Care, P.A. "
+    },
+    {
+        "patientid": "793",
+        "practice": "Howard County Health Department"
+    },
+    {
+        "patientid": "8978",
+        "practice": "Montgomery County Health Department"
+    },
+    {
+        "patientid": "4231",
+        "practice": "Physicians To You Home Health Ltd. "
+    },
+    {
+        "patientid": "7320",
+        "practice": "Steiner Medical and Therapeutic Center"
+    },
+    {
+        "patientid": "1636",
+        "practice": "Tovba Care Medical P.C"
+    },
+    {
+        "patientid": "1296",
+        "practice": "Adult Geriatrics of Wooster, Inc."
+    },
+    {
+        "patientid": "8552",
+        "practice": "Healthfirst Rehab & Wellness"
+    },
+    {
+        "patientid": "4539",
+        "practice": "Prospect HealthCare SC"
+    },
+    {
+        "patientid": "5936",
+        "practice": "Leslie Sean Ramsammy MD PC"
+    },
+    {
+        "patientid": "23",
+        "practice": "Kaliyur Venkat"
+    },
+    {
+        "patientid": "39",
+        "practice": "IGNACIO FAMILY MEDICINE, INC."
+    },
+    {
+        "patientid": "23891",
+        "practice": "Burke County Health Department"
+    },
+    {
+        "patientid": "6163",
+        "practice": "Laszlo Feher D.O."
+    },
+    {
+        "patientid": "35",
+        "practice": "Wheelersburg Medical Associates"
+    },
+    {
+        "patientid": "7541",
+        "practice": "A A R, M.D., P.A."
+    },
+    {
+        "patientid": "1",
+        "practice": "CANCER CARE CENTER OF DEMOPOLIS"
+    },
+    {
+        "patientid": "100621",
+        "practice": "AMG Medical Group"
+    },
+    {
+        "patientid": "11422",
+        "practice": "Bladen County Health Department"
+    },
+    {
+        "patientid": "22815",
+        "practice": "Garden City Obstetrics and Gynecology"
+    },
+    {
+        "patientid": "99",
+        "practice": "Traci Thompson M.D., P.A."
+    },
+    {
+        "patientid": "2153",
+        "practice": "Physician Housecalls"
+    },
+    {
+        "patientid": "8117",
+        "practice": "Primary Care Physicians Medical Corp."
+    },
+    {
+        "patientid": "4240",
+        "practice": "Eastside Family Medical Clinic"
+    },
+    {
+        "patientid": "5668",
+        "practice": "BKLYNCardio"
+    },
+    {
+        "patientid": "19315",
+        "practice": "Lee County Health Department"
+    },
+    {
+        "patientid": "361",
+        "practice": "Atchison County Health Department"
+    },
+    {
+        "patientid": "20042",
+        "practice": "United Clinical Group"
+    },
+    {
+        "patientid": "13978",
+        "practice": "Scotland County Health Department"
+    },
+    {
+        "patientid": "9190",
+        "practice": "Anson County Health Department"
+    },
+    {
+        "patientid": "1150",
+        "practice": "Paramount Medical"
+    },
+    {
+        "patientid": "7767",
+        "practice": "Premier Neurology and Wellness Center, LLC"
+    },
+    {
+        "patientid": "14004",
+        "practice": "Allergy & Asthma Associates of Murray Hill"
+    },
+    {
+        "patientid": "114591",
+        "practice": "Digestive & Liver Center, PA"
+    },
+    {
+        "patientid": "10100",
+        "practice": "Manhattan Endocrinologist, PLLC"
+    },
+    {
+        "patientid": "12202",
+        "practice": "Caricare Family Health Services LLC"
+    },
+    {
+        "patientid": "2540",
+        "practice": "Janice Prime Care Medical P.C."
+    },
+    {
+        "patientid": "30670",
+        "practice": "Arthur Lubitz MD, PC"
+    },
+    {
+        "patientid": "34683",
+        "practice": "Edgecombe County Health Department"
+    },
+    {
+        "patientid": "383",
+        "practice": "Meng Kao Tseng MD LLP"
+    },
+    {
+        "patientid": "60555",
+        "practice": "AMERICAN PHYSICIANS FOUNDATION"
+    }
+]

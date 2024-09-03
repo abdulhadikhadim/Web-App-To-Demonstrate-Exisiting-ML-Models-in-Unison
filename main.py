@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, flash
+from flask import Flask, render_template, request, session, flash, render_template_string,redirect
 from flask_session import Session
 from starter import MongoFetcher
 import json
@@ -21,35 +21,40 @@ Session(app)
 diagnosis = {}
 patient1 = Patient()
 
+
 @app.route('/', methods=["GET", "POST"])
 def home():
+    global patient1
+   
     if request.method == "POST":
-        session['PID'] = request.form['PID']
-        session['PP'] = request.form['PP'] 
-        
+        print("in home")
+        session['PID'] = request.form.get("PID", None)
+        session['PP'] = request.form.get("PP", None)
+       
         mongo_fetcher = MongoFetcher()
         patient1.patient_ID = session.get("PID", '')
         patient1.patient_practice = session.get("PP", '')
         pat = mongo_fetcher.get_patients_from_mongo(patient1.patient_ID, patient1.patient_practice)
         patient1.data = json.loads(pat)
-        
-        if patient1.data == {}:
-            print("Condition True")
+        # print(patient1.data)
+        if not patient1.data:
             flash("Patient ID or Practice is Incorrect!")
-
+            return render_template("index.html")
+ 
         else:  
             keys = ["_id", "patientid", "practice"]
             patient1.clean_data(keys)
-            return json.dumps(patient1.data)
-            
+            return redirect("/diagnose")
+               
     return render_template("index.html")
-
 
 @app.route('/diagnose')
 def diagnose():
     global diagnosis
+    global patient1
     response = requests.post(API_URL, json = patient1.data)
     diagnosis = response.json()
+    patient1.patient_data_collector(diagnosis)
     patient1.diagnosis_sorter()
 
     return render_template('diagnose.html', data = patient1.data)
@@ -60,40 +65,56 @@ def response_from_api():
     diagnosis = response.json()
     return render_template("response.html", diagnosis = diagnosis)
 
+# @app.route("/chronic")
+# def chronic_diagnosis():
+#     global diagnosis
+#     global patient1
+#     # prediction = ChronicDiseasePred(diagnosis["chronic_diseases_response"])
+#     names, prob, vector, imp_features, risky, rules = patient1.get_chronic_pred()
+#     return render_template("chronic_disease.html", names=names, prob=prob, imp = imp_features, vector = vector, risk = risky, data=patient1.data, rules = rules)
+
 @app.route("/chronic")
 def chronic_diagnosis():
     global diagnosis
     global patient1
-    prediction = ChronicDiseasePred(diagnosis["chronic_diseases_response"])
-    patient1.chronic_pred = prediction
-    names, prob, vector, imp_features, risky, rules = prediction.set_values()
+    names, prob, vector, imp_features, risky, rules = patient1.get_chronic_pred()
 
-    return render_template("chronic_disease.html", names=names, prob=prob, imp = imp_features, vector = vector, risk = risky, data=patient1.data, rules = rules)
+    # Sort the names list based on the probability in descending order
+    sorted_names = sorted(names, key=lambda x: prob[x], reverse=True)
+
+    return render_template("chronic_disease.html", names=sorted_names, prob=prob, imp=imp_features, vector=vector, risk=risky, data=patient1.data, rules=rules)
+
 
 @app.route("/medlabs")
 def medlabs_response():
     global diagnosis
     global patient1
-    med_data = diagnosis["medlabs_response"]
-    med_preds = MedLabPredictions()
-    patient1.medlab_pred = med_preds
-    names, probs, feature_imp = med_preds.set_values(med_data)
-    return render_template("medlabs_response.html", names=names, probs=probs, feature_imp=feature_imp)
+    names, probs, feature_imp = patient1.get_medlab_pred()
+    return render_template("medlabs_response.html", names=names, probs=probs, feature_imp=feature_imp,data=patient1.data)
+
+# @app.route("/pattern")
+# def pattern_recognition():
+#     global patient1
+#     # print(patient1.chronic_pred.trajectory)
+#     fig = patient1.chronic_pred.sanky_plot_generator()
+#     plot_html = fig.to_html(full_html=False)
+#     return render_template("pattern_recognition.html", html = plot_html,data = patient1.data)
 
 @app.route("/pattern")
 def pattern_recognition():
-    return render_template("pattern_recognition.html")
+    global patient1
+    fig = patient1.chronic_pred.sankey_plot_generator()
+    plot_html = fig.to_html(full_html=False) if fig else None
+    return render_template("pattern_recognition.html", html=plot_html, data=patient1.data)
+
 
 @app.route("/recommendation")
 def recommendations_response():
     global patient1
     global diagnosis
-    filtered_names = patient1.recommendations_filter()
-    recommendations_data = diagnosis["recommendations"]
-    recommendations = Recommendations()
-    names, procedures, surgeries, labs, lifestyle_changes = recommendations.set_values(filtered_names, recommendations_data)
-    return render_template("Recommendation.html")
+    names, procedures, surgeries, labs, lifestyle_changes = patient1.get_recommendations()
+    return render_template("Recommendation.html", names=names, procedure=procedures, surgeries=surgeries, lab=labs, lifestyle=lifestyle_changes, data=patient1.data)
 
 if __name__ == '__main__':    
-    app.run(host="172.16.105.138",debug=True, port=5000)
+    app.run(host = "172.16.105.134", debug=True, port=5000)
 

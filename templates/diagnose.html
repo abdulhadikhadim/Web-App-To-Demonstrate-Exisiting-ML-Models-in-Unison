@@ -1,231 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+{% extends "base.html" %}
+{% block title %}Diagnose Disease{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>Diagnose Disease</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #020202dc;
-            transition: margin-left 0.3s;
-        }
+{% block content %}
 
-        .collapsible-menu-container {
-            position: fixed;
-            left: 0;
-            top: 100;
-            height: 100%;
-            width: 250px; /* Adjust width as needed */
-            background-color: #333;
-            color: #fff;
-            overflow: auto;
-            z-index: 1000; /* Ensure it is above other elements */
-            padding: 10px; /* Ensure padding is sufficient */
-            transition: transform 0.3s;
-        }
-
-        .collapsible-menu-container.collapsed {
-            transform: translateX(-100%);
-        }
-
-        .collapsible-menu {
-            width: 100%;
-            margin-top: 100;
-            background-color: #444;
-            border: none;
-            padding: 10px;
-            text-align: left;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .collapsible-menu:hover {
-            background-color: #555;
-        }
-
-        .collapsible-content {
-            display: block;
-            background-color: #555;
-            padding: 10px;
-        }
-
-        .collapsible-content p {
-            margin: 10px 0;
-        }
-
-        .main-content {
-            margin-left: 250px; /* Adjust based on sidebar width */
-            padding: 20px;
-            margin-top: 100px;
-            transition: margin-left 0.3s;
-        }
-
-        .main-content.shifted {
-            margin-left: 0;
-        }
-
-        .image-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2 columns */
-            gap: 20px; /* Space between images */
-            padding: 20px;
-            justify-content: center;
-        }
-
-        .image-grid-item img {
-            width: 100%;
-            height: 250px;
-            max-width: 250px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .image-grid-item p {
-            margin-top: 10px;
-            font-size: 20px;
-            font-family: Georgia, 'Times New Roman', Times, serif;
-        }
-
-        .toggle-button {
-            position: absolute;
-            top: 10px;
-            left: 250px;
-            z-index: 1001;
-            background-color: #333;
-            color: #fff;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            transition: left 0.3s;
-        }
-
-        .toggle-button.shifted {
-            left: 10px;
-        }
-    </style>
-</head>
-    <!-- Top Navigation Bar -->
-    <div class="top-nav">
-        <a href="/">Home</a>
-
-    </div>
-    
-
-<body>
-    <!-- Toggle Button for Sidebar -->
-    <button id="toggle-menu" class="toggle-button">☰</button>
-
-    <!-- Collapsible Menu Container -->
-    <div id="collapsible-menu" class="collapsible-menu-container">
-        <button class="collapsible-menu">Personal Information</button>
-        <div id="personal-info" class="collapsible-content">
-            <p id="dob">Date of Birth: {{data["Date_Of_Birth"]}}</p>
-            <p id="gender">Gender: {{data["Gender"]}}</p>
-            <p id="marital-status">Marital Status: {{data["MaritalStatus"]}}</p>
-            <p id="races">Races: {{data["Races"]}}</p>
-        </div>
-        <button class="collapsible-menu">Vitals</button>
-        <div id="vitals" class="collapsible-content">
-            <p id="weight">Weight: {{data["Vitals"]["Weight"]}}lbs</p>
-            <p id="height">Height: {{data["Vitals"]["Height"]}}</p>
-            <p id="systolic">Systolic: {{data["Vitals"]["Systolic"]}}</p>
-            <p id="diastolic">Diastolic: {{data["Vitals"]["Diastolic"]}}</p>
-            <p id="pulse">Pulse: {{data["Vitals"]["Pulse"]}}</p>
-            <p id="respiration">Respiration: {{data["Vitals"]["Respiration"]}}</p>
-        </div>
-        <button class="collapsible-menu">Diagnosis</button>
-        <div id="diagnosis" class="collapsible-content">
-            <p id="weight">Weight: {{data["Vitals"]["Weight"]}}lbs</p>
-            <p id="height">Height: {{data["Vitals"]["Height"]}}</p>
-            <p id="systolic">Systolic: {{data["Vitals"]["Systolic"]}}</p>
-            <p id="diastolic">Diastolic: {{data["Vitals"]["Diastolic"]}}</p>
-            <p id="pulse">Pulse: {{data["Vitals"]["Pulse"]}}</p>
-            <p id="respiration">Respiration: {{data["Vitals"]["Respiration"]}}</p>
-        </div>
-        <button class="collapsible-menu">Family History</button>
-        <div id="family-history" class="collapsible-content">
-            {% for member in data["FamilyHistory"] %}
-                <button class="collapsible-menu">{{ member["FamilyMember"] }}</button>
-                <div class="collapsible-content">
-                    {% for disease in member["Diseases"] %}
-                        <p>{{ disease["DiseaseName"] }} - {% if disease["Denies"] %} Yes {% else %} No {% endif %}</p>
-                    {% endfor %}
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-
-    <!-- Main Content Area -->
-    <div id="main-content" class="main-content">
-        <!-- Image Grid Section -->
-        <section class="image-grid">
-            <div class="image-grid-item">
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-around">
+            <div class="text-center mx-2">
                 <a href="chronic">
-                    <img src="static/imgs/Chronic_Diseases.jpg" alt="Image 1">
-                    <p>Chronic Disease</p>
+                    <img src="static/imgs/Chronic_Diseases.jpg" alt="Chronic Disease" class="img-feature" style="width: 300px; height: auto;">
+                    <h3 class="feature-title text-yellow">Chronic Disease</h3>
                 </a>
             </div>
-            <div class="image-grid-item">
+            <div class="text-center mx-2">
                 <a href="medlabs">
-                    <img src="static/imgs/Lab_Testing.jpg" alt="Image 2">
-                    <p>MedLab Diagnosis</p>
+                    <img src="static/imgs/Lab_Testing.jpg" alt="MedLab Diagnosis" class="img-feature" style="width: 300px; height: auto;">
+                    <h3 class="feature-title text-yellow">MedLab Diagnosis</h3>
                 </a>
             </div>
-            <div class="image-grid-item">
-                <a href="pattern">
-                    <img src="static/imgs/pattern_mining.png" alt="Image 3">
-                    <p>Disease Pattern</p>
-                </a>
-            </div>
-            <div class="image-grid-item">
+            <div class="text-center mx-2">
                 <a href="recommendation">
-                    <img src="static/imgs/Chronic_Diseases.jpg" alt="Image 4">
-                    <p>Something</p>
+                    <img src="static/imgs/Chronic_Diseases.jpg" alt="Recommendations" class="img-feature" style="width: 300px; height: auto;">
+                    <h3 class="feature-title text-yellow">Recommendations</h3>
                 </a>
             </div>
-        </section>
+        </div>
     </div>
-    <script>
-        function toggleMenu() {
-            const menu = document.getElementById("collapsible-menu");
-            const content = document.getElementById("main-content");
-            const toggleButton = document.getElementById("toggle-menu");
-            menu.classList.toggle('collapsed');
-            content.classList.toggle('shifted');
-            toggleButton.classList.toggle('shifted');
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            const collapsibles = document.querySelectorAll('.collapsible-menu');
-
-            collapsibles.forEach(button => {
-                button.addEventListener('click', function () {
-                    // Toggle the 'active' class on the clicked button
-                    this.classList.toggle('active');
-
-                    // Get the next sibling element (the content)
-                    const content = this.nextElementSibling;
-
-                    // Toggle the display of the content
-                    if (content.style.display === 'block') {
-                        content.style.display = 'none';
-                    } else {
-                        content.style.display = 'block';
-                    }
-                });
-            });
-
-            // Add event listener to toggle button
-            document.getElementById("toggle-menu").addEventListener("click", toggleMenu);
-        });
-    </script>
-
-</body>
-
-</html>
+</section>
+{% endblock %}

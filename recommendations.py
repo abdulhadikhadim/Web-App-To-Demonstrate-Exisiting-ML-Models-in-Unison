@@ -12,8 +12,10 @@ class Recommendations:
 
     def set_values(self, names, data):
         for name in names:
-            self.names.append(name)
-            self.procedures[name] = DISEASE_RECOMMENDATIONS[name]["Procedures"]
-            self.surgeries[name] = DISEASE_RECOMMENDATIONS[name]["Surgeries"]
-            self.labs[name] = DISEASE_RECOMMENDATIONS[name]["Lab"]
-            self.lifestyle_changes[name] = DISEASE_RECOMMENDATIONS[name]["Lifestyle changes"]
+            if name not in self.names:
+                self.names.append(name)
+                self.procedures[name] = DISEASE_RECOMMENDATIONS[name]["Procedures"]
+                self.surgeries[name] = DISEASE_RECOMMENDATIONS[name]["Surgeries"]
+                self.labs[name] = DISEASE_RECOMMENDATIONS[name]["Labs"]
+                self.lifestyle_changes[name] = DISEASE_RECOMMENDATIONS[name]["Lifestyle changes"]
+        # return self.names, self.procedures, self.surgeries, self.labs, self.lifestyle_changes
