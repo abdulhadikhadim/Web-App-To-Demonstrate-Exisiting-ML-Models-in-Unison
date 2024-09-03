@@ -47,18 +47,19 @@ class Patient:
     
     @data.setter
     def data(self, val):
-        if val is not None:
             self._data = val
-        else:
-            pass
+    
     @data.deleter
     def data(self):
         del self._data
 
     def reset_patient(self):
+        self.patient_ID = 0
+        self.patient_practice = ""
         self.chronic_pred= None
         self.medlab_pred= None
         self.recommendations = None
+        self.data=None
 
     def clean_data(self, keys):
         for key in keys:

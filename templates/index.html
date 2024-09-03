@@ -106,31 +106,41 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const form = document.getElementById("patientForm");
-            const showResponseButton = document.getElementById("showResponse");
-       
-            form.onsubmit = async function (e) {
-                e.preventDefault();
-       
-                const formData = new FormData(form);
-                const response = await fetch('/', {
-                    method: 'POST',
-                    body: formData
-                });
-       
-                if (response.ok) {
-                    // Optionally handle response here
-                    window.location.href = "/diagnose"; // Redirect to /diagnose
+        const form = document.getElementById("patientForm");
+        const showResponseButton = document.getElementById("showResponse");
+    
+        form.onsubmit = async function (e) {
+            e.preventDefault();
+    
+            const formData = new FormData(form);
+            const response = await fetch('/', {
+                method: 'POST',
+                body: formData
+            });
+    
+            const result = await response.json();
+            if (response.ok && result.status === 'success') {
+                window.location.href = "/diagnose"; // Redirect to /diagnose
+            } else {
+                // Handle the error response
+                const alertDiv = document.querySelector('.alert');
+                if (alertDiv) {
+                    alertDiv.textContent = result.message;
                 } else {
-                    console.error('Failed to submit form:', response.status, response.statusText);
+                    const newAlertDiv = document.createElement('div');
+                    newAlertDiv.className = 'alert alert-danger mt-3';
+                    newAlertDiv.textContent = result.message;
+                    form.insertAdjacentElement('afterend', newAlertDiv);
                 }
-            };
-       
-            // Ensure this button click works if it should handle form submission
-            showResponseButton.onclick = function () {
-                form.requestSubmit(); // Triggers the form submission
-            };
-        });
+            }
+        };
+
+        // Ensure this button click works if it should handle form submission
+        showResponseButton.onclick = function () {
+            form.requestSubmit(); // Triggers the form submission
+        };
+    });
+
         </script>
         </body>
 </html>

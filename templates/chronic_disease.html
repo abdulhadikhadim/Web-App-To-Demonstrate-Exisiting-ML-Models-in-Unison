@@ -7,11 +7,11 @@
     <!-- Left Pane -->
     <div class="left-pane">
         <div class="d-flex justify-content-center mb-3">
-            <div class="btn-group-vertical" role="group" aria-label="Disease Tabs">
+            <div class="btn-group-vertical" role="group" aria-label="Disease Tabs" >
                 {% if names %}
                     {% for name in names %}
                         {% if name %}
-                            <button class="btn btn-outline-primary {% if loop.index == active_tab or loop.index == 1 %}active{% endif %}" id="btn-{{ loop.index }}" onclick="showTab({{ loop.index }})">{{ name }} ({{ prob[name] }})</button>
+                            <button class="btn btn-outline-primary {% if loop.index == active_tab or loop.index == 1 %}active{% endif %}" id="btn-{{ loop.index }}" onclick="showTab({{ loop.index }})">{{ name }} ({{ prob[name] }}) </button>
                         {% endif %}
                     {% endfor %}
                 {% else %}
