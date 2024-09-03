@@ -1,5 +1,5 @@
-from chronic import ChronicDiseasePred
-from medlabs import MedLabPredictions
+from chronic import ChronicPredictor
+from medlabs import MedLabPredictor
 from recommendations import Recommendations
 import json
 from datetime import datetime
@@ -73,19 +73,19 @@ class Patient:
         self.data["Diagnoses"] = sorted_diagnoses
 
     def patient_data_collector(self, data):
-        self.chronic_pred = ChronicDiseasePred()
+        self.chronic_pred = ChronicPredictor()
         self.chronic_pred.set_values(data["chronic_diseases_response"])
-        self.medlab_pred = MedLabPredictions()
+        self.medlab_pred = MedLabPredictor()
         self.medlab_pred.set_values(data["medlabs_response"])
         self.recommendations = Recommendations()
         filtered_names = self.recommendations_filter()
         self.recommendations.set_values(filtered_names, data["recommendations"])
     
     def get_chronic_pred(self):
-        return self.chronic_pred.names, self.chronic_pred.prob, self.chronic_pred.feature_vector, self.chronic_pred.important_features, self.chronic_pred.risky_features, self.chronic_pred.top_pred_rules
+        return self.chronic_pred.names, self.chronic_pred.prob, self.chronic_pred.feature_vector, self.chronic_pred.imp_features, self.chronic_pred.risky_features, self.chronic_pred.top_pred_rules
 
     def get_medlab_pred(self):
-        return self.medlab_pred.names, self.medlab_pred.prob, self.medlab_pred.feature_imp
+        return self.medlab_pred.names, self.medlab_pred.prob, self.medlab_pred.imp_features
 
     def get_recommendations(self):
         return self.recommendations.names, self.recommendations.procedures, self.recommendations.surgeries, self.recommendations.labs, self.recommendations.lifestyle_changes

@@ -4,8 +4,8 @@ from starter import MongoFetcher
 import json
 import requests
 from patient import Patient
-from chronic import ChronicDiseasePred
-from medlabs import MedLabPredictions
+from chronic import ChronicPredictor
+from medlabs import MedLabPredictor
 from recommendations import Recommendations
 
 with open("static\disease_name_mapping.json", "r") as file:
@@ -110,5 +110,5 @@ def recommendations_response():
     return render_template("Recommendation.html", names=names, procedure=procedures, surgeries=surgeries, lab=labs, lifestyle=lifestyle_changes, data=patient1.data)
 
 if __name__ == '__main__':    
-    app.run(host = "172.16.105.134", debug=True, port=5000)
+    app.run(debug=True, port=5000)
 

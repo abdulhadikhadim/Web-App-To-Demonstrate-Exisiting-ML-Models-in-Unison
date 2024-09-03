@@ -1,16 +1,14 @@
 import plotly.graph_objects as go
+from DiseasePredictor import DiseasePredictor
 
-class ChronicDiseasePred:
-    def __init__(self, feature_vector={}, important_features={}, risky_features={}, names=[], macro_rules = {}, top_pred_rules = {}, prob = {}, trajectory={}):
-        self.names = names
-        self.prob = prob
+class ChronicPredictor(DiseasePredictor):
+    def __init__(self, name = [], prob = {}, imp_features={}, feature_vector={}, risky_features={}, macro_rules = {}, top_pred_rules = {}, trajectory={}):
+        super().__init__(name, prob, imp_features)
         self.feature_vector = feature_vector
-        self.important_features = important_features
         self.risky_features = risky_features
         self.macro_rules = macro_rules
         self.top_pred_rules = top_pred_rules
         self.trajectory = trajectory
-
 
     def set_values(self, data):
         for diseases in data["Content"]["DiseasePredictions"]:
@@ -19,7 +17,7 @@ class ChronicDiseasePred:
                 self.prob[diseases["Disease"]] = diseases["ModelsProbabilities"]["12_months"]
                 self.feature_vector[diseases["Disease"]] = diseases["FeatureVector"]
                 self.risky_features[diseases["Disease"]] = diseases["RiskyFeatures"]
-                self.important_features[diseases["Disease"]] = diseases["AllImportantFeatures"]
+                self.imp_features[diseases["Disease"]] = diseases["AllImportantFeatures"]
                 self.top_pred_rules[diseases["Disease"]] = diseases["TopPredictionRules"]
         self.trajectory=data["Content"]["DiseaseTrajectories"]
 
