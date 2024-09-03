@@ -102,7 +102,7 @@ class Patient:
         return self.chronic_pred.names, self.chronic_pred.prob, self.chronic_pred.feature_vector, self.chronic_pred.imp_features, self.chronic_pred.risky_features, self.chronic_pred.top_pred_rules
 
     def get_medlab_pred(self):
-        return self.medlab_pred.names, self.medlab_pred.prob, self.medlab_pred.imp_features
+        return self.medlab_pred.names, self.medlab_pred.prob, self.medlab_pred.imp_features, self.medlab_pred.confirmed_diag
 
     def get_recommendations(self):
         return self.recommendations.names, self.recommendations.procedures, self.recommendations.surgeries, self.recommendations.labs, self.recommendations.lifestyle_changes
