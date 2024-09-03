@@ -9,7 +9,7 @@ with open("static\disease_name_mapping.json", "r") as file:
     DISEASE_MAPPINGS = json.load(file)
 
 class Patient:
-    def __init__(self, patient_ID=0, patient_practice="", data={}, chronic_pred = None, medlab_pred = None, recommendations = None):
+    def __init__(self, patient_ID=0, patient_practice="", data=None, chronic_pred = None, medlab_pred = None, recommendations = None):
         self._patient_ID = patient_ID
         self._patient_practice = patient_practice
         self._data = data
@@ -25,6 +25,10 @@ class Patient:
     def patient_ID(self, ID):
         self._patient_ID = ID 
 
+    @patient_ID.deleter
+    def patient_ID(self):
+        del self._patient_ID
+
     @property
     def patient_practice(self):
         return self._patient_practice
@@ -32,6 +36,10 @@ class Patient:
     @patient_practice.setter
     def patient_practice(self, practice):
         self._patient_practice = practice
+    
+    @patient_practice.deleter
+    def patient_practice(self):
+        del self._patient_practice
 
     @property
     def data(self):
@@ -43,6 +51,14 @@ class Patient:
             self._data = val
         else:
             pass
+    @data.deleter
+    def data(self):
+        del self._data
+
+    def reset_patient(self):
+        self.chronic_pred= None
+        self.medlab_pred= None
+        self.recommendations = None
 
     def clean_data(self, keys):
         for key in keys:
@@ -64,7 +80,7 @@ class Patient:
     
     def diagnosis_sorter(self):
         def parse_date(date_str):
-            try:
+            try: 
                 return datetime.strptime(date_str, '%Y-%m-%d')
             except ValueError:
                 return datetime.min

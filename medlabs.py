@@ -19,5 +19,23 @@ class MedLabPredictor(DiseasePredictor):
                 self.imp_features[name] = disease["feature_importances"]
 
 
+# from dataclasses import dataclass, field
+# from typing import List, Dict, Any
+# from DiseasePredictor import DiseasePredictor
 
+# @dataclass
+# class MedLabPredictor(DiseasePredictor):
+#     feature_imp: Dict[str, Any] = field(default_factory=dict)
 
+#     def top_four_selector(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
+#         sorted_responses = sorted(data.get("likely_diag", []), key=lambda x: x.get('probability', 0), reverse=True)
+#         return sorted_responses[:4]
+
+#     def set_values(self, data: Dict[str, Any]) -> None:
+#         diagnosis = self.top_four_selector(data)
+#         for disease in diagnosis:
+#             name = disease["disease_name"]
+#             if name not in self.names:
+#                 self.names.append(name)
+#                 self.prob[name] = disease["probability"]
+#                 self.feature_imp[name] = disease["feature_importances"]
