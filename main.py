@@ -92,21 +92,27 @@ def medlabs_response():
     names, probs, feature_imp = patient1.get_medlab_pred()
     return render_template("medlabs_response.html", names=names, probs=probs, feature_imp=feature_imp,data=patient1.data)
 
+# @app.route("/pattern")
+# def pattern_recognition():
+#     global patient1
+#     # print(patient1.chronic_pred.trajectory)
+#     fig = patient1.chronic_pred.sanky_plot_generator()
+#     plot_html = fig.to_html(full_html=False)
+#     return render_template("pattern_recognition.html", html = plot_html,data = patient1.data)
+
 @app.route("/pattern")
 def pattern_recognition():
     global patient1
-    # print(patient1.chronic_pred.trajectory)
-    fig = patient1.chronic_pred.sanky_plot_generator()
-    plot_html = fig.to_html(full_html=False)
-    return render_template("pattern_recognition.html", html = plot_html,data = patient1.data)
+    fig = patient1.chronic_pred.sankey_plot_generator()
+    plot_html = fig.to_html(full_html=False) if fig else None
+    return render_template("pattern_recognition.html", html=plot_html, data=patient1.data)
+
 
 @app.route("/recommendation")
 def recommendations_response():
     global patient1
     global diagnosis
-    # names, probs, vector, imp_features, risky, rules = patient1.get_chronic_pred()
     names, procedures, surgeries, labs, lifestyle_changes = patient1.get_recommendations()
-    full_names = [DISEASE_MAPPINGS.get(name, name) for name in names]
     return render_template("Recommendation.html", names=names, procedure=procedures, surgeries=surgeries, lab=labs, lifestyle=lifestyle_changes, data=patient1.data)
 
 if __name__ == '__main__':    
