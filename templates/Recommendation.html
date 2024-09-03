@@ -11,25 +11,17 @@
                 Procedures
             </button>
             <div id="procedures-menu" class="collapse show mb-3">
-                {% for name in names %}
-                {% if name != "Normal" %}
+                {% for procedure, diseases in procedures.items() %}
                 <div class="card mb-2">
                     <div class="card-body">
-                        {% if procedure[name] %}
-                            <ul class="list-unstyled mb-0">
-                                {% for procedure_item in procedure[name] %}
-                                    <li class="d-flex justify-content-between">
-                                        <span>{{ procedure_item }}</span>
-                                        <span>{{ name }}</span>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <p>No procedure data available.</p>
-                        {% endif %}
+                        <ul class="list-unstyled mb-0">
+                            <li class="d-flex justify-content-between">
+                                <span>{{ procedure }}</span>
+                                <span>{{ diseases|join(", ") }}</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                {% endif %}
                 {% endfor %}
             </div>
         </div>
@@ -42,25 +34,17 @@
                 Surgeries
             </button>
             <div id="surgeries-menu" class="collapse show mb-3">
-                {% for name in names %}
-                {% if name != "Normal" %}
+                {% for surgery, diseases in surgeries.items() %}
                 <div class="card mb-2">
                     <div class="card-body">
-                        {% if surgeries[name] %}
-                            <ul class="list-unstyled mb-0">
-                                {% for surgery in surgeries[name] %}
-                                    <li class="d-flex justify-content-between">
-                                        <span>{{ surgery }}</span>
-                                        <span>{{ name }}</span>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <p>No surgery data available.</p>
-                        {% endif %}
+                        <ul class="list-unstyled mb-0">
+                            <li class="d-flex justify-content-between">
+                                <span>{{ surgery }}</span>
+                                <span>{{ diseases|join(", ") }}</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                {% endif %}
                 {% endfor %}
             </div>
         </div>
@@ -73,25 +57,17 @@
                 Lifestyle Changes
             </button>
             <div id="lifestyle-menu" class="collapse show mb-3">
-                {% for name in names %}
-                {% if name != "Normal" %}
+                {% for lifestyle, diseases in lifestyle_changes.items() %}
                 <div class="card mb-2">
                     <div class="card-body">
-                        {% if lifestyle[name] %}
-                            <ul class="list-unstyled mb-0">
-                                {% for lifestyle_item in lifestyle[name] %}
-                                    <li class="d-flex justify-content-between">
-                                        <span>{{ lifestyle_item }}</span>
-                                        <span>{{ name }}</span>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <p>No lifestyle changes data available.</p>
-                        {% endif %}
+                        <ul class="list-unstyled mb-0">
+                            <li class="d-flex justify-content-between">
+                                <span>{{ lifestyle }}</span>
+                                <span>{{ diseases|join(", ") }}</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                {% endif %}
                 {% endfor %}
             </div>
         </div>
@@ -104,25 +80,17 @@
                 Labs
             </button>
             <div id="labs-menu" class="collapse show mb-3">
-                {% for name in names %}
-                {% if name != "Normal" %}
+                {% for lab, diseases in labs.items() %}
                 <div class="card mb-2">
                     <div class="card-body">
-                        {% if lab[name] %}
-                            <ul class="list-unstyled mb-0">
-                                {% for lab_item in lab[name] %}
-                                    <li class="d-flex justify-content-between">
-                                        <span>{{ lab_item }}</span>
-                                        <span>{{ name }}</span>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <p>No labs data available.</p>
-                        {% endif %}
+                        <ul class="list-unstyled mb-0">
+                            <li class="d-flex justify-content-between">
+                                <span>{{ lab }}</span>
+                                <span>{{ diseases|join(", ") }}</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                {% endif %}
                 {% endfor %}
             </div>
         </div>

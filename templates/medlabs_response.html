@@ -6,47 +6,84 @@
 
 <div class="container mt-4">
     <div class="row">
+        <!-- Confirmed Diagnosis Section -->
+        <div class="col-md-12 mb-4">
+            <h3>Confirmed Diagnosis</h3>
+            {% if confirmed %}
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            {% for disease, details in confirmed.items() %}
+                                <li class="mb-4">
+                                    <h5>{{ details.verbose_name }} ({{ details.disease_name }})</h5>
+                                    <p><strong>ICD-10 Codes:</strong> {{ details.ICD_10|join(', ') }}</p>
+                                    {% if details.confirmed_rules %}
+                                        <h6>Confirmed Rules:</h6>
+                                        <ul>
+                                            {% for rule in details.confirmed_rules %}
+                                                {% for condition in rule.conditions %}
+                                                    <li>{{ condition }}</li>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <p>No confirmed rules available.</p>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% else %}
+                <p>No confirmed diagnosis available.</p>
+            {% endif %}
+        </div>
+
+        <!-- Likely Diagnosis Section -->
         {% if "normal" in names %}
         <div class="alert alert-success text-center" role="alert" style="font-size: 1.5rem; font-weight: bold;">
             The Patient is Healthy According to MedLab Predictions!
         </div>
         {% else %}
-        {% for name in names %}
-        <div class="col-md-12 mb-3">
-            <!-- Disease Name Button -->
-            <button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#disease-{{ loop.index }}" aria-expanded="true" aria-controls="disease-{{ loop.index }}" style="background-color: #0287CA">
-                {{ name }} - Probability: {{ probs[name] }}
-            </button>
-            <!-- Feature Importance Dropdown -->
-            <div id="disease-{{ loop.index }}" class="collapse mt-2">
-                <div class="card card-body">
-                    <h5>Feature Importance</h5>
-                    {% if feature_imp %}
-                        <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Feature</th>
-                                        <th>Value</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for key, value in feature_imp[name].items() %}
+        <div class="col-md-12 mb-4">
+            <h3>Likely Diagnosis</h3>
+            {% for name in names %}
+            <div class="mb-3">
+                <!-- Disease Name Button -->
+                <button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#disease-{{ loop.index }}" aria-expanded="true" aria-controls="disease-{{ loop.index }}" style="background-color: #0287CA">
+                    <strong>{{ name }}</strong> - Probability: <span class="badge bg-secondary">{{ probs[name]|round(2) }}</span>
+                </button>
+                <!-- Feature Importance Dropdown -->
+                <div id="disease-{{ loop.index }}" class="collapse mt-2">
+                    <div class="card card-body">
+                        <h5>Feature Importance</h5>
+                        {% if feature_imp %}
+                            <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
+                                <table class="table table-striped">
+                                    <thead>
                                         <tr>
-                                            <td>{{ key }}</td>
-                                            <td>{{ value }}</td>
+                                            <th>Feature</th>
+                                            <th>Value</th>
                                         </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    {% else %}
-                        <p>No feature importance data available.</p>
-                    {% endif %}
+                                    </thead>
+                                    <tbody>
+                                        {% for key, value in feature_imp[name].items() %}
+                                            <tr>
+                                                <td>{{ key }}</td>
+                                                <td>{{ value }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <p>No feature importance data available.</p>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
         {% endif %}
     </div>
 </div>

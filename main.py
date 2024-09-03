@@ -102,18 +102,49 @@ class FlaskApp:
         return render_template("chronic_disease.html", names=sorted_names, prob=prob, imp=imp_features, vector=vector, risk=risky, data=self.patient1.data, rules=rules)
 
     def handle_medlabs_response(self):
-        names, probs, feature_imp = self.patient1.get_medlab_pred()
-        return render_template("medlabs_response.html", names=names, probs=probs, feature_imp=feature_imp, data=self.patient1.data)
+        names, probs, feature_imp, confirmed= self.patient1.get_medlab_pred()
+        print(confirmed)
+        return render_template("medlabs_response.html", names=names, probs=probs, feature_imp=feature_imp, confirmed=confirmed, data=self.patient1.data)
 
     def handle_pattern_recognition(self):
         fig = self.patient1.chronic_pred.sankey_plot_generator()
         plot_html = fig.to_html(full_html=False) if fig else None
         return render_template("pattern_recognition.html", html=plot_html, data=self.patient1.data)
 
+    # def handle_recommendations_response(self):
+    #     names, procedures, surgeries, labs, lifestyle_changes = self.patient1.get_recommendations()
+    #     return render_template("Recommendation.html", names=names, procedure=procedures, surgeries=surgeries, lab=labs, lifestyle=lifestyle_changes, data=self.patient1.data)
+
     def handle_recommendations_response(self):
         names, procedures, surgeries, labs, lifestyle_changes = self.patient1.get_recommendations()
-        return render_template("Recommendation.html", names=names, procedure=procedures, surgeries=surgeries, lab=labs, lifestyle=lifestyle_changes, data=self.patient1.data)
+        
+        # Aggregating data
+        def aggregate_data(recommendations):
+            aggregated = {}
+            for name in names:
+                if name != "Normal":
+                    for item in recommendations[name]:
+                        if item not in aggregated:
+                            aggregated[item] = []
+                        aggregated[item].append(name)
+            return aggregated
+
+        aggregated_procedures = aggregate_data(procedures)
+        aggregated_surgeries = aggregate_data(surgeries)
+        aggregated_lifestyle_changes = aggregate_data(lifestyle_changes)
+        aggregated_labs = aggregate_data(labs)
+        
+        return render_template(
+            "Recommendation.html",
+            names=names,
+            procedures=aggregated_procedures,
+            surgeries=aggregated_surgeries,
+            lifestyle_changes=aggregated_lifestyle_changes,
+            labs=aggregated_labs,
+            data=self.patient1.data
+        )
+
 
 if __name__ == '__main__':
     app_instance = FlaskApp()
-    app_instance.app.run(host="172.16.105.134", debug=True, port=5000)
+    app_instance.app.run(host="172.16.105.138", debug=True, port=5000)
