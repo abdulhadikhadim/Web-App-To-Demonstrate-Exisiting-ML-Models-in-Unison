@@ -23,8 +23,13 @@ class ChronicDiseasePred:
                 self.top_pred_rules[diseases["Disease"]] = diseases["TopPredictionRules"]
         self.trajectory=data["Content"]["DiseaseTrajectories"]
 
-    def sanky_plot_generator(self):
+    def sankey_plot_generator(self):
+        
         data = self.trajectory
+        if "Mapper" not in data:  # Check if Mapper data is available
+            self.has_sankey_data = False  # Set the flag to False if Mapper is missing
+            return None
+
         # Create a mapping from ICD10 codes to descriptions
         id_to_desc = {item["ICD10"]: item["Description"] for item in data["Mapper"]}
         # Extract unique labels
