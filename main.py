@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, flash, render_template_string
+from flask import Flask, render_template, request, session, flash, render_template_string,redirect
 from flask_session import Session
 from starter import MongoFetcher
 import json
@@ -25,27 +25,28 @@ patient1 = Patient()
 @app.route('/', methods=["GET", "POST"])
 def home():
     global patient1
+   
     if request.method == "POST":
-        session['PID'] = request.form['PID']
-        session['PP'] = request.form['PP'] 
-        
+        print("in home")
+        session['PID'] = request.form.get("PID", None)
+        session['PP'] = request.form.get("PP", None)
+       
         mongo_fetcher = MongoFetcher()
         patient1.patient_ID = session.get("PID", '')
         patient1.patient_practice = session.get("PP", '')
         pat = mongo_fetcher.get_patients_from_mongo(patient1.patient_ID, patient1.patient_practice)
         patient1.data = json.loads(pat)
-        
-        if patient1.data == {}:
-            print("Condition True")
+        # print(patient1.data)
+        if not patient1.data:
             flash("Patient ID or Practice is Incorrect!")
-
+            return render_template("index.html")
+ 
         else:  
             keys = ["_id", "patientid", "practice"]
             patient1.clean_data(keys)
-            return json.dumps(patient1.data)
-            
+            return redirect("/diagnose")
+               
     return render_template("index.html")
-
 
 @app.route('/diagnose')
 def diagnose():

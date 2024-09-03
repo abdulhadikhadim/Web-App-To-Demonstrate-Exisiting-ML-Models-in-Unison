@@ -152,13 +152,15 @@ body {
 }
 
 /* From Abdul hadi */
-/* Adjusting right-pane to make space for sidebar */
+/* Adjusting right-pane to fit within the page */
 .right-pane {
-    margin-left: 80px; /* Move content to the right, accounting for sidebar width + some padding */
-    padding-right: 60px; /* Optional: add padding to the right side */
+    margin-left: 0; /* Remove unnecessary left margin */
+    padding: 0 15px; /* Adjust padding for spacing inside the right pane */
+    width: calc(100% - 95px); /* Ensure right pane occupies remaining space */
 }
 
-/* Adjusting container to have full width minus sidebar */
+/* Adjusting container to have full width */
 .container {
-    max-width: calc(100%); /* Full width minus sidebar width + some padding */
+    max-width: 100%; /* Full width */
+    padding-left: 70px; /* Account for left-side content */
 }
