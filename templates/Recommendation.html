@@ -11,21 +11,17 @@
                 Procedures
             </button>
             <div id="procedures-menu" class="collapse show mb-3">
-                
                 {% for name in names %}
                 {% if name != "Normal" %}
                 <div class="card mb-2">
-                    <div class="card-header">
-                        <h5 class="mb-0 d-flex justify-content-between align-items-center">
-                            {{ name }}
-                            <span class="badge bg-primary">{{ prob[name] if name in prob else 'N/A' }}</span>
-                        </h5>
-                    </div>
                     <div class="card-body">
                         {% if procedure[name] %}
-                            <ul class="list-unstyled">
+                            <ul class="list-unstyled mb-0">
                                 {% for procedure_item in procedure[name] %}
-                                    <li>{{ procedure_item }}</li>
+                                    <li class="d-flex justify-content-between">
+                                        <span>{{ procedure_item }}</span>
+                                        <span>{{ name }}</span>
+                                    </li>
                                 {% endfor %}
                             </ul>
                         {% else %}
@@ -49,17 +45,14 @@
                 {% for name in names %}
                 {% if name != "Normal" %}
                 <div class="card mb-2">
-                    <div class="card-header">
-                        <h5 class="mb-0 d-flex justify-content-between align-items-center">
-                            {{ name }}
-                            <span class="badge bg-primary">{{ prob[name] if name in prob else 'N/A' }}</span>
-                        </h5>
-                    </div>
                     <div class="card-body">
                         {% if surgeries[name] %}
-                            <ul class="list-unstyled">
+                            <ul class="list-unstyled mb-0">
                                 {% for surgery in surgeries[name] %}
-                                    <li>{{ surgery }}</li>
+                                    <li class="d-flex justify-content-between">
+                                        <span>{{ surgery }}</span>
+                                        <span>{{ name }}</span>
+                                    </li>
                                 {% endfor %}
                             </ul>
                         {% else %}
@@ -83,17 +76,14 @@
                 {% for name in names %}
                 {% if name != "Normal" %}
                 <div class="card mb-2">
-                    <div class="card-header">
-                        <h5 class="mb-0 d-flex justify-content-between align-items-center">
-                            {{ name }}
-                            <span class="badge bg-primary">{{ prob[name] if name in prob else 'N/A' }}</span>
-                        </h5>
-                    </div>
                     <div class="card-body">
                         {% if lifestyle[name] %}
-                            <ul class="list-unstyled">
+                            <ul class="list-unstyled mb-0">
                                 {% for lifestyle_item in lifestyle[name] %}
-                                    <li>{{ lifestyle_item }}</li>
+                                    <li class="d-flex justify-content-between">
+                                        <span>{{ lifestyle_item }}</span>
+                                        <span>{{ name }}</span>
+                                    </li>
                                 {% endfor %}
                             </ul>
                         {% else %}
@@ -117,17 +107,14 @@
                 {% for name in names %}
                 {% if name != "Normal" %}
                 <div class="card mb-2">
-                    <div class="card-header">
-                        <h5 class="mb-0 d-flex justify-content-between align-items-center">
-                            {{ name }}
-                            <span class="badge bg-primary">{{ prob[name] if name in prob else 'N/A' }}</span>
-                        </h5>
-                    </div>
                     <div class="card-body">
                         {% if lab[name] %}
-                            <ul class="list-unstyled">
+                            <ul class="list-unstyled mb-0">
                                 {% for lab_item in lab[name] %}
-                                    <li>{{ lab_item }}</li>
+                                    <li class="d-flex justify-content-between">
+                                        <span>{{ lab_item }}</span>
+                                        <span>{{ name }}</span>
+                                    </li>
                                 {% endfor %}
                             </ul>
                         {% else %}

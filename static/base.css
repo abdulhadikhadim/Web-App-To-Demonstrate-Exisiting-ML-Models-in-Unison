@@ -70,7 +70,7 @@ body {
 .sidebar .collapsible-menu {
     background-color: #0287CA;
     border: none;
-    color: #000;
+    color: #fffdfd;
     padding: 10px;
     width: 100%;
     text-align: left;
@@ -78,11 +78,13 @@ body {
     cursor: pointer;
     margin-bottom: 10px;
     border-radius: 4px;
+    font-weight: bold;
 }
 
 .collapsible-content {
     padding-left: 15px;
     display: none;
+    font-weight: bold;
 }
 
 .collapsible-menu.active + .collapsible-content {

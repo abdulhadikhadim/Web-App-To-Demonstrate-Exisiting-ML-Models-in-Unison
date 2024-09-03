@@ -108,6 +108,14 @@ import json
 import requests
 from patient import Patient
 from starter import MongoFetcher
+from chronic import ChronicPredictor
+from medlabs import MedLabPredictor
+from recommendations import Recommendations
+from collections import defaultdict, namedtuple
+
+
+with open("static\disease_name_mapping.json", "r") as file:
+    DISEASE_MAPPINGS = json.load(file)
 
 API_URL = "http://172.16.101.167:5000/integrate"
 
@@ -195,6 +203,42 @@ class FlaskApp:
         names, procedures, surgeries, labs, lifestyle_changes = self.patient1.get_recommendations()
         return render_template("Recommendation.html", names=names, procedure=procedures, surgeries=surgeries, lab=labs, lifestyle=lifestyle_changes, data=self.patient1.data)
 
-if __name__ == '__main__':
-    app_instance = FlaskApp()
-    app_instance.app.run(host="172.16.105.138", debug=True, port=5000)
+
+# @app.route("/recommendation")
+# def recommendations_response():
+#     global patient1
+#     global diagnosis
+
+#     # Retrieve the recommendations
+#     names, procedures, surgeries, labs, lifestyle_changes = patient1.get_recommendations()
+
+#     # Define a NamedTuple for storing grouped data
+#     GroupedRecommendation = namedtuple('GroupedRecommendation', ['item', 'diseases'])
+
+#     # Function to group recommendations by their items
+#     def group_recommendations(names, recommendations_dict):
+#         grouped = defaultdict(list)
+#         for name in names:
+#             if name != "Normal" and recommendations_dict.get(name):
+#                 for item in recommendations_dict[name]:
+#                     grouped[item].append(name)
+#         return [GroupedRecommendation(item=k, diseases=', '.join(v)) for k, v in grouped.items()]
+
+#     # Grouping the data
+#     grouped_procedures = group_recommendations(names, procedures)
+#     grouped_surgeries = group_recommendations(names, surgeries)
+#     grouped_labs = group_recommendations(names, labs)
+#     grouped_lifestyle_changes = group_recommendations(names, lifestyle_changes)
+
+#     return render_template(
+#         "Recommendation.html", 
+#         grouped_procedures=grouped_procedures,
+#         grouped_surgeries=grouped_surgeries,
+#         grouped_labs=grouped_labs,
+#         grouped_lifestyle_changes=grouped_lifestyle_changes,
+#         data=patient1.data
+#     )
+
+if __name__ == '__main__':    
+    app.run(host = "172.16.105.134", debug=True, port=5000)
+
