@@ -4,7 +4,6 @@ import json
 class MongoFetcher:
     def __init__(self):
         self.client = MongoClient('mongodb://172.16.103.206:27017/')
-        # self.db = self.client['Patients_for_API']
         self.db = self.client['Patients_for_API']
         
         self.collection = self.db['PatientData200']
