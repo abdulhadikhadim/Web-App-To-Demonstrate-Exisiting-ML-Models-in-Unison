@@ -65,9 +65,7 @@ class Patient:
         for key in keys:
             self._data.pop(key, None)
         return self._data
-    
-
-    
+     
     def sort_diagnosis(self):
         def parse_date(date_str):
             try: 
@@ -84,7 +82,7 @@ class Patient:
         self.medlab_pred = MedLabPredictor()
         self.medlab_pred.set_values(data["medlabs_response"])
         self.recommendations = Recommendations()
-        filtered_names = self.recommendations.filter_recommendations(self.chronic_pred,self.medlab_pred)
+        filtered_names = self.recommendations.filter_recommendations(self.chronic_pred, self.medlab_pred)
         self.recommendations.set_values(filtered_names, data["recommendations"])
     
     def get_chronic_pred(self):

@@ -5,6 +5,9 @@ from typing import List, Dict, Any
 import json
 with open("static/recommendations.json", "r") as file:
     DISEASE_RECOMMENDATIONS = json.load(file)
+    
+with open("static\disease_name_mapping.json", "r") as file:
+    DISEASE_MAPPINGS = json.load(file)
 
 
 with open("static\disease_name_mapping.json", "r") as file:
