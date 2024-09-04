@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 import json
 
-class MongoFetcher:
+class DatabaseHandler:
     def __init__(self):
         self.client = MongoClient('mongodb://172.16.103.206:27017/')
         self.db = self.client['Patients_for_API']
