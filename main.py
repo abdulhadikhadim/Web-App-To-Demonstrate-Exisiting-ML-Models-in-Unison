@@ -3,7 +3,7 @@ from flask_session import Session
 import json
 import requests
 from patient import Patient
-from starter import MongoFetcher
+from starter import DatabaseHandler
 import os
 
 with open("static\disease_name_mapping.json", "r") as file:
@@ -55,7 +55,7 @@ class FlaskApp:
             session['PID'] = request.form.get("PID", None)
             session['PP'] = request.form.get("PP", None)
             
-            mongo_fetcher = MongoFetcher()
+            mongo_fetcher = DatabaseHandler()
             self.patient1.patient_ID = session.get("PID", '')
             self.patient1.patient_practice = session.get("PP", '')
             pat = mongo_fetcher.get_patients_from_mongo(self.patient1.patient_ID, self.patient1.patient_practice)

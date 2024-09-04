@@ -64,10 +64,13 @@ body {
     padding: 40px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
+    margin: 0 auto; /* Center horizontally */
+    position: absolute; /* Remove it from the normal flow */
+    top: 35%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Offset to fully center */
 }
+
 .patient-details-form h1 {
     font-size: 2rem;
     margin-bottom: 1rem;
@@ -84,18 +87,20 @@ body {
     font-size: 1.5rem;
     font-weight: bold;
     align-items: center;
-    /* justify-content: space-between; */
+    justify-content: space-between; /* Ensures items are evenly spaced */
+    position: relative;
 }
-.yellow-strip a {
-    color: white;
-    margin: 0 15px;
-    text-decoration: none;
-    font-weight: bold;
-    
-}
+
 .yellow-strip img {
     height: 25px; /* Adjust this value to match your navigation bar height */
-    margin-right: 525px;
+    margin-right: 0; /* Reset margin */
+}
+
+.prediction-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
 }
 #jsonResult {
     margin: 0 auto;
@@ -103,3 +108,79 @@ body {
     white-space: pre-wrap;
     overflow-x: auto;
 }
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1; /* This makes the main content area grow and fill the available space */
+}
+
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+}
+
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+}
+
+.footer .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.footer .row:first-child {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Aligns items to the top */
+    flex-wrap: wrap;
+}
+
+.footer .row.mt-4 {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.footer .col-md-4.text-end {
+    text-align: right; /* Ensures both "Follow Us" and icons are right-aligned */
+}
+
+.footer .social-icons {
+    display: flex;
+    justify-content: flex-end; /* Aligns icons to the right */
+    align-items: center; /* Vertically centers the icons */
+}
+
+.footer .fab {
+    font-size: 0.3 rem; /* Slightly reduce icon size to match smaller footer height */
+    margin-left: 2px; /* Adjust spacing between icons */
+}
+
+.footer h5 {
+    font-size: 1rem; /* Reduce the font size of the headers */
+    margin-bottom: 5px; /* Reduce margin to keep content tight */
+}
+
+.footer p {
+    margin-bottom: 5px; /* Reduce margin to keep content tight */
+    font-size: 0.9rem; /* Adjust text size to match reduced footer height */
+}
+

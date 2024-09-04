@@ -1,0 +1,81 @@
+@startuml
+actor User
+
+participant "FlaskApp" as Flask
+participant "Patient" as Patient
+participant "ChronicPredictor" as ChronicPredictor
+participant "MedLabPredictor" as MedLabPredictor
+participant "Recommendations" as Recommendations
+participant "DatabaseHandler" as Database
+participant "API" as API
+
+User -> Flask: POST / (Enter Patient ID and Practice)
+activate Flask
+Flask -> Patient: reset_patient()
+Flask -> Database: get_patients_from_mongo(patient_ID, patient_practice)
+activate Database
+Database --> Flask: return patient_data
+deactivate Database
+
+
+alt Patient data is valid
+   Flask -> Patient: clean_data(keys)
+else Patient data is invalid
+    Flask --> User: Return error message (Patient ID or Practice is Incorrect)
+end
+deactivate Flask
+
+User -> Flask: GET /diagnose
+activate Flask
+Flask -> API: Post patient data to API_URL
+activate API
+API --> Flask: Return diagnosis data
+deactivate API
+Flask -> Patient: collect_patient_data(response.json())
+Patient -> ChronicPredictor: set_values(chronic_diseases_response)
+Patient -> MedLabPredictor: set_values(medlabs_response)
+Patient -> Recommendations: filter_recommendations(chronic_pred, medlab_pred)
+Patient -> Recommendations: set_values(filtered_names, recommendations)
+Flask --> User: Render diagnose.html with patient data
+deactivate Flask
+
+User -> Flask: GET /chronic
+activate Flask
+Flask -> Patient: get_chronic_pred()
+activate Patient
+Patient -> ChronicPredictor: get_pred_data()
+activate ChronicPredictor 
+ChronicPredictor --> Patient: return chronic_prediction_data
+deactivate ChronicPredictor
+Patient --> Flask: return chronic_prediction_data
+deactivate Patient
+Flask --> User: Render chronic_disease.html with chronic prediction data
+deactivate Flask
+
+User -> Flask: GET /medlabs
+activate Flask
+Flask -> Patient: get_medlab_pred()
+activate Patient
+Patient -> MedLabPredictor: get_medlab_data()
+activate MedLabPredictor 
+MedLabPredictor --> Patient : return medlab_prediction_data
+deactivate MedLabPredictor
+Patient --> Flask : return medlab_prediction_data
+deactivate Patient
+Flask --> User: Render medlabs_response.html with medlab prediction data
+deactivate Flask
+
+User -> Flask: GET /recommendation
+activate Flask
+Flask -> Patient: get_recommendations()
+activate Patient
+Patient -> Recommendations: get_recommendation_data()
+activate Recommendations
+Recommendations --> Patient: return recommendations
+deactivate Recommendations
+Patient --> Flask : return recommendations_data
+deactivate Patient
+Flask --> User: Render Recommendation.html with recommendation data
+deactivate Flask
+
+@enduml
