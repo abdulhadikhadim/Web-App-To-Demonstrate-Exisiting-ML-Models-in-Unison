@@ -3,26 +3,31 @@
 {% block title %}Chronic Diseases{% endblock %}
 
 {% block content %}
+
 <div class="container mt-4">
     <!-- Left Pane -->
     <div class="left-pane">
         <div class="d-flex justify-content-center mb-3">
-            <div class="btn-group-vertical" role="group" aria-label="Disease Tabs" >
+            <!-- Wrap the button group in a separate div with background color -->
+            <div style="background-color: #f5f5f5; padding: 10px; border-radius: 20px;">
                 <h3>Chronic Disease (Probability)</h3>
-                {% if names %}
-                    {% for name in names %}
-                        {% if name %}
-                            <button class="btn btn-outline-primary {% if loop.index == active_tab or loop.index == 1 %}active{% endif %}" id="btn-{{ loop.index }}" onclick="showTab({{ loop.index }})">{{ name }} ({{ prob[name] }}) </button>
-                        {% endif %}
-                    {% endfor %}
-                {% else %}
-                    <div class="alert alert-success text-center" role="alert" style="font-size: 1.5rem; font-weight: bold;">
-                        The Patient has no chronic disease!
-                    </div>
-                {% endif %}
+                <div class="btn-group-horizontal" role="group" aria-label="Disease Tabs">
+                    {% if names %}
+                        {% for name in names %}
+                            {% if name %}
+                                <button class="btn btn-outline-primary {% if loop.index == active_tab or loop.index == 1 %}active{% endif %}" id="btn-{{ loop.index }}" onclick="showTab({{ loop.index }})">{{ name }} ({{ prob[name] }}) </button>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <div class="alert alert-success text-center" role="alert" style="font-size: 1.5rem; font-weight: bold;">
+                            The Patient has no chronic disease!
+                        </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
+
 
     <!-- Right Pane -->
     <div class="right-pane">
@@ -30,50 +35,13 @@
             {% for name in names %}
             <div class="tab-pane {% if loop.index == active_tab or loop.index == 1 %}show{% endif %}" id="tab-content-{{ loop.index }}" style="display: {% if loop.index == active_tab or loop.index == 1 %}block{% else %}none{% endif %};">
                 <div class="row">
-                    <!-- Feature Vector Section -->
-                    <div class="col-lg-12 mb-3">
-                        <div class="accordion" id="accordion-feature-vector-{{ loop.index }}">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="heading-feature-vector-{{ loop.index }}">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-feature-vector-{{ loop.index }}" aria-expanded="true" aria-controls="collapse-feature-vector-{{ loop.index }}">
-                                        Feature Vector
-                                    </button>
-                                </h2>
-                                <div id="collapse-feature-vector-{{ loop.index }}" class="accordion-collapse collapse show" aria-labelledby="heading-feature-vector-{{ loop.index }}" data-bs-parent="#accordion-feature-vector-{{ loop.index }}">
-                                    <div class="accordion-body">
-                                        {% if vector[name] %}
-                                            <table class="table table-striped" id="table-feature-vector-{{ loop.index }}">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Feature</th>
-                                                        <th>Value</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {% for key, value in vector[name].items() %}
-                                                        <tr>
-                                                            <td>{{ key }}</td>
-                                                            <td>{{ value }}</td>
-                                                        </tr>
-                                                    {% endfor %}
-                                                </tbody>
-                                            </table>
-                                        {% else %}
-                                            <p>No feature data available.</p>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Important Features Section -->
                     <div class="col-lg-12 mb-3">
                         <div class="accordion" id="accordion-important-features-{{ loop.index }}">
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="heading-important-features-{{ loop.index }}">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-important-features-{{ loop.index }}" aria-expanded="true" aria-controls="collapse-important-features-{{ loop.index }}">
-                                        Important Features
+                                        <div style="font-weight: bold;">Important Features</div>
                                     </button>
                                 </h2>
                                 <div id="collapse-important-features-{{ loop.index }}" class="accordion-collapse collapse show" aria-labelledby="heading-important-features-{{ loop.index }}" data-bs-parent="#accordion-important-features-{{ loop.index }}">
@@ -110,7 +78,7 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="heading-risky-features-{{ loop.index }}">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-risky-features-{{ loop.index }}" aria-expanded="true" aria-controls="collapse-risky-features-{{ loop.index }}">
-                                        Risky Features
+                                        <div style="font-weight: bold;">Risky Features</div>
                                     </button>
                                 </h2>
                                 <div id="collapse-risky-features-{{ loop.index }}" class="accordion-collapse collapse show" aria-labelledby="heading-risky-features-{{ loop.index }}" data-bs-parent="#accordion-risky-features-{{ loop.index }}">
@@ -141,6 +109,42 @@
                         </div>
                     </div>
                 </div>
+                                    <!-- Feature Vector Section -->
+                                    <div class="col-lg-12 mb-3">
+                                        <div class="accordion" id="accordion-feature-vector-{{ loop.index }}">
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="heading-feature-vector-{{ loop.index }}">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-feature-vector-{{ loop.index }}" aria-expanded="true" aria-controls="collapse-feature-vector-{{ loop.index }}">
+                                                        <div style="font-weight: bold;">Feature Vector</div>
+                                                    </button>
+                                                </h2>
+                                                <div id="collapse-feature-vector-{{ loop.index }}" class="accordion-collapse collapse show" aria-labelledby="heading-feature-vector-{{ loop.index }}" data-bs-parent="#accordion-feature-vector-{{ loop.index }}">
+                                                    <div class="accordion-body">
+                                                        {% if vector[name] %}
+                                                            <table class="table table-striped" id="table-feature-vector-{{ loop.index }}">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Feature</th>
+                                                                        <th>Value</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {% for key, value in vector[name].items() %}
+                                                                        <tr>
+                                                                            <td>{{ key }}</td>
+                                                                            <td>{{ value }}</td>
+                                                                        </tr>
+                                                                    {% endfor %}
+                                                                </tbody>
+                                                            </table>
+                                                        {% else %}
+                                                            <p>No feature data available.</p>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                 <!-- Prediction Rules Button -->
                 <button class="btn btn-primary mt-3" type="button" data-bs-toggle="modal" data-bs-target="#rules-modal-{{ loop.index }}">
@@ -191,7 +195,7 @@
             pane.classList.toggle('show', index === tabIndex - 1);
         });
 
-        document.querySelectorAll('.btn-group-vertical .btn').forEach((button, index) => {
+        document.querySelectorAll('.btn-group-horizontal .btn').forEach((button, index) => {
             button.classList.toggle('active', index === tabIndex - 1);
         });
     }
