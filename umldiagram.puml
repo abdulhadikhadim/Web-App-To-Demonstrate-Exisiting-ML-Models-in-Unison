@@ -72,7 +72,6 @@ hide empty members
 
     class FlaskApp {
         + app : Flask
-        + diagnosis : Dict<String, Any>
         + patient1 : Patient
     }
 
