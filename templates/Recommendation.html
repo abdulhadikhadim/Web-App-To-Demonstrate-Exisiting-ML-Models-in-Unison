@@ -72,7 +72,7 @@
                 <div style="font-weight: bold;">Lifestyle Changes</div>
             </button>
             <div id="lifestyle-menu" class="collapse show mb-3">
-                {% if diseases in lifestyle_changes %}
+                {% if lifestyle_changes %}
                     {% for lifestyle, diseases in lifestyle_changes.items() %}
                     <div class="card mb-2">
                         <div class="card-body">
