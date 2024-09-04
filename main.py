@@ -20,7 +20,6 @@ class FlaskApp:
         self.app.config["SECRET_KEY"] = "your_secret_key_here"
         Session(self.app)
         
-        self.diagnosis = {}
         self.patient1 = Patient()
         
         self.setup_routes()
@@ -87,8 +86,7 @@ class FlaskApp:
 
     def handle_diagnose(self):
         response = requests.post(API_URL, json=self.patient1.data)
-        self.diagnosis = response.json()
-        self.patient1.collect_patient_data(self.diagnosis)
+        self.patient1.collect_patient_data(response.json())
         self.patient1.sort_diagnosis()
         return render_template('diagnose.html', data=self.patient1.data)
 
