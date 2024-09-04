@@ -18,10 +18,11 @@ body {
 }
 .btn-yellow {
     background-color: #0287CA; /* Adjust to match your theme */
-    color: #000; /* Adjust to match your theme */
+    color: #ffffff; /* Adjust to match your theme */
 }
 .btn-yellow:hover {
-    background-color: #0287CA; /* Adjust to match your theme */
+    background-color: #065d88; /* Adjust to match your theme */
+    color: white;
 }
 .hidden {
     display: none;
