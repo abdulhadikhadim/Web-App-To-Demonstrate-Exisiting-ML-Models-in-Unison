@@ -66,18 +66,7 @@ class Patient:
             self._data.pop(key, None)
         return self._data
     
-    def filter_recommendations(self):
-        names = []
-        for name in self.chronic_pred.names:
-            if self.chronic_pred.prob[name]>=0.5:
-                names.append(DISEASE_MAPPINGS[name])
-        if "normal" in self.medlab_pred.names:
-            names.append("Normal")
-        else:
-            for name in self.medlab_pred.names:
-                if self.medlab_pred.prob[name]>=60:
-                    names.append(DISEASE_MAPPINGS[name])
-        return names   
+
     
     def sort_diagnosis(self):
         def parse_date(date_str):
@@ -95,7 +84,7 @@ class Patient:
         self.medlab_pred = MedLabPredictor()
         self.medlab_pred.set_values(data["medlabs_response"])
         self.recommendations = Recommendations()
-        filtered_names = self.filter_recommendations()
+        filtered_names = self.recommendations.filter_recommendations(self.chronic_pred,self.medlab_pred)
         self.recommendations.set_values(filtered_names, data["recommendations"])
     
     def get_chronic_pred(self):

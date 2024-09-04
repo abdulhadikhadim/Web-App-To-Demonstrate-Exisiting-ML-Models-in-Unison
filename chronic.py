@@ -7,7 +7,6 @@ from DiseasePredictor import DiseasePredictor
 class ChronicPredictor(DiseasePredictor):
     feature_vector: Dict[str, Any] = field(default_factory=dict)
     risky_features: Dict[str, Any] = field(default_factory=dict)
-    macro_rules: Optional[Any] = None
     top_pred_rules: Dict[str, Any] = field(default_factory=dict)
     trajectory: Optional[Dict[str, Any]] = None
 
