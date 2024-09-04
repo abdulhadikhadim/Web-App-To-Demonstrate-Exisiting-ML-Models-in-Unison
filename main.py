@@ -107,9 +107,6 @@ class FlaskApp:
         plot_html = fig.to_html(full_html=False) if fig else None
         return render_template("pattern_recognition.html", html=plot_html, data=self.patient1.data)
 
-    # def handle_recommendations_response(self):
-    #     names, procedures, surgeries, labs, lifestyle_changes = self.patient1.get_recommendations()
-    #     return render_template("Recommendation.html", names=names, procedure=procedures, surgeries=surgeries, lab=labs, lifestyle=lifestyle_changes, data=self.patient1.data)
 
     def handle_recommendations_response(self):
         names, procedures, surgeries, labs, lifestyle_changes = self.patient1.get_recommendations()
