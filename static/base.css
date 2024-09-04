@@ -185,3 +185,8 @@ body {
     max-height: 400px; /* Adjust the height as needed */
     overflow-y: auto;
 }
+.btn-group-horizontal .btn.active {
+    background-color: #0287CA; /* Light blue color */
+    color: white; /* Text color inside the button */
+    border-color: #c5df55; /* Border color matching the background */
+}

@@ -8,17 +8,17 @@
     <div class="row">
         <!-- Confirmed Diagnosis Section -->
         <div class="col-md-12 mb-4">
-            <h3>Confirmed Diagnosis</h3>
+            <h2>Confirmed Diagnosis</h2>
             {% if confirmed %}
                 <div class="card">
                     <div class="card-body">
                         <ul class="list-unstyled">
                             {% for disease, details in confirmed.items() %}
                                 <li class="mb-4">
-                                    <h5>{{ details.verbose_name }} ({{ details.disease_name }})</h5>
+                                    <h5><div style="font-weight: bold;">{{ details.verbose_name }} ({{ details.disease_name }})</div></h5>
                                     <p><strong>ICD-10 Codes:</strong> {{ details.ICD_10|join(', ') }}</p>
                                     {% if details.confirmed_rules %}
-                                        <h6>Confirmed Rules:</h6>
+                                    <div ><h6 style="font-weight:bold;">Confirmed Rules:</h6></div>
                                         <ul>
                                             {% for rule in details.confirmed_rules %}
                                                 {% for condition in rule.conditions %}
@@ -50,9 +50,19 @@
             {% for name in names %}
             <div class="mb-3">
                 <!-- Disease Name Button -->
+                {% if probs[name] >= 70 %}
+                    <button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#disease-{{ loop.index }}" aria-expanded="true" aria-controls="disease-{{ loop.index }}" style="background-color: #0287CA">
+                        <strong>{{ name }}</strong> - Probability: <span class="badge bg-danger">{{ (probs[name]/100)|round(3) }}</span>
+                    </button>
+                    {% elif probs[name] > 30 and probs[name] < 50 %}
+                    <button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#disease-{{ loop.index }}" aria-expanded="true" aria-controls="disease-{{ loop.index }}" style="background-color: #0287CA">
+                        <strong>{{ name }}</strong> - Probability: <span class="badge bg-warning">{{ (probs[name] / 100)|round(3) }}</span>
+                    </button>
+                {%else%}
                 <button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#disease-{{ loop.index }}" aria-expanded="true" aria-controls="disease-{{ loop.index }}" style="background-color: #0287CA">
-                    <strong>{{ name }}</strong> - Probability: <span class="badge bg-secondary">{{ probs[name]|round(2) }}</span>
+                    <strong>{{ name }}</strong> - Probability: <span class="badge bg-secondary">{{ (probs[name]/100)|round(3) }}</span>
                 </button>
+                {% endif %}
                 <!-- Feature Importance Dropdown -->
                 <div id="disease-{{ loop.index }}" class="collapse mt-2">
                     <div class="card card-body">
@@ -70,7 +80,7 @@
                                         {% for key, value in feature_imp[name].items() %}
                                             <tr>
                                                 <td>{{ key }}</td>
-                                                <td>{{ value }}</td>
+                                                <td>{{ value|float|round(7) }}</td>
                                             </tr>
                                         {% endfor %}
                                     </tbody>

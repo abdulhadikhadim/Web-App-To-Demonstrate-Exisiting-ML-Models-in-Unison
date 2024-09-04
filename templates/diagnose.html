@@ -9,24 +9,48 @@
     <div class="container">
         <div class="d-flex justify-content-around">
             <div class="text-center mx-2">
-                <a href="chronic">
-                    <img src="static/imgs/Chronic_Diseases.jpg" alt="Chronic Disease" class="img-feature" style="width: 300px; height: auto;">
+                <a href="chronic" class="feature-link">
+                    <img src="static/imgs/Chronic_Diseases.png" alt="Chronic Disease" class="img-feature" style="width: 310px; height: 86%;">
                     <h3 class="feature-title text-yellow">Chronic Disease</h3>
                 </a>
             </div>
             <div class="text-center mx-2">
-                <a href="medlabs">
-                    <img src="static/imgs/Lab_Testing.jpg" alt="MedLab Diagnosis" class="img-feature" style="width: 300px; height: auto;">
+                <a href="medlabs" class="feature-link">
+                    <img src="static/imgs/Lab_Testing.png" alt="MedLab Diagnosis" class="img-feature" style="width: 310px; height: 86.5%;">
                     <h3 class="feature-title text-yellow">MedLab Diagnosis</h3>
                 </a>
             </div>
             <div class="text-center mx-2">
-                <a href="recommendation">
-                    <img src="static/imgs/Chronic_Diseases.jpg" alt="Recommendations" class="img-feature" style="width: 300px; height: auto;">
+                <a href="recommendation" class="feature-link">
+                    <img src="static/imgs/Recommendations.png" alt="Recommendations" class="img-feature" style="width: 310px; height: 87%;">
                     <h3 class="feature-title text-yellow">Recommendations</h3>
                 </a>
             </div>
         </div>
     </div>
 </section>
+
+<style>
+    .feature-link {
+        text-decoration: none;
+        font-weight: bolder;
+        color: #3498db;
+        transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    .feature-link:hover {
+        color: #2c3e50;
+        text-shadow: 1px 1px 2px #7f8c8d;
+    }
+
+    .feature-title {
+        margin-top: 15px;
+        font-size: 1.5rem;
+    }
+
+    .text-yellow {
+        color: #0f5ef1;
+    }
+</style>
+
 {% endblock %}

@@ -7,45 +7,60 @@
     <div class="row mb-4">
         <!-- Procedures -->
         <div class="col-md-12">
+            <h2>Recommendations</h2>
             <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#procedures-menu" aria-expanded="true" aria-controls="procedures-menu" style="background-color: #0287CA">
-                Procedures
+                <div style="font-weight: bold;">Procedures</div>
             </button>
             <div id="procedures-menu" class="collapse show mb-3">
-                {% for procedure, diseases in procedures.items() %}
-                <div class="card mb-2">
-                    <div class="card-body">
-                        <ul class="list-unstyled mb-0">
-                            <li class="d-flex justify-content-between">
-                                <span>{{ procedure }}</span>
-                                <span>{{ diseases|join(", ") }}</span>
-                            </li>
-                        </ul>
+                {% if procedures %}
+                    {% for procedure, diseases in procedures.items() %}
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <ul class="list-unstyled mb-0">
+                                    <li class="d-flex justify-content-between">
+                                        <div style="font-weight: bold;"><span>{{ procedure }}</span></div>
+                                        <div style="font-weight: bold;"><span>{{ diseases|join(", ") }}</span></div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-success" role="alert">
+                        No procedures available.
                     </div>
-                </div>
-                {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>
+    
 
     <div class="row mb-4">
         <!-- Surgeries -->
         <div class="col-12">
             <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#surgeries-menu" aria-expanded="true" aria-controls="surgeries-menu" style="background-color: #0287CA">
-                Surgeries
+                <div style="font-weight: bold;">Surgeries</div>
             </button>
             <div id="surgeries-menu" class="collapse show mb-3">
-                {% for surgery, diseases in surgeries.items() %}
-                <div class="card mb-2">
-                    <div class="card-body">
-                        <ul class="list-unstyled mb-0">
-                            <li class="d-flex justify-content-between">
-                                <span>{{ surgery }}</span>
-                                <span>{{ diseases|join(", ") }}</span>
-                            </li>
-                        </ul>
+                {%if surgeries %}
+                    {% for surgery, diseases in surgeries.items() %}
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <ul class="list-unstyled mb-0">
+                                <li class="d-flex justify-content-between">
+                                    <div style="font-weight: bold;"><span>{{ surgery }}</span></div>
+                                    <div style="font-weight: bold;"><span>{{ diseases|join(", ") }}</span></div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
+                    {% endfor %}
+                {% else %}
+                <div class="alert alert-success" role="alert">
+                    No Surgeries for this Patient.
                 </div>
-                {% endfor %}
+                {% endif %}
+
             </div>
         </div>
     </div>
@@ -54,21 +69,27 @@
         <!-- Lifestyle Changes -->
         <div class="col-12">
             <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#lifestyle-menu" aria-expanded="true" aria-controls="lifestyle-menu" style="background-color: #0287CA">
-                Lifestyle Changes
+                <div style="font-weight: bold;">Lifestyle Changes</div>
             </button>
             <div id="lifestyle-menu" class="collapse show mb-3">
-                {% for lifestyle, diseases in lifestyle_changes.items() %}
-                <div class="card mb-2">
-                    <div class="card-body">
-                        <ul class="list-unstyled mb-0">
-                            <li class="d-flex justify-content-between">
-                                <span>{{ lifestyle }}</span>
-                                <span>{{ diseases|join(", ") }}</span>
-                            </li>
-                        </ul>
+                {% if diseases in lifestyle_changes %}
+                    {% for lifestyle, diseases in lifestyle_changes.items() %}
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <ul class="list-unstyled mb-0">
+                                <li class="d-flex justify-content-between">
+                                    <div style="font-weight: bold;"><span>{{ lifestyle }}</span></div>
+                                    <div style="font-weight: bold;"><span>{{ diseases|join(", ") }}</span></div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
+                    {% endfor %}
+                {% else %}
+                <div class="alert alert-success" role="alert">
+                    No Lifestyle Change Recommended.
                 </div>
-                {% endfor %}
+            {% endif %}
             </div>
         </div>
     </div>
@@ -77,21 +98,27 @@
         <!-- Labs -->
         <div class="col-12">
             <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#labs-menu" aria-expanded="true" aria-controls="labs-menu" style="background-color: #0287CA">
-                Labs
+            <div style="font-weight: bold;">Labs</div>
             </button>
             <div id="labs-menu" class="collapse show mb-3">
-                {% for lab, diseases in labs.items() %}
-                <div class="card mb-2">
-                    <div class="card-body">
-                        <ul class="list-unstyled mb-0">
-                            <li class="d-flex justify-content-between">
-                                <span>{{ lab }}</span>
-                                <span>{{ diseases|join(", ") }}</span>
-                            </li>
-                        </ul>
+                {% if labs %}
+                    {% for lab, diseases in labs.items() %}
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <ul class="list-unstyled mb-0">
+                                <li class="d-flex justify-content-between">
+                                    <div style="font-weight: bold;"><span>{{ lab }}</span></div>
+                                    <div style="font-weight: bold;"><span>{{ diseases|join(", ") }}</span></div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-success" role="alert">
+                        No procedures available.
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
