@@ -17,7 +17,7 @@ class MedLabPredictor(DiseasePredictor):
             if name not in self.names:
                 self.names.append(name)
                 self.prob[name] = disease["probability"]
-                self.imp_features[name] = disease["feature_importances"]
+                self.imp_features[name] = dict(sorted(disease["feature_importances"].items(), key=lambda item: item[1], reverse=True))
         for disease in data["confirmed_diag"]:
                     self.confirmed_diag[disease["verbose_name"]] = disease
 

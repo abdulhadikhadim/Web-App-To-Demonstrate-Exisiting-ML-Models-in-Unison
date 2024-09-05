@@ -14,7 +14,14 @@ class ChronicPredictor(DiseasePredictor):
         for diseases in data["Content"]["DiseasePredictions"]:
             if diseases["Disease"] not in self.names:
                 self.names.append(diseases["Disease"])
-                self.prob[diseases["Disease"]] = diseases["ModelsProbabilities"]["12_months"]
+                # print(diseases["ModelsProbabilities"])
+                keys = diseases['ModelsProbabilities'].keys()
+
+                
+                if "12_months" in diseases["ModelsProbabilities"]:
+                    self.prob[diseases["Disease"]] = diseases["ModelsProbabilities"]["12_months"]
+                else:
+                    self.prob[diseases["Disease"]] = diseases["ModelsProbabilities"]["4_months"]
                 self.feature_vector[diseases["Disease"]] = diseases["FeatureVector"]
                 self.risky_features[diseases["Disease"]] = diseases["RiskyFeatures"]
                 self.imp_features[diseases["Disease"]] = diseases["AllImportantFeatures"]

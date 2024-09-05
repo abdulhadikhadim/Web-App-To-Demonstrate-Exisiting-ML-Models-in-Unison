@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, flash, redirect, jsonify
+from flask import Flask, render_template, request, session, flash, redirect, jsonify, url_for
 from flask_session import Session
 import json
 import requests
@@ -50,7 +50,7 @@ class FlaskApp:
             return self.handle_recommendations_response()
 
     def handle_home(self):
-        self.patient1.reset_patient()
+        # self.patient1.reset_patient()
         if request.method == "POST":
             session['PID'] = request.form.get("PID", None)
             session['PP'] = request.form.get("PP", None)
@@ -84,11 +84,26 @@ class FlaskApp:
         
         return render_template("index.html", practices=practices)
 
+    # def handle_diagnose(self):
+    #     response = requests.post(API_URL, json=self.patient1.data)
+    #     self.patient1.collect_patient_data(response.json())
+    #     self.patient1.sort_diagnosis()
+    #     return render_template('diagnose.html', data=self.patient1.data)
+
     def handle_diagnose(self):
         response = requests.post(API_URL, json=self.patient1.data)
+        
+        # Check if the response contains the key "chronic_disease_response"
+        if "chronic_diseases_response" not in response.json():
+            flash("The server failed to respond, please try again later!", "danger")
+            return redirect(url_for("home"))
+        
+        # Continue with the normal flow if the key exists
+        # print(response.json())
         self.patient1.collect_patient_data(response.json())
         self.patient1.sort_diagnosis()
         return render_template('diagnose.html', data=self.patient1.data)
+
 
     def handle_chronic_diagnosis(self):
         names, prob, vector, imp_features, risky, rules = self.patient1.get_chronic_pred()

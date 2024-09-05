@@ -1,6 +1,7 @@
 @startuml
 actor User
 
+participant "FrontEnd" as FE
 participant "FlaskApp" as Flask
 participant "Patient" as Patient
 participant "ChronicPredictor" as ChronicPredictor
@@ -9,9 +10,12 @@ participant "Recommendations" as Recommendations
 participant "DatabaseHandler" as Database
 participant "API" as API
 
-User -> Flask: POST / (Enter Patient ID and Practice)
+User -> FE: Patient ID and Practice
+activate FE
+FE-> Flask: POST / (Patient ID, Practice)
+
 activate Flask
-Flask -> Patient: reset_patient()
+
 Flask -> Database: get_patients_from_mongo(patient_ID, patient_practice)
 activate Database
 Database --> Flask: return patient_data
@@ -20,26 +24,40 @@ deactivate Database
 
 alt Patient data is valid
    Flask -> Patient: clean_data(keys)
+   activate Patient
+   deactivate Patient
 else Patient data is invalid
-    Flask --> User: Return error message (Patient ID or Practice is Incorrect)
+    Flask --> FE: Return error message (Patient ID or Practice is Incorrect)
 end
 deactivate Flask
 
-User -> Flask: GET /diagnose
+FE -> Flask: GET /diagnose
 activate Flask
 Flask -> API: Post patient data to API_URL
 activate API
 API --> Flask: Return diagnosis data
 deactivate API
-Flask -> Patient: collect_patient_data(response.json())
+alt API Response is valid
+    Flask -> Patient: assign_patient_data(response.json())
+    activate Patient
+    deactivate Patient
+else API response is invalid
+    Flask --> FE: Return error message (server failed to respond, try again later)
+end
 Patient -> ChronicPredictor: set_values(chronic_diseases_response)
+activate ChronicPredictor
+deactivate ChronicPredictor
 Patient -> MedLabPredictor: set_values(medlabs_response)
+activate MedLabPredictor
+deactivate MedLabPredictor
 Patient -> Recommendations: filter_recommendations(chronic_pred, medlab_pred)
+activate Recommendations
 Patient -> Recommendations: set_values(filtered_names, recommendations)
-Flask --> User: Render diagnose.html with patient data
+Flask --> FE: Render diagnose.html with patient data
+deactivate Recommendations
 deactivate Flask
 
-User -> Flask: GET /chronic
+FE -> Flask: GET /chronic
 activate Flask
 Flask -> Patient: get_chronic_pred()
 activate Patient
@@ -49,10 +67,10 @@ ChronicPredictor --> Patient: return chronic_prediction_data
 deactivate ChronicPredictor
 Patient --> Flask: return chronic_prediction_data
 deactivate Patient
-Flask --> User: Render chronic_disease.html with chronic prediction data
+Flask --> FE: Render chronic_disease.html with chronic prediction data
 deactivate Flask
 
-User -> Flask: GET /medlabs
+FE -> Flask: GET /medlabs
 activate Flask
 Flask -> Patient: get_medlab_pred()
 activate Patient
@@ -62,10 +80,10 @@ MedLabPredictor --> Patient : return medlab_prediction_data
 deactivate MedLabPredictor
 Patient --> Flask : return medlab_prediction_data
 deactivate Patient
-Flask --> User: Render medlabs_response.html with medlab prediction data
+Flask --> FE: Render medlabs_response.html with medlab prediction data
 deactivate Flask
 
-User -> Flask: GET /recommendation
+FE -> Flask: GET /recommendation
 activate Flask
 Flask -> Patient: get_recommendations()
 activate Patient
@@ -75,7 +93,7 @@ Recommendations --> Patient: return recommendations
 deactivate Recommendations
 Patient --> Flask : return recommendations_data
 deactivate Patient
-Flask --> User: Render Recommendation.html with recommendation data
+Flask --> FE: Render Recommendation.html with recommendation data
 deactivate Flask
-
+deactivate FE
 @enduml
