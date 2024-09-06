@@ -32,8 +32,9 @@ class Recommendations:
     def filter_recommendations(self, chronic_pred, medlab_pred):
         names = []
         for name in chronic_pred.names:
-            if chronic_pred.prob[name]>=0.5:
-                names.append(DISEASE_MAPPINGS[name])
+            if name != "BPH":
+                if chronic_pred.prob[name]>=0.5:
+                    names.append(DISEASE_MAPPINGS[name])
         if "normal" in medlab_pred.names:
             names.append("Normal")
         else:

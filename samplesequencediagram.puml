@@ -5,8 +5,6 @@ participant "FrontEnd" as FE
 participant "FlaskApp" as Flask
 participant "Patient" as Patient
 participant "ChronicPredictor" as ChronicPredictor
-participant "MedLabPredictor" as MedLabPredictor
-participant "Recommendations" as Recommendations
 participant "DatabaseHandler" as Database
 participant "API" as API
 
@@ -47,14 +45,7 @@ end
 Patient -> ChronicPredictor: set_values(chronic_diseases_response)
 activate ChronicPredictor
 deactivate ChronicPredictor
-Patient -> MedLabPredictor: set_values(medlabs_response)
-activate MedLabPredictor
-deactivate MedLabPredictor
-Patient -> Recommendations: filter_recommendations(chronic_pred, medlab_pred)
-activate Recommendations
-Patient -> Recommendations: set_values(filtered_names, recommendations)
 Flask --> FE: Render diagnose.html with patient data
-deactivate Recommendations
 deactivate Flask
 
 FE -> Flask: GET /chronic
@@ -70,30 +61,6 @@ deactivate Patient
 Flask --> FE: Render chronic_disease.html with chronic prediction data
 deactivate Flask
 
-FE -> Flask: GET /medlabs
-activate Flask
-Flask -> Patient: get_medlab_pred()
-activate Patient
-Patient -> MedLabPredictor: get_medlab_data()
-activate MedLabPredictor 
-MedLabPredictor --> Patient : return medlab_prediction_data
-deactivate MedLabPredictor
-Patient --> Flask : return medlab_prediction_data
-deactivate Patient
-Flask --> FE: Render medlabs_response.html with medlab prediction data
-deactivate Flask
-
-FE -> Flask: GET /recommendation
-activate Flask
-Flask -> Patient: get_recommendations()
-activate Patient
-Patient -> Recommendations: get_recommendation_data()
-activate Recommendations
-Recommendations --> Patient: return recommendations
-deactivate Recommendations
-Patient --> Flask : return recommendations_data
-deactivate Patient
-Flask --> FE: Render Recommendation.html with recommendation data
 deactivate Flask
 deactivate FE
 @enduml
