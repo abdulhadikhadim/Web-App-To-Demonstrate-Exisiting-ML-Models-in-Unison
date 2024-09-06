@@ -58,15 +58,21 @@
             <div class="container patient-details-section">
                 <form id="patientForm" action="/" method="POST" class="patient-details-form">
                     <h1 class="text-center text-yellow mb-4">Enter Patient Details</h1>
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <input class="form-control" type="text" id="PID" name="PID" placeholder="Enter patient's ID here" required>
-                    </div>
+                    </div> -->
+
                     <div class="mb-3">
                         <select class="form-control" id="PP" name="PP" required>
                             <option value="" disabled selected>Select patient's practice</option>
                             {% for practice in practices %}
                                 <option value="{{ practice.practice }}">{{ practice.practice }}</option>
                             {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <select class="form-control" id="PID" name="PID" required>
+                            <option value="" disabled selected>Select patient's ID</option>
                         </select>
                     </div>
                     <button id="showResponse" type="button" class="btn btn-yellow mt-3">Diagnosed Disease</button>
@@ -184,6 +190,115 @@
                     }
                     return $result;
                 }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("patientForm");
+            const showResponseButton = document.getElementById("showResponse");
+            const practiceSelect = document.getElementById("PP");
+            const patientIdSelect = document.getElementById("PID");
+    
+            // Fetch the JSON data
+            fetch('/static/PatientsWithAllResponses.json')
+                .then(response => response.json())
+                .then(data => {
+                    const practices = new Map();
+    
+                    // Organize data by practice
+                    data.forEach(item => {
+                        if (!practices.has(item.practice)) {
+                            practices.set(item.practice, []);
+                        }
+                        practices.get(item.practice).push(item.patientid);
+                    });
+    
+                    // Populate the practice dropdown
+                    practiceSelect.innerHTML = ''; // Clear existing options
+                    practiceSelect.innerHTML = '<option value="" disabled selected>Select patient\'s practice</option>';
+                    practices.forEach((ids, practice) => {
+                        const option = document.createElement('option');
+                        option.value = practice;
+                        option.textContent = practice;
+                        practiceSelect.appendChild(option);
+                    });
+    
+                    // Event listener for practice selection
+                    practiceSelect.addEventListener('change', function () {
+                        const selectedPractice = practiceSelect.value;
+                        const ids = practices.get(selectedPractice) || [];
+    
+                        // Populate the patient ID dropdown
+                        patientIdSelect.innerHTML = ''; // Clear existing options
+                        patientIdSelect.innerHTML = '<option value="" disabled selected>Select patient\'s ID</option>';
+                        ids.forEach(id => {
+                            const option = document.createElement('option');
+                            option.value = id;
+                            option.textContent = id;
+                            patientIdSelect.appendChild(option);
+                        });
+                    });
+                })
+                .catch(error => console.error('Error fetching JSON data:', error));
+    
+            form.onsubmit = async function (e) {
+                e.preventDefault();
+    
+                const formData = new FormData(form);
+                const response = await fetch('/', {
+                    method: 'POST',
+                    body: formData
+                });
+    
+                const result = await response.json();
+                if (response.ok && result.status === 'success') {
+                    window.location.href = "/diagnose"; // Redirect to /diagnose
+                } else {
+                    // Handle the error response
+                    const alertDiv = document.querySelector('.alert');
+                    if (alertDiv) {
+                        alertDiv.textContent = result.message;
+                    } else {
+                        const newAlertDiv = document.createElement('div');
+                        newAlertDiv.className = 'alert alert-danger mt-3';
+                        newAlertDiv.textContent = result.message;
+                        form.insertAdjacentElement('afterend', newAlertDiv);
+                    }
+                }
+            };
+    
+            // Ensure this button click works if it should handle form submission
+            showResponseButton.onclick = function () {
+                form.requestSubmit(); // Triggers the form submission
+            };
+    
+            // Initialize Select2 on the practice select element
+            $(practiceSelect).select2({
+                placeholder: "Select patient's practice",
+                allowClear: true,
+                tags: true, // Allow free text input
+                createTag: function (params) {
+                    return {
+                        id: params.term,
+                        text: params.term,
+                        newOption: true
+                    };
+                },
+                templateResult: function (data) {
+                    const $result = $("<span></span>");
+                    $result.text(data.text);
+                    if (data.newOption) {
+                        $result.append(" <em>(new)</em>");
+                    }
+                    return $result;
+                }
+            });
+    
+            // Initialize Select2 on the patient ID select element
+            $(patientIdSelect).select2({
+                placeholder: "Select patient's ID",
+                allowClear: true
             });
         });
     </script>
