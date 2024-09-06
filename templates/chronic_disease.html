@@ -58,7 +58,7 @@
                                                     {% for important in imp[name] %}
                                                         <tr>
                                                             <td>{{ important["Feature"] }}</td>
-                                                            <td>{{ important["Value"]|float|round(4) }}</td>
+                                                            <td>{{ important["Value"]|float|round(1) }}</td>
                                                         </tr>
                                                     {% endfor %}
                                                 </tbody>
@@ -95,7 +95,7 @@
                                                     {% for risky in risk[name] %}
                                                         <tr>
                                                             <td>{{ risky["Feature"] }}</td>
-                                                            <td>{{ risky["Value"]|float|round(3) }}</td>
+                                                            <td>{{ risky["Value"]|float|round(1) }}</td>
                                                         </tr>
                                                     {% endfor %}
                                                 </tbody>
