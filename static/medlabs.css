@@ -1,0 +1,85 @@
+body {
+    background-color: #f0f8ff;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Container settings */
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    margin-top: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center; /* Centers content horizontally */
+    align-items: flex-start; /* Aligns content at the top */
+    flex-direction: column;  /* Stack items vertically */
+    max-width: 1200px;
+    margin: 0 auto; /* Centers container on the page */
+    
+}
+
+/* Flexbox to ensure proper centering of panes */
+
+ .right-pane {
+    display: flex;
+    justify-content: center; /* Horizontal centering */
+    flex-direction: column;
+    width:800px;
+    margin: 0 auto;
+}
+
+
+
+.card-body {
+    width:100%;
+    background-color:#f0f8ff ;
+    border: 1px solid #cce5ff; /* Light blue border for a delicate look */
+    border-radius: 15px;
+    /* padding: 25px; Increased padding for more space */
+    /* margin: 0 auto; Increased margin for spacing around the card */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for hover effects */
+}
+
+.card-body:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.card-body h5 {
+    font-size: 1.5rem;
+    color: #007bff; /* Bright blue for headings */
+    margin-bottom: 15px;
+    font-weight: 600; /* Bolder font for headings */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Light shadow for text */
+}
+
+.card-body p {
+    color: #333; /* Darker text color for readability */
+    line-height: 1.7;
+}
+
+.card-body ul {
+    padding-left: 20px; /* Indent list items */
+}
+
+.card-body ul li {
+    margin-bottom: 12px; /* Space between list items */
+    font-size: 1.1rem; /* Slightly larger font for list items */
+}
+
+.card-body .list-unstyled {
+    padding-left: 0; /* Remove default padding */
+    
+}
+
+.card-body .list-unstyled li {
+    border-bottom: 1px solid #cce5ff; /* Light border between list items */
+    padding-bottom: 12px; /* Space below each list item */
+    color: #555; /* Slightly lighter color for list items */
+}
+
+.card-body .list-unstyled li:last-child {
+    border-bottom: none; /* Remove border for the last item */
+}
+

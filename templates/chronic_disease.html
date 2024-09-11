@@ -3,7 +3,8 @@
 {% block title %}Chronic Diseases{% endblock %}
 
 {% block content %}
-
+<link rel="stylesheet" href="static\chronic_disease.css">
+<section class="py-5">
 <div class="container mt-4">
     <!-- Left Pane -->
     <div class="left-pane">
@@ -183,7 +184,7 @@
         </div>
     </div>
 </div>
-
+</section>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         showTab(1); // Automatically show the first tab when the page loads
@@ -200,5 +201,6 @@
         });
     }
 </script>
+
 {% endblock %}
 

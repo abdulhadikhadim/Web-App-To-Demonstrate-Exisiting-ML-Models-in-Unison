@@ -3,28 +3,29 @@
 {% block title %}Diagnose Disease{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="static/recommendations.css">
 <div class="container mt-5">
     <div class="row mb-4">
         <!-- Procedures -->
         <div class="col-md-12">
             <h2>Recommendations</h2>
-            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#procedures-menu" aria-expanded="true" aria-controls="procedures-menu" style="background-color: #0287CA">
+            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#procedures-menu" aria-expanded="true" aria-controls="procedures-menu">
                 <div style="font-weight: bold;">Procedures</div>
             </button>
             <div id="procedures-menu" class="collapse show mb-3">
                 {% if procedures %}
-                    {% for procedure, diseases in procedures.items() %}
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <ul class="list-unstyled mb-0">
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <ul class="list-unstyled mb-0 procedures-list">
+                                {% for procedure, diseases in procedures.items() %}
                                     <li class="d-flex justify-content-between">
                                         <div style="font-weight: bold;"><span>{{ procedure }}</span></div>
                                         <div style="font-weight: bold;"><span>{{ diseases|join(", ") }}</span></div>
                                     </li>
-                                </ul>
-                            </div>
+                                {% endfor %}
+                            </ul>
                         </div>
-                    {% endfor %}
+                    </div>
                 {% else %}
                     <div class="alert alert-success" role="alert">
                         No procedures recommended for this patient.
@@ -34,33 +35,31 @@
         </div>
     </div>
     
-
     <div class="row mb-4">
         <!-- Surgeries -->
         <div class="col-12">
-            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#surgeries-menu" aria-expanded="true" aria-controls="surgeries-menu" style="background-color: #0287CA">
+            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#surgeries-menu" aria-expanded="true" aria-controls="surgeries-menu">
                 <div style="font-weight: bold;">Surgeries</div>
             </button>
             <div id="surgeries-menu" class="collapse show mb-3">
-                {%if surgeries %}
-                    {% for surgery, diseases in surgeries.items() %}
+                {% if surgeries %}
                     <div class="card mb-2">
                         <div class="card-body">
-                            <ul class="list-unstyled mb-0">
-                                <li class="d-flex justify-content-between">
-                                    <div style="font-weight: bold;"><span>{{ surgery }}</span></div>
-                                    <div style="font-weight: bold;"><span>{{ diseases|join(", ") }}</span></div>
-                                </li>
+                            <ul class="list-unstyled mb-0 surgeries-list">
+                                {% for surgery, diseases in surgeries.items() %}
+                                    <li class="d-flex justify-content-between">
+                                        <div style="font-weight: bold;"><span>{{ surgery }}</span></div>
+                                        <div style="font-weight: bold;"><span>{{ diseases|join(", ") }}</span></div>
+                                    </li>
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>
-                    {% endfor %}
                 {% else %}
-                <div class="alert alert-success" role="alert">
-                    No surgeries recommended for this patient.
-                </div>
+                    <div class="alert alert-success" role="alert">
+                        No surgeries recommended for this patient.
+                    </div>
                 {% endif %}
-
             </div>
         </div>
     </div>
@@ -68,28 +67,28 @@
     <div class="row mb-4">
         <!-- Lifestyle Changes -->
         <div class="col-12">
-            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#lifestyle-menu" aria-expanded="true" aria-controls="lifestyle-menu" style="background-color: #0287CA">
+            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#lifestyle-menu" aria-expanded="true" aria-controls="lifestyle-menu">
                 <div style="font-weight: bold;">Lifestyle Changes</div>
             </button>
             <div id="lifestyle-menu" class="collapse show mb-3">
                 {% if lifestyle_changes %}
-                    {% for lifestyle, diseases in lifestyle_changes.items() %}
                     <div class="card mb-2">
                         <div class="card-body">
-                            <ul class="list-unstyled mb-0">
-                                <li class="d-flex justify-content-between">
-                                    <div style="font-weight: bold;"><span>{{ lifestyle }}</span></div>
-                                    <div style="font-weight: bold;"><span>{{ diseases|join(", ") }}</span></div>
-                                </li>
+                            <ul class="list-unstyled mb-0 lifestyle-list">
+                                {% for lifestyle, diseases in lifestyle_changes.items() %}
+                                    <li class="d-flex justify-content-between">
+                                        <div style="font-weight: bold;"><span>{{ lifestyle }}</span></div>
+                                        <div style="font-weight: bold;"><span>{{ diseases|join(", ") }}</span></div>
+                                    </li>
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>
-                    {% endfor %}
                 {% else %}
-                <div class="alert alert-success" role="alert">
-                    No changes in lifestyle recommended for this patient.
-                </div>
-            {% endif %}
+                    <div class="alert alert-success" role="alert">
+                        No changes in lifestyle recommended for this patient.
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -97,23 +96,23 @@
     <div class="row mb-4">
         <!-- Labs -->
         <div class="col-12">
-            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#labs-menu" aria-expanded="true" aria-controls="labs-menu" style="background-color: #0287CA">
-            <div style="font-weight: bold;">Labs</div>
+            <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#labs-menu" aria-expanded="true" aria-controls="labs-menu">
+                <div style="font-weight: bold;">Labs</div>
             </button>
             <div id="labs-menu" class="collapse show mb-3">
                 {% if labs %}
-                    {% for lab, diseases in labs.items() %}
                     <div class="card mb-2">
                         <div class="card-body">
-                            <ul class="list-unstyled mb-0">
-                                <li class="d-flex justify-content-between">
-                                    <div style="font-weight: bold;"><span>{{ lab }}</span></div>
-                                    <div style="font-weight: bold;"><span>{{ diseases|join(", ") }}</span></div>
-                                </li>
+                            <ul class="list-unstyled mb-0 labs-list">
+                                {% for lab, diseases in labs.items() %}
+                                    <li class="d-flex justify-content-between">
+                                        <div style="font-weight: bold;"><span>{{ lab }}</span></div>
+                                        <div style="font-weight: bold;"><span>{{ diseases|join(", ") }}</span></div>
+                                    </li>
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>
-                    {% endfor %}
                 {% else %}
                     <div class="alert alert-success" role="alert">
                         No labs test recommended for this patient.

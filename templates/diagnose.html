@@ -31,6 +31,20 @@
 </section>
 
 <style>
+  
+    .text-center {
+        border: 1px solid blue;
+        padding: 20px; /* Adds space inside the box */
+        border-radius: 10px; /* Rounds the corners of the box */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
+        background-color: #f9f9f9; /* Sets a light background color */
+        transition: box-shadow 0.3s ease; /* Smooth transition for shadow on hover */
+    }
+
+    .text-center:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7); /* Darker shadow on hover */
+    }
+
     .feature-link {
         text-decoration: none;
         font-weight: bolder;
@@ -52,5 +66,6 @@
         color: #0f5ef1;
     }
 </style>
+
 
 {% endblock %}
